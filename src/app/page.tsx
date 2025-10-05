@@ -18,17 +18,17 @@ import { GoodLuckButton } from '@/components/course/good-luck-button';
 export default function Home() {
 
   return (
-    <div className="flex flex-col gap-8 md:gap-12">
+    <div className="flex flex-col gap-4 md:gap-8">
       <section className="w-full md:container md:mx-auto md:px-4 md:pt-8 md:md:px-6">
         <HeroCarousel />
       </section>
       
-      <section className="container mx-auto px-4 md:px-6 -mt-4 mb-4">
+      <section className="container mx-auto px-4 md:px-6">
         <GoodLuckButton />
       </section>
 
       <main className="container mx-auto px-4 md:px-6">
-        <section className="mt-12">
+        <section className="mt-8">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
             Featured Courses
           </h2>
@@ -39,7 +39,7 @@ export default function Home() {
           </div>
         </section>
         
-        <section className="mt-12 mb-12">
+        <section className="mt-8 mb-12">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6 text-center">
             What Our Students Say
           </h2>
