@@ -7,8 +7,6 @@ import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import { Users, PlayCircle, Video } from 'lucide-react';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import { Card, CardContent } from '../ui/card';
 
 interface CourseCardProps {
@@ -18,27 +16,16 @@ interface CourseCardProps {
 
 export function CourseCard({ course, progress }: CourseCardProps) {
   const image = PlaceHolderImages.find((img) => img.id === course.imageId);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // In a real implementation, you would have a video URL.
-  // For now, we'll just toggle the state to show how it would look.
-  const hasVideoPreview = false; 
-
   const totalLessons = course.modules.reduce((acc, module) => acc + module.lessons.length, 0);
 
   const handlePlayClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    // Logic to play video preview would go here
     console.log("Play button clicked");
   };
 
   return (
-    <Card 
-      className="relative flex flex-col h-full overflow-hidden transition-all group border-0 shadow-lg"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <Card className="relative flex flex-col h-full overflow-hidden transition-all group border-0 shadow-lg">
       <Link href={`/courses/${course.id}`} className="block absolute inset-0 z-0" aria-label={`View course: ${course.title}`} />
       
       <CardContent className="relative p-0 aspect-[9/12]">
@@ -74,12 +61,12 @@ export function CourseCard({ course, progress }: CourseCardProps) {
         </div>
       </CardContent>
       
-      <div className="p-3 bg-card relative z-10">
-         <h3 className="font-bold text-sm leading-tight text-foreground line-clamp-2 min-h-[2.5rem]">
+      <div className="p-3 bg-card relative z-10 flex-grow flex flex-col justify-between">
+         <h3 className="font-bold text-sm leading-tight text-foreground line-clamp-2 min-h-[40px] mb-2">
             {course.title}
           </h3>
-        <div className="mt-2 flex justify-between items-center text-xs text-muted-foreground">
-          <p className="font-semibold uppercase tracking-wider">Featured Course</p>
+        <div className="flex justify-between items-center text-xs text-muted-foreground">
+          <p className="font-semibold uppercase tracking-wider">{course.category}</p>
           <div className="flex items-center gap-1">
             <Users className="w-3 h-3" />
             <span>{course.studentsCount.toLocaleString()}</span>
