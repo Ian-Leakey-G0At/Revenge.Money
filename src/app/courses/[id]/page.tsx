@@ -15,14 +15,15 @@ import {
   VolumeX,
   RotateCcw
 } from 'lucide-react';
-import { CoursePurchaseCard } from '@/components/course/course-purchase-card';
 import { TestimonialCarousel } from '@/components/course/testimonial-carousel';
 import { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 export default function CourseDetailPage() {
   const params = useParams<{ id: string }>();
   const course = courses.find((c) => c.id === params.id);
+  const { toast } = useToast();
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -58,6 +59,13 @@ export default function CourseDetailPage() {
       videoRef.current.play();
       setIsPlaying(true);
     }
+  }
+
+  const handlePurchase = () => {
+    toast({
+      title: 'Checkout Initiated (Mock)',
+      description: `You are being redirected to purchase "${course.title}". This is a mock action.`,
+    })
   }
 
   const instructorAvatar = PlaceHolderImages.find(
@@ -173,11 +181,19 @@ export default function CourseDetailPage() {
         </main>
       </div>
 
-       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <CoursePurchaseCard course={course} />
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-50 md:bottom-auto md:relative md:bg-transparent md:border-none md:backdrop-blur-none">
+        <div className="container mx-auto px-0 md:px-6 flex items-center justify-between">
+          <p className="text-2xl font-bold">${course.price}</p>
+          <div className="flex flex-col items-end gap-1">
+             <Button size="lg" className="font-bold" onClick={handlePurchase}>
+                Buy Now
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                30-Day Money-Back Guarantee
+              </p>
           </div>
         </div>
+      </div>
     </div>
   );
 }
