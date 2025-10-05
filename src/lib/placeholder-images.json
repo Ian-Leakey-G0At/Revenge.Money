@@ -3,37 +3,37 @@
     {
       "id": "course-investing-101",
       "description": "Abstract shapes representing financial growth",
-      "imageUrl": "https://images.unsplash.com/photo-1462556791646-c201b8241a94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmaW5hbmNlJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzU5NTg0NTc1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1624953587687-e253b7646c20?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "finance abstract"
     },
     {
       "id": "course-debt-free",
-      "description": "A person breaking free from chains",
-      "imageUrl": "https://images.unsplash.com/photo-1552896796-3f0a5a8f67e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmcmVlZG9tJTIwY29uY2VwdHxlbnwwfHx8fDE3NTk2NDc1ODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "freedom concept"
+      "description": "A clear road ahead symbolizing freedom from debt",
+      "imageUrl": "https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "freedom road"
     },
     {
       "id": "course-budgeting-basics",
-      "description": "A person organizing coins and notes",
-      "imageUrl": "https://images.unsplash.com/photo-1616077168737-6b1884d804e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb25leSUyMG9yZ2FuaXphdGlvbnxlbnwwfHx8fDE3NTk2NDc1ODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A person organizing coins and notes into jars",
+      "imageUrl": "https://images.unsplash.com/photo-1593672715438-d88a706299a5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "money organization"
     },
     {
       "id": "course-stock-market",
-      "description": "A graph showing stock market trends",
-      "imageUrl": "https://images.unsplash.com/photo-1691643158804-d3f02eb456a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdG9jayUyMGNoYXJ0fGVufDB8fHx8MTc1OTU2MzIxOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A dynamic, glowing stock market chart on a dark background",
+      "imageUrl": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "stock chart"
     },
     {
       "id": "course-real-estate",
-      "description": "Modern architectural building",
-      "imageUrl": "https://images.unsplash.com/photo-1521713362244-1b5e5d150b29?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzU5NTY2NjU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "modern architecture"
+      "description": "A set of keys on top of a blueprint for a modern house",
+      "imageUrl": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "real estate"
     },
     {
       "id": "course-crypto",
-      "description": "Digital currency coins illustration",
-      "imageUrl": "https://images.unsplash.com/photo-1744473119469-905016183836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjcnlwdG9jdXJyZW5jeSUyMGRpZ2l0YWx8ZW58MHx8fHwxNzU5NTYyODA4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A physical Bitcoin coin with a digital, abstract background",
+      "imageUrl": "https://images.unsplash.com/photo-1621418763592-36b0e957a16e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "cryptocurrency digital"
     },
     {
@@ -47,12 +47,6 @@
       "description": "Headshot of a professional instructor",
       "imageUrl": "https://images.unsplash.com/photo-1544168190-79c17527004f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU5NTk5MzMyfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "professional portrait"
-    },
-    {
-      "id": "hero-image-1",
-      "description": "A person looking at a bright horizon, symbolizing financial future",
-      "imageUrl": "https://images.unsplash.com/photo-1692699288667-0ddfc33d7b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmaW5hbmNpYWwlMjBmdXR1cmV8ZW58MHx8fHwxNzU5NjQ3NTgyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "financial future"
     }
   ]
 }

@@ -1,9 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { CourseCard } from '@/components/course/course-card';
-import { courses, myCourses } from '@/lib/placeholder-data';
+import { courses } from '@/lib/placeholder-data';
 import {
   Carousel,
   CarouselContent,
@@ -18,8 +17,8 @@ import { GoodLuckButton } from '@/components/course/good-luck-button';
 export default function Home() {
 
   return (
-    <div className="flex flex-col gap-4 md:gap-8">
-      <section className="w-full md:container md:mx-auto md:px-4 md:pt-8 md:md:px-6">
+    <div className="flex flex-col gap-8">
+      <section className="w-full">
         <HeroCarousel />
       </section>
       
@@ -28,7 +27,7 @@ export default function Home() {
       </section>
 
       <main className="container mx-auto px-4 md:px-6">
-        <section className="mt-8">
+        <section>
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
             Featured Courses
           </h2>
