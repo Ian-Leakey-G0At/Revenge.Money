@@ -102,7 +102,7 @@
   }
   
   .course-card__title-section {
-    @apply relative pt-2 px-1 h-[4.25rem];
+    @apply relative pt-1 px-1 h-[4.25rem];
   }
 
   .course-card__title {
