@@ -65,8 +65,7 @@ export function CourseCard({ course, progress }: CourseCardProps) {
          <h3 className="font-bold text-sm leading-tight text-foreground line-clamp-2 min-h-[40px] mb-2">
             {course.title}
           </h3>
-        <div className="flex justify-between items-center text-xs text-muted-foreground">
-          <p className="font-semibold uppercase tracking-wider">{course.category}</p>
+        <div className="flex justify-end items-center text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Users className="w-3 h-3" />
             <span>{course.studentsCount.toLocaleString()}</span>
