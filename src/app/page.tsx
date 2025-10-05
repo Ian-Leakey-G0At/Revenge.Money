@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { CourseCard } from '@/components/course/course-card';
 import { courses, myCourses } from '@/lib/placeholder-data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { PersonalizedRecommendations } from '@/components/course/personalized-recommendations';
 import {
   Carousel,
@@ -15,39 +14,14 @@ import {
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+import { HeroCarousel } from '@/components/course/hero-carousel';
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(
-    (img) => img.id === 'course-stock-market'
-  );
 
   return (
     <div className="flex flex-col gap-8 md:gap-12">
-      <section className="relative h-[400px] md:h-[500px] w-full">
-        {heroImage && (
-          <Image
-            src={heroImage.imageUrl}
-            alt={heroImage.description}
-            fill
-            className="object-cover"
-            data-ai-hint={heroImage.imageHint}
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center text-center">
-          <div className="relative max-w-2xl px-4 text-foreground">
-            <h1 className="text-4xl font-bold tracking-tight md:text-6xl font-headline">
-              Master Your Money, Master Your Life
-            </h1>
-            <p className="mt-4 text-lg md:text-xl">
-              Gain the financial knowledge and skills to achieve your goals with
-              our expert-led courses.
-            </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/courses">Explore Courses</Link>
-            </Button>
-          </div>
-        </div>
+      <section className="w-full">
+        <HeroCarousel />
       </section>
 
       <main className="container mx-auto px-4 md:px-6">
