@@ -43,7 +43,7 @@ export default function Home() {
               <Link href="/courses">See more</Link>
             </Button>
           </div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {courses.slice(0, 4).map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}

@@ -16,7 +16,7 @@ export default function MyLearningPage() {
         </p>
       </div>
       {myCourses.length > 0 ? (
-        <div className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {myCourses.map((course) => (
             <CourseCard
               key={course.id}
