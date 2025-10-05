@@ -1,6 +1,6 @@
 
 'use client';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { courses } from '@/lib/placeholder-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
@@ -20,7 +20,8 @@ import { TestimonialCarousel } from '@/components/course/testimonial-carousel';
 import { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
+export default function CourseDetailPage() {
+  const params = useParams<{ id: string }>();
   const course = courses.find((c) => c.id === params.id);
 
   const videoRef = useRef<HTMLVideoElement>(null);
