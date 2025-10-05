@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { CourseCard } from '@/components/course/course-card';
 import { courses, myCourses } from '@/lib/placeholder-data';
-import { PersonalizedRecommendations } from '@/components/course/personalized-recommendations';
 import {
   Carousel,
   CarouselContent,
@@ -29,27 +28,6 @@ export default function Home() {
       </section>
 
       <main className="container mx-auto px-4 md:px-6">
-        <section>
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
-            My Learning
-          </h2>
-          {myCourses.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {myCourses.map((course) => (
-                <CourseCard key={course.id} course={course} progress={Math.floor(Math.random() * 80) + 10} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12 border-2 border-dashed rounded-lg">
-                <h3 className="text-xl font-semibold">Your learning journey is empty</h3>
-                <p className="text-muted-foreground mt-2">Start by exploring our course catalog.</p>
-                <Button asChild className="mt-4">
-                  <Link href="/courses">Browse Courses</Link>
-                </Button>
-              </div>
-          )}
-        </section>
-
         <section className="mt-12">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
             Featured Courses
@@ -61,10 +39,6 @@ export default function Home() {
           </div>
         </section>
         
-        <section className="mt-12">
-          <PersonalizedRecommendations />
-        </section>
-
         <section className="mt-12 mb-12">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6 text-center">
             What Our Students Say
