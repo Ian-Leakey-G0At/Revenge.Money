@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { UserMenu } from '@/components/navigation/user-menu';
 import { ThemeToggle } from './theme-toggle';
