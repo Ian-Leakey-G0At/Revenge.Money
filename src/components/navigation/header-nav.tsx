@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { UserMenu } from '@/components/navigation/user-menu';
 import { ThemeToggle } from './theme-toggle';
+import { Logo } from '@/components/icons';
 
 const navLinks = [
   { href: '/courses', label: 'Courses' },
@@ -12,28 +13,25 @@ export function HeaderNav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-        </div>
-
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2">
-           <Link href="/" className="text-xl font-bold">
-              Revenge Money
+        <Link href="/" className="flex items-center gap-2">
+          <Logo className="h-6 w-6 text-primary" />
+          <span className="text-xl font-bold">Revenge Money</span>
+        </Link>
+        
+        <nav className="hidden items-center gap-6 text-sm md:flex">
+          {navLinks.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              {link.label}
             </Link>
-        </div>
+          ))}
+        </nav>
 
-        <div className="flex items-center gap-4">
-          <nav className="hidden items-center gap-6 text-sm md:flex">
-            {navLinks.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <UserMenu />
         </div>
       </div>
