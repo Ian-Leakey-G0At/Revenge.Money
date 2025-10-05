@@ -3,7 +3,7 @@ import type { Course } from './types';
 export const courses: Course[] = [
   {
     id: 'investing-101',
-    title: 'Investing 101: The Beginner\'s Guide',
+    title: 'Beginner\'s Guide to Investing',
     description: 'Learn the fundamentals of investing in stocks, bonds, and more.',
     longDescription:
       'This course is designed for absolute beginners. We will cover everything from setting up a brokerage account to making your first trade. You will learn about different asset classes, risk management, and how to build a diversified portfolio that aligns with your financial goals.',
@@ -36,7 +36,7 @@ export const courses: Course[] = [
   },
   {
     id: 'debt-free-roadmap',
-    title: 'The Roadmap to Becoming Debt-Free',
+    title: 'Roadmap to Becoming Debt-Free',
     description: 'A step-by-step guide to tackling and eliminating debt.',
     longDescription:
       'Debt can be overwhelming, but with the right strategy, you can overcome it. This course provides a clear, actionable roadmap to paying off your debts, from credit cards to student loans. Learn about the debt snowball and avalanche methods, how to negotiate with creditors, and build habits that keep you debt-free for life.',
@@ -61,7 +61,7 @@ export const courses: Course[] = [
   },
   {
     id: 'budgeting-mastery',
-    title: 'Budgeting Mastery: Take Control of Your Finances',
+    title: 'Master Your Budget Control',
     description: 'Master the art of budgeting and unlock financial freedom.',
     longDescription:
       'Budgeting is the cornerstone of financial health. In this comprehensive course, you\'ll learn various budgeting techniques, how to track your expenses effectively, and how to create a budget that works for your lifestyle. Go from feeling stressed about money to being in complete control.',
@@ -109,7 +109,7 @@ export const courses: Course[] = [
   },
   {
     id: 'real-estate-investing',
-    title: 'Real Estate Investing for Beginners',
+    title: 'Beginner Real Estate Investing',
     description: 'Learn how to find, finance, and manage rental properties.',
     longDescription:
       'Discover the world of real estate investing. This course will guide you through the process of buying your first investment property, from market analysis and deal evaluation to financing options and property management. Build long-term wealth through real estate.',
@@ -133,7 +133,7 @@ export const courses: Course[] = [
   },
   {
     id: 'crypto-fundamentals',
-    title: 'Cryptocurrency Fundamentals',
+    title: 'Cryptocurrency Investing Fundamentals',
     description: 'An introduction to Bitcoin, Ethereum, and the world of DeFi.',
     longDescription:
       'Demystify the world of cryptocurrency. This course explains the technology behind blockchain, the difference between major cryptocurrencies like Bitcoin and Ethereum, and introduces the fast-growing ecosystem of Decentralized Finance (DeFi). Understand the risks and opportunities in this exciting new asset class.',
