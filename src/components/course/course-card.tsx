@@ -53,7 +53,7 @@ export function CourseCard({ course }: CourseCardProps) {
     wasHeld.current = false;
     holdTimeout.current = setTimeout(() => {
       playVideo();
-    }, 300);
+    }, 1500);
   };
 
   const handleMouseUp = () => {
