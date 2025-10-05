@@ -1,28 +1,62 @@
 
+'use client';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { courses } from '@/lib/placeholder-data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
-  Clock,
-  BarChart,
   Star,
-  Users,
-  PlayCircle,
-  Lock,
   Check,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  RotateCcw
 } from 'lucide-react';
 import { CoursePurchaseCard } from '@/components/course/course-purchase-card';
 import { TestimonialCarousel } from '@/components/course/testimonial-carousel';
+import { useRef, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 export default function CourseDetailPage({ params }: { params: { id: string } }) {
   const course = courses.find((c) => c.id === params.id);
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+
   if (!course) {
     notFound();
+  }
+  
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
+  
+  const handleReplay = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
   }
 
   const instructorAvatar = PlaceHolderImages.find(
@@ -32,15 +66,35 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
   return (
     <div className="bg-background pb-24">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="w-full aspect-video rounded-lg overflow-hidden bg-muted my-6">
+        <div 
+          className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted my-6 group"
+          onMouseEnter={() => setShowControls(true)}
+          onMouseLeave={() => setShowControls(false)}
+        >
            <video 
+              ref={videoRef}
               className="w-full h-full object-cover" 
               src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder video
               autoPlay 
               muted
               loop
               playsInline
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
             />
+            <div className={cn("absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300", showControls ? "opacity-100" : "opacity-0")}>
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={togglePlayPause}>
+                  {isPlaying ? <Pause className="w-8 h-8" /> : <Play className="w-8 h-8" />}
+                </Button>
+                <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={toggleMute}>
+                  {isMuted ? <VolumeX className="w-8 h-8" /> : <Volume2 className="w-8 h-8" />}
+                </Button>
+                 <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={handleReplay}>
+                  <RotateCcw className="w-8 h-8" />
+                </Button>
+              </div>
+            </div>
         </div>
 
         <main className="max-w-3xl mx-auto">
@@ -100,7 +154,6 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                           className="flex items-center justify-between"
                         >
                           <div className="flex items-center gap-3">
-                            {lesson.isPreview ? <PlayCircle className="h-4 w-4 text-primary" /> : <Lock className="h-4 w-4 text-muted-foreground" />}
                             <span className="text-sm text-muted-foreground">{lesson.title}</span>
                           </div>
                         </li>
