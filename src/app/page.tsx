@@ -24,17 +24,17 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col">
       <section className="w-full">
         <HeroCarousel />
       </section>
       
-      <section className="container mx-auto px-4">
+      <section className="container mx-auto px-4 my-4">
         <GoodLuckButton />
       </section>
 
       <main className="container mx-auto px-4">
-        <section className="mt-4">
+        <section>
           <h2 className="text-xl font-bold tracking-tight md:text-2xl font-headline mb-6">
             Featured Courses
           </h2>
