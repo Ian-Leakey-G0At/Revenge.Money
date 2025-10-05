@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-8 md:gap-12">
-      <section className="w-full">
+      <section className="w-full md:container md:mx-auto md:px-4 md:pt-8 md:md:px-6">
         <HeroCarousel />
       </section>
 

@@ -70,8 +70,8 @@ export function HeaderNav() {
           </Sheet>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-2">
-          <div className="relative flex-1 max-w-xs ml-4">
+        <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
+          <div className="relative flex-1 max-w-xs ml-auto">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"

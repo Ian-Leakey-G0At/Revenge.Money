@@ -102,7 +102,7 @@ export function HeroCarousel() {
   }, [api]);
   
   return (
-    <div className="relative w-full aspect-[16/9]">
+    <div className="relative w-full aspect-[16/9] md:rounded-lg md:overflow-hidden">
       <Carousel
         setApi={setApi}
         className="w-full h-full"
@@ -111,36 +111,35 @@ export function HeroCarousel() {
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent className="h-full">
-          {heroContent.map((item) => {
+          {heroContent.map((item, index) => {
             const image = PlaceHolderImages.find(img => img.id === item.imageId);
             return (
               <CarouselItem key={item.id} className="h-full">
-                <div className="relative w-full h-full">
-                   {image && (
-                    <Image
-                        src={image.imageUrl}
-                        alt={image.description}
-                        fill
-                        className="object-cover"
-                        data-ai-hint={image.imageHint}
-                        priority={item.id === 'hero-1'}
-                    />
-                    )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center text-center">
-                    <div className="relative max-w-2xl px-4 text-foreground">
-                      <h1 className="text-4xl font-bold tracking-tight md:text-6xl font-headline text-white">
-                        {item.headline}
-                      </h1>
-                      <p className="mt-4 text-lg md:text-xl text-white/90">
-                        {item.subhead}
-                      </p>
-                      <Button asChild size="lg" className="mt-8">
-                        <Link href={item.cta.href}>{item.cta.text}</Link>
-                      </Button>
+                <Link href={item.cta.href} className="block w-full h-full">
+                  <div className="relative w-full h-full">
+                    {image && (
+                      <Image
+                          src={image.imageUrl}
+                          alt={image.description}
+                          fill
+                          className="object-cover"
+                          data-ai-hint={image.imageHint}
+                          priority={index === 0}
+                      />
+                      )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    <div className="absolute inset-0 flex items-end justify-start text-left p-8 md:p-12">
+                      <div className="relative max-w-2xl px-4 text-foreground">
+                        <h1 className="text-3xl font-bold tracking-tight md:text-5xl font-headline text-white">
+                          {item.headline}
+                        </h1>
+                        <p className="mt-2 text-base md:text-lg text-white/90">
+                          {item.subhead}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </CarouselItem>
             );
           })}
