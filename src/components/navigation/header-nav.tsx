@@ -12,7 +12,7 @@ const navLinks = [
 export function HeaderNav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between px-2">
+      <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <Logo className="h-6 w-6 text-primary" />
           <span className="text-xl font-bold">Revenge Money</span>
