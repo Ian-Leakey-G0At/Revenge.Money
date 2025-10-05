@@ -30,6 +30,10 @@ export function CourseCard({ course }: CourseCardProps) {
       wasHeld.current = false; // Reset flag after preventing navigation
       return;
     }
+    if (isPlaying) {
+      setIsPlaying(false);
+      return;
+    }
     router.push(`/courses/${course.id}`);
   };
 
@@ -38,6 +42,11 @@ export function CourseCard({ course }: CourseCardProps) {
     setIsPlaying(true);
   };
   
+  const handlePlayPause = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsPlaying(prev => !prev);
+  }
+
   const handleMouseDown = () => {
     wasHeld.current = false;
     holdTimeout.current = setTimeout(() => {
@@ -84,7 +93,7 @@ export function CourseCard({ course }: CourseCardProps) {
         )}
 
         <button
-          onClick={playVideo}
+          onClick={handlePlayPause}
           className="course-card__play-button"
           aria-label={`Play preview for ${course.title}`}
         >
