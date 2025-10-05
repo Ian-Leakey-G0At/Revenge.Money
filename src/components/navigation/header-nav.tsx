@@ -9,6 +9,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ThemeToggle } from './theme-toggle';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -78,6 +79,7 @@ export function HeaderNav() {
               className="pl-9"
             />
           </div>
+          <ThemeToggle />
           <UserMenu />
         </div>
       </div>
