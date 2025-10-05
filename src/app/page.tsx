@@ -29,17 +29,17 @@ export default function Home() {
         <HeroCarousel />
       </section>
       
-      <section className="container mx-auto px-4 md:px-6">
+      <section className="container mx-auto px-2">
         <GoodLuckButton />
       </section>
 
-      <main className="container mx-auto px-4 md:px-6">
+      <main className="container mx-auto px-2">
         <section>
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
             Featured Courses
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {courses.slice(0, 4).map((course) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+            {courses.slice(0, 6).map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
           </div>

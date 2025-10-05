@@ -1,3 +1,4 @@
+
 import { CourseCard } from '@/components/course/course-card';
 import { Button } from '@/components/ui/button';
 import { myCourses } from '@/lib/placeholder-data';
@@ -17,6 +18,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
 
 export default function AccountPage() {
   return (
@@ -36,14 +38,19 @@ export default function AccountPage() {
           <TabsTrigger value="billing">Billing</TabsTrigger>
         </TabsList>
         <TabsContent value="my-courses">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {myCourses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                progress={Math.floor(Math.random() * 80) + 10}
-              />
-            ))}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {myCourses.map((course) => {
+               const progress = Math.floor(Math.random() * 80) + 10;
+               return (
+                <div key={course.id} className="flex flex-col gap-2">
+                  <CourseCard
+                    course={course}
+                  />
+                  <Progress value={progress} className="h-2" />
+                  <p className="text-sm text-center text-muted-foreground">{progress}% complete</p>
+                </div>
+              )
+            })}
           </div>
         </TabsContent>
         <TabsContent value="profile">

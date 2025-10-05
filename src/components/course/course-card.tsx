@@ -1,17 +1,15 @@
+
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Users } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import { Users, PlayCircle, Video } from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   course: Course;
@@ -20,62 +18,64 @@ interface CourseCardProps {
 
 export function CourseCard({ course, progress }: CourseCardProps) {
   const image = PlaceHolderImages.find((img) => img.id === course.imageId);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // In a real implementation, you would have a video URL.
+  // For now, we'll just toggle the state to show how it would look.
+  const hasVideoPreview = false; 
+
+  const totalLessons = course.modules.reduce((acc, module) => acc + module.lessons.length, 0);
 
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all hover:shadow-lg">
-      <CardHeader className="p-0">
-        <Link href={`/courses/${course.id}`} className="block">
-          <div className="relative h-48 w-full">
-            {image && (
-              <Image
-                src={image.imageUrl}
-                alt={image.description}
-                fill
-                className="object-cover"
-                data-ai-hint={image.imageHint}
-              />
-            )}
+    <Card 
+      className="relative flex flex-col h-full overflow-hidden transition-all group border-0 shadow-lg"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Link href={`/courses/${course.id}`} className="block">
+        <CardContent className="relative p-0 aspect-[9/12]">
+          {image && (
+            <Image
+              src={image.imageUrl}
+              alt={course.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              data-ai-hint={image.imageHint}
+            />
+          )}
+          {/* Video player would go here */}
+          
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+          <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-8 w-8 bg-black/30 hover:bg-black/50 text-white hover:text-white">
+            <PlayCircle className="h-5 w-5" />
+          </Button>
+
+          <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end">
+            <div className="flex items-center gap-2 text-white text-xs font-semibold">
+              <Video className="h-4 w-4"/>
+              <span>{totalLessons} VIDEOS</span>
+            </div>
+            <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20">
+              ${course.price}
+            </div>
           </div>
-        </Link>
-      </CardHeader>
-      <CardContent className="flex-1 p-4 flex flex-col">
-        <div className="flex-1">
-          <Badge variant="outline" className="mb-2">{course.category}</Badge>
-          <h3 className="text-lg font-bold leading-tight font-headline">
+        </CardContent>
+      </Link>
+      <div className="p-3 bg-card">
+         <h3 className="font-bold text-sm leading-tight text-foreground truncate">
             <Link href={`/courses/${course.id}`} className="hover:text-primary transition-colors">
               {course.title}
             </Link>
           </h3>
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-            {course.description}
-          </p>
+        <div className="mt-2 flex justify-between items-center text-xs text-muted-foreground">
+          <p className="font-semibold uppercase tracking-wider">Featured Course</p>
+          <div className="flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            <span>{course.studentsCount.toLocaleString()}</span>
+          </div>
         </div>
-        <div className="mt-4 flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-accent fill-accent" />
-              <span>{course.rating}</span>
-            </div>
-             <div className="flex items-center gap-1">
-              <Users className="w-4 h-4" />
-              <span>{course.studentsCount.toLocaleString()}</span>
-            </div>
-          </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-0">
-        {progress !== undefined ? (
-          <div className="w-full">
-            <Progress value={progress} className="h-2 mb-2" />
-            <p className="text-sm text-muted-foreground">{progress}% complete</p>
-          </div>
-        ) : (
-          <div className="w-full flex justify-between items-center">
-             <p className="text-xl font-bold text-primary">${course.price}</p>
-            <Button asChild variant="secondary" size="sm">
-              <Link href={`/courses/${course.id}`}>View Details</Link>
-            </Button>
-          </div>
-        )}
-      </CardFooter>
+      </div>
     </Card>
   );
 }
