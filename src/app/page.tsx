@@ -34,8 +34,8 @@ export default function Home() {
       </section>
 
       <main className="container mx-auto px-4">
-        <section>
-          <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
+        <section className="mt-4">
+          <h2 className="text-xl font-bold tracking-tight md:text-2xl font-headline mb-6">
             Featured Courses
           </h2>
           <div className="grid grid-cols-2 gap-x-3 gap-y-6">
