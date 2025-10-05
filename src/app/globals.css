@@ -106,7 +106,7 @@
   }
 
   .course-card__title {
-    @apply font-bold text-sm leading-tight text-white mb-2;
+    @apply font-bold text-sm leading-tight text-white mb-1;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
