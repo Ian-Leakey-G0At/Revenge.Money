@@ -185,7 +185,7 @@ export default function CourseDetailPage() {
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between gap-4">
           <p className="text-2xl font-bold whitespace-nowrap">${course.price}</p>
           <Button size="lg" className="font-bold w-full max-w-xs" onClick={handlePurchase}>
-            Buy Now
+            Get Now
           </Button>
         </div>
       </div>
