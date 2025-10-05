@@ -1,0 +1,56 @@
+
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Home, BookOpen, GraduationCap, User } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const navLinks = [
+  { href: '/', label: 'Home', icon: Home },
+  { href: '/courses', label: 'Courses', icon: BookOpen },
+  { href: '/learn', label: 'Learning', icon: GraduationCap },
+  { href: '/account', label: 'Account', icon: User },
+];
+
+export function BottomNav() {
+  const pathname = usePathname();
+
+  return (
+    <>
+      <div className="h-16 md:hidden" />
+      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+        <nav className="grid h-16 grid-cols-4 items-center">
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === '/'
+                ? pathname === '/'
+                : pathname.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex flex-col items-center justify-center gap-1"
+              >
+                <link.icon
+                  className={cn(
+                    'h-6 w-6',
+                    isActive ? 'text-primary' : 'text-muted-foreground'
+                  )}
+                />
+                <span
+                  className={cn(
+                    'text-xs font-medium',
+                    isActive ? 'text-primary' : 'text-muted-foreground'
+                  )}
+                >
+                  {link.label}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+      </footer>
+    </>
+  );
+}
