@@ -30,6 +30,7 @@ export function CourseCard({ course }: CourseCardProps) {
       wasHeld.current = false; // Reset flag after preventing navigation
       return;
     }
+    // If video is playing, the first tap should just pause it.
     if (isPlaying) {
       setIsPlaying(false);
       return;
@@ -40,6 +41,7 @@ export function CourseCard({ course }: CourseCardProps) {
   const playVideo = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setIsPlaying(true);
+    wasHeld.current = true;
   };
   
   const handlePlayPause = (e: React.MouseEvent) => {
@@ -51,7 +53,6 @@ export function CourseCard({ course }: CourseCardProps) {
     wasHeld.current = false;
     holdTimeout.current = setTimeout(() => {
       playVideo();
-      wasHeld.current = true;
     }, 300);
   };
 
@@ -97,7 +98,7 @@ export function CourseCard({ course }: CourseCardProps) {
           className="course-card__play-button"
           aria-label={`Play preview for ${course.title}`}
         >
-          <Play className="fill-white" />
+          <Play className={cn("fill-white", isPlaying && "fill-primary")} />
         </button>
 
         <div className="course-card__media-overlay">
