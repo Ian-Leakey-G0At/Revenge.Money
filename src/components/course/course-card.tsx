@@ -34,7 +34,7 @@ export function CourseCard({ course }: CourseCardProps) {
       className="relative flex flex-col group cursor-pointer transition-transform duration-150 ease-out hover:scale-105"
     >
       {/* Thumbnail Section */}
-      <div className="relative aspect-[9/12] w-full bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/10">
+      <div className="relative aspect-[9/12] w-full bg-card rounded-2xl overflow-hidden border">
         {image && (
           <Image
             src={image.imageUrl}
@@ -55,8 +55,8 @@ export function CourseCard({ course }: CourseCardProps) {
         </button>
 
         {/* Bottom Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-center">
-          <div className="text-neutral-400 text-xs font-semibold">
+        <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center">
+          <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-3 py-1 border border-white/20">
             {totalLessons} VIDEOS
           </div>
           <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10">
@@ -67,11 +67,11 @@ export function CourseCard({ course }: CourseCardProps) {
 
       {/* Content Section */}
       <div className="p-3">
-        <div className="relative flex flex-col justify-start items-start text-neutral-400 min-h-[42px]">
-          <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left">
+        <div className="relative flex flex-col justify-start items-start text-foreground min-h-[42px]">
+          <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left absolute top-0 left-0">
             {course.title}
           </h3>
-          <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs">
+          <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs text-muted-foreground">
             <Users className="w-3.5 h-3.5" />
             <span className="font-semibold">
               {course.studentsCount.toLocaleString()}
