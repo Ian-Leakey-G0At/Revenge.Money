@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Play, Users } from 'lucide-react';
+import { Play, Users, Video } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -67,7 +67,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
       {/* Content Section */}
       <div className="p-3">
-        <div className="relative flex flex-col justify-start items-start text-foreground min-h-[42px]">
+        <div className="relative flex flex-col justify-start items-start text-foreground min-h-[56px]">
           <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left absolute top-0 left-0">
             {course.title}
           </h3>
