@@ -1,14 +1,8 @@
 import Link from 'next/link';
-import { Search, Menu } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { Logo } from '@/components/icons';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { UserMenu } from '@/components/navigation/user-menu';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { ThemeToggle } from './theme-toggle';
 
 const navLinks = [
@@ -22,56 +16,32 @@ export function HeaderNav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
       <div className="container flex h-16 items-center">
-        <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center gap-2">
+        <div className="flex items-center gap-2 md:gap-4">
+           <Link href="/" className="mr-2 flex items-center gap-2 md:mr-6">
             <Logo className="h-6 w-6 text-primary" />
             <span className="hidden font-bold sm:inline-block">
               RevengeLearn
             </span>
           </Link>
-          <nav className="flex items-center gap-6 text-sm">
-            {navLinks.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <div className="md:hidden">
+            <ThemeToggle />
+          </div>
         </div>
 
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-full max-w-xs glassmorphism">
-              <Link href="/" className="mb-6 flex items-center gap-2">
-                 <Logo className="h-6 w-6 text-primary" />
-                <span className="font-bold">RevengeLearn</span>
-              </Link>
-              <nav className="flex flex-col gap-4">
-                 {navLinks.map(link => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="text-lg font-medium text-foreground/80 hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </div>
+        <nav className="ml-6 hidden items-center gap-6 text-sm md:flex">
+          {navLinks.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
 
         <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-          <div className="relative flex-1 max-w-xs ml-auto">
+          <div className="relative flex-1 max-w-xs ml-auto hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="search"
@@ -79,7 +49,9 @@ export function HeaderNav() {
               className="pl-9"
             />
           </div>
-          <ThemeToggle />
+          <div className="hidden md:block">
+             <ThemeToggle />
+          </div>
           <UserMenu />
         </div>
       </div>
