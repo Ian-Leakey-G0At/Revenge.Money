@@ -55,7 +55,7 @@ export function CourseCard({ course }: CourseCardProps) {
         </button>
 
         {/* Bottom Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end">
+        <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-center">
           <div className="text-neutral-400 text-xs font-semibold">
             {totalLessons} VIDEOS
           </div>
@@ -67,11 +67,11 @@ export function CourseCard({ course }: CourseCardProps) {
 
       {/* Content Section */}
       <div className="p-3">
-        <div className="relative flex items-center text-neutral-400 min-h-[42px]">
-          <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 flex-1 mr-12">
+        <div className="relative flex flex-col justify-start items-start text-neutral-400 min-h-[42px]">
+          <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left">
             {course.title}
           </h3>
-          <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs flex-shrink-0">
+          <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs">
             <Users className="w-3.5 h-3.5" />
             <span className="font-semibold">
               {course.studentsCount.toLocaleString()}
