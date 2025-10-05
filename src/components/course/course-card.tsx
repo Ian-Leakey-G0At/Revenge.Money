@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -5,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Play, Users } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { useState, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   course: Course;
@@ -18,60 +21,91 @@ export function CourseCard({ course }: CourseCardProps) {
     0
   );
 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const holdTimeout = useRef<NodeJS.Timeout | null>(null);
+  const wasHeld = useRef(false);
+
   const handleNavigation = () => {
+    if (wasHeld.current) {
+      wasHeld.current = false; // Reset flag after preventing navigation
+      return;
+    }
     router.push(`/courses/${course.id}`);
   };
 
-  const handlePlayPreview = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // In a real app, this would trigger a modal video player
-    console.log(`Playing preview for ${course.title}`);
+  const playVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsPlaying(true);
+  };
+  
+  const handleMouseDown = () => {
+    wasHeld.current = false;
+    holdTimeout.current = setTimeout(() => {
+      playVideo();
+      wasHeld.current = true;
+    }, 300);
+  };
+
+  const handleMouseUp = () => {
+    if (holdTimeout.current) {
+      clearTimeout(holdTimeout.current);
+    }
   };
 
   return (
-    <article
-      onClick={handleNavigation}
-      className="relative flex flex-col group cursor-pointer transition-transform duration-150 ease-out hover:scale-105"
-    >
-      <div className="relative aspect-[9/12] w-full bg-card rounded-2xl overflow-hidden border">
-        {image && (
+    <div className="course-card-container">
+      <article
+        className="course-card__media-section"
+        onClick={handleNavigation}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onTouchStart={handleMouseDown}
+        onTouchEnd={handleMouseUp}
+      >
+        {!isPlaying && image && (
           <Image
             src={image.imageUrl}
             alt={course.title}
             fill
-            className="object-cover"
-            data-ai-hint={image.imageHint}
+            className="course-card__image"
+            priority
           />
         )}
+        {isPlaying && (
+           <video 
+              className="course-card__video" 
+              src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder video
+              autoPlay 
+              controls={false}
+              muted
+              loop
+              onEnded={() => setIsPlaying(false)}
+            />
+        )}
+
         <button
-          onClick={handlePlayPreview}
+          onClick={playVideo}
+          className="course-card__play-button"
           aria-label={`Play preview for ${course.title}`}
-          className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center p-2 transition-transform hover:scale-110"
         >
-          <Play className="w-4 h-4 fill-current" />
+          <Play className="fill-white" />
         </button>
-        <div className="absolute bottom-4 left-0 right-0 px-4 flex justify-between items-center">
-           <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-3 py-1 border border-white/20 backdrop-blur-sm">
-            {totalLessons} VIDEOS
-          </div>
-          <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10 backdrop-blur-sm">
-            ${course.price}
-          </div>
+
+        <div className="course-card__media-overlay">
+          <span className="course-card__video-count">
+             {totalLessons} VIDEOS
+          </span>
+          <span className="course-card__price-tag">${course.price}</span>
         </div>
+      </article>
+
+      <div className="course-card__title-section">
+        <h3 className="course-card__title">{course.title}</h3>
+        <p className="course-card__student-count">
+          <Users />
+          <span>{course.studentsCount.toLocaleString()}</span>
+        </p>
       </div>
-      <div className="pt-3 px-1">
-        <div className="relative flex flex-col justify-start items-start text-foreground min-h-[56px]">
-          <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left absolute top-0 left-0">
-            {course.title}
-          </h3>
-          <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Users className="w-3.5 h-3.5" />
-            <span className="font-semibold">
-              {course.studentsCount.toLocaleString()}
-            </span>
-          </div>
-        </div>
-      </div>
-    </article>
+    </div>
   );
 }

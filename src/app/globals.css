@@ -68,4 +68,57 @@
   .glassmorphism {
     @apply bg-card/60 backdrop-blur-xl;
   }
+
+  .course-card-container {
+    @apply flex flex-col;
+  }
+
+  .course-card__media-section {
+    @apply relative aspect-[3/4] w-full bg-card rounded-2xl overflow-hidden border cursor-pointer;
+  }
+
+  .course-card__image,
+  .course-card__video {
+    @apply w-full h-full object-cover;
+  }
+
+  .course-card__play-button {
+    @apply absolute top-3 right-3 z-10 w-12 h-12 rounded-full bg-black/30 backdrop-blur-sm border border-white/20 text-white flex items-center justify-center p-2 transition-transform hover:scale-110;
+  }
+
+  .course-card__media-overlay {
+    @apply absolute bottom-0 left-0 right-0 p-3 flex justify-between items-center;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  }
+
+  .course-card__video-count {
+    @apply text-white text-xs font-semibold;
+  }
+  
+  .course-card__price-tag {
+    @apply text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10 backdrop-blur-sm;
+  }
+  
+  .course-card__title-section {
+    @apply flex flex-col pt-3 px-1 gap-1;
+  }
+
+  .course-card__title {
+    @apply font-bold text-base leading-tight text-white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .course-card__student-count {
+    @apply flex items-center gap-1.5 text-xs text-muted-foreground;
+  }
+
+  .course-card__student-count svg {
+      @apply w-3.5 h-3.5;
+  }
+
+  .course-card__student-count span {
+      @apply font-semibold;
+  }
 }
