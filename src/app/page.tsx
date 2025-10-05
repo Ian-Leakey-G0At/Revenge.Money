@@ -17,11 +17,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { HeroCarousel } from '@/components/course/hero-carousel';
 import { GoodLuckButton } from '@/components/course/good-luck-button';
 import Autoplay from "embla-carousel-autoplay"
+import Fade from "embla-carousel-fade"
 
 export default function Home() {
-  const plugin = React.useRef(
+  const autoplayPlugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   );
+  const fadePlugin = React.useRef(
+    Fade()
+  )
 
   return (
     <div className="flex flex-col gap-8">
@@ -50,13 +54,14 @@ export default function Home() {
             What Our Students Say
           </h2>
           <Carousel
-            plugins={[plugin.current]}
+            plugins={[autoplayPlugin.current, fadePlugin.current]}
             opts={{
               align: 'start',
+              loop: true,
             }}
             className="w-full max-w-4xl mx-auto"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
+            onMouseEnter={autoplayPlugin.current.stop}
+            onMouseLeave={autoplayPlugin.current.reset}
           >
             <CarouselContent>
               {Array.from({ length: 5 }).map((_, index) => (
