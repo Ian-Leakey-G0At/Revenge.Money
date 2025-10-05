@@ -2,9 +2,10 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Play, Users, Video } from 'lucide-react';
+import { Play, Users } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   course: Course;
@@ -33,7 +34,6 @@ export function CourseCard({ course }: CourseCardProps) {
       onClick={handleNavigation}
       className="relative flex flex-col group cursor-pointer transition-transform duration-150 ease-out hover:scale-105"
     >
-      {/* Thumbnail Section */}
       <div className="relative aspect-[9/12] w-full bg-card rounded-2xl overflow-hidden border">
         {image && (
           <Image
@@ -44,8 +44,6 @@ export function CourseCard({ course }: CourseCardProps) {
             data-ai-hint={image.imageHint}
           />
         )}
-
-        {/* Top Right Play Button */}
         <button
           onClick={handlePlayPreview}
           aria-label={`Play preview for ${course.title}`}
@@ -53,8 +51,6 @@ export function CourseCard({ course }: CourseCardProps) {
         >
           <Play className="w-4 h-4 fill-current" />
         </button>
-
-        {/* Bottom Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center">
           <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-3 py-1 border border-white/20">
             {totalLessons} VIDEOS
@@ -64,8 +60,6 @@ export function CourseCard({ course }: CourseCardProps) {
           </div>
         </div>
       </div>
-
-      {/* Content Section */}
       <div className="p-3">
         <div className="relative flex flex-col justify-start items-start text-foreground min-h-[56px]">
           <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left absolute top-0 left-0">
