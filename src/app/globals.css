@@ -93,12 +93,8 @@
 
 
   .course-card__media-overlay {
-    @apply absolute bottom-0 left-0 right-0 p-3 flex justify-between items-center;
+    @apply absolute bottom-0 left-0 right-0 p-3 flex justify-end items-center;
     background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-  }
-
-  .course-card__video-count {
-    @apply text-white/70 text-[10px] font-semibold tracking-wider uppercase bg-black/30 rounded-full px-2 py-0.5 border border-white/20 backdrop-blur-sm;
   }
   
   .course-card__price-tag {
@@ -129,4 +125,17 @@
   .course-card__student-count span {
       @apply font-semibold;
   }
+
+  .course-card__video-count {
+    @apply absolute bottom-0 left-1 flex items-center gap-1.5 text-xs text-muted-foreground;
+  }
+
+  .course-card__video-count svg {
+      @apply w-3.5 h-3.5;
+  }
+
+  .course-card__video-count span {
+      @apply font-semibold;
+  }
 }
+

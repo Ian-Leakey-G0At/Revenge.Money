@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Play, Users } from 'lucide-react';
+import { Play, Users, Video } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useState, useRef } from 'react';
@@ -102,15 +102,16 @@ export function CourseCard({ course }: CourseCardProps) {
         </button>
 
         <div className="course-card__media-overlay">
-          <span className="course-card__video-count">
-             {totalLessons} VIDEOS
-          </span>
           <span className="course-card__price-tag">${course.price}</span>
         </div>
       </article>
 
       <div className="course-card__title-section">
         <h3 className="course-card__title">{course.title}</h3>
+        <p className="course-card__video-count">
+          <Video />
+          <span>{totalLessons}</span>
+        </p>
         <p className="course-card__student-count">
           <Users />
           <span>{course.studentsCount.toLocaleString()}</span>
@@ -119,3 +120,4 @@ export function CourseCard({ course }: CourseCardProps) {
     </div>
   );
 }
+
