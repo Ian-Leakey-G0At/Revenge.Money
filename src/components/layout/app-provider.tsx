@@ -1,7 +1,6 @@
 "use client";
 
 import { ThemeProvider } from "@/components/theme-provider";
-import { AppLayout } from "@/components/layout/app-layout";
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
     return (
@@ -11,7 +10,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          {children}
         </ThemeProvider>
     )
 }
