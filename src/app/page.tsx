@@ -38,7 +38,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl font-headline mb-6">
             Featured Courses
           </h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-6">
             {courses.slice(0, 6).map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
