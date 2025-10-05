@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { Play, Users } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { cn } from '@/lib/utils';
 
 interface CourseCardProps {
   course: Course;
@@ -51,16 +50,16 @@ export function CourseCard({ course }: CourseCardProps) {
         >
           <Play className="w-4 h-4 fill-current" />
         </button>
-        <div className="absolute bottom-0 left-0 right-0 p-4 flex justify-between items-center">
-          <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-3 py-1 border border-white/20">
+        <div className="absolute bottom-4 left-0 right-0 px-4 flex justify-between items-center">
+           <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-3 py-1 border border-white/20 backdrop-blur-sm">
             {totalLessons} VIDEOS
           </div>
-          <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10">
+          <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10 backdrop-blur-sm">
             ${course.price}
           </div>
         </div>
       </div>
-      <div className="p-3">
+      <div className="pt-3 px-1">
         <div className="relative flex flex-col justify-start items-start text-foreground min-h-[56px]">
           <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 text-left absolute top-0 left-0">
             {course.title}
