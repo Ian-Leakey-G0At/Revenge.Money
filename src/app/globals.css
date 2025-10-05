@@ -102,20 +102,25 @@
   }
   
   .course-card__title-section {
-    @apply relative pt-1 px-1 h-[4.25rem];
+    @apply flex flex-col justify-between flex-grow pt-2 px-1;
   }
 
   .course-card__title {
-    @apply font-bold text-sm leading-tight text-white;
+    @apply font-bold text-sm leading-tight text-white mb-2;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-height: 2.5rem; /* Ensures consistent height for 1 or 2 lines */
+  }
+
+  .course-card__info-bar {
+    @apply flex justify-between items-center;
   }
   
   .course-card__student-count {
-    @apply absolute bottom-0 right-1 flex items-center gap-1.5 text-xs text-muted-foreground;
+    @apply flex items-center gap-1.5 text-xs text-muted-foreground;
   }
 
   .course-card__student-count svg {
@@ -127,7 +132,7 @@
   }
 
   .course-card__video-count {
-    @apply absolute bottom-0 left-1 flex items-center gap-1.5 text-xs text-muted-foreground;
+    @apply flex items-center gap-1.5 text-xs text-muted-foreground;
   }
 
   .course-card__video-count svg {
@@ -138,4 +143,3 @@
       @apply font-semibold;
   }
 }
-

@@ -108,16 +108,17 @@ export function CourseCard({ course }: CourseCardProps) {
 
       <div className="course-card__title-section">
         <h3 className="course-card__title">{course.title}</h3>
-        <p className="course-card__video-count">
-          <Video />
-          <span>{totalLessons}</span>
-        </p>
-        <p className="course-card__student-count">
-          <Users />
-          <span>{course.studentsCount.toLocaleString()}</span>
-        </p>
+        <div className="course-card__info-bar">
+          <p className="course-card__video-count">
+            <Video />
+            <span>{totalLessons}</span>
+          </p>
+          <p className="course-card__student-count">
+            <Users />
+            <span>{course.studentsCount.toLocaleString()}</span>
+          </p>
+        </div>
       </div>
     </div>
   );
 }
-
