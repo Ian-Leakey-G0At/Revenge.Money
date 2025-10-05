@@ -1,4 +1,7 @@
+
+'use client';
 import Link from 'next/link';
+import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { CourseCard } from '@/components/course/course-card';
@@ -13,8 +16,12 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { HeroCarousel } from '@/components/course/hero-carousel';
 import { GoodLuckButton } from '@/components/course/good-luck-button';
+import Autoplay from "embla-carousel-autoplay"
 
 export default function Home() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
 
   return (
     <div className="flex flex-col gap-8">
@@ -43,10 +50,13 @@ export default function Home() {
             What Our Students Say
           </h2>
           <Carousel
+            plugins={[plugin.current]}
             opts={{
               align: 'start',
             }}
             className="w-full max-w-4xl mx-auto"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
               {Array.from({ length: 5 }).map((_, index) => (
