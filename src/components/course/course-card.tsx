@@ -6,7 +6,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import type { Course } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Users, Play, Video } from 'lucide-react';
+import { Users, Play } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface CourseCardProps {
@@ -57,7 +57,6 @@ export function CourseCard({ course }: CourseCardProps) {
         {/* Bottom Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end">
           <div className="flex items-center gap-1.5 text-white text-xs font-semibold bg-black/30 rounded-full px-2 py-1">
-            <Video className="h-3 w-3"/>
             <span>{totalLessons} VIDEOS</span>
           </div>
           <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10">
