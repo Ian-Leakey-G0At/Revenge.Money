@@ -181,7 +181,7 @@ export default function CourseDetailPage() {
         </main>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-50 md:bottom-auto md:relative md:bg-transparent md:border-none md:backdrop-blur-none">
+      <div className="fixed bottom-[4.5rem] md:bottom-auto left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-40 md:relative md:bg-transparent md:border-none md:backdrop-blur-none">
         <div className="container mx-auto px-0 md:px-6 flex items-center justify-between">
           <p className="text-2xl font-bold">${course.price}</p>
           <div className="flex flex-col items-end gap-1">
