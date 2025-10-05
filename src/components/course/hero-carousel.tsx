@@ -101,7 +101,7 @@ export function HeroCarousel() {
   }, [api]);
   
   return (
-    <div className="relative w-full aspect-[16/9] md:rounded-lg md:overflow-hidden">
+    <div className="relative w-full aspect-[16/9] md:aspect-[21/9] lg:aspect-[24/9] md:container md:rounded-lg md:overflow-hidden md:mt-4">
       <Carousel
         setApi={setApi}
         className="w-full h-full"
@@ -126,10 +126,10 @@ export function HeroCarousel() {
                           priority={index === 0}
                       />
                       )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                     <div className="absolute inset-0 flex items-end justify-start text-left p-8 md:p-12">
-                      <div className="relative max-w-2xl text-foreground">
-                        <h1 className="text-3xl font-bold tracking-tight md:text-5xl font-headline text-white">
+                      <div className="relative max-w-2xl text-white">
+                        <h1 className="text-3xl font-bold tracking-tight md:text-5xl font-headline">
                           {item.headline}
                         </h1>
                         <p className="mt-2 text-base md:text-lg text-white/90">

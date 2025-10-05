@@ -101,11 +101,11 @@
   }
   
   .course-card__title-section {
-    @apply flex flex-col justify-between flex-grow pt-1 px-1;
+    @apply flex flex-col justify-between flex-grow pt-3 px-1;
   }
 
   .course-card__title {
-    @apply font-bold text-sm leading-tight text-white;
+    @apply font-bold text-sm leading-tight text-foreground;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -115,7 +115,7 @@
   }
 
   .course-card__info-bar {
-    @apply flex justify-between items-center;
+    @apply flex justify-between items-center mt-2;
   }
   
   .course-card__student-count {
