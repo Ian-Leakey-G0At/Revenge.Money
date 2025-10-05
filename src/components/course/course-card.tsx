@@ -13,13 +13,6 @@ interface CourseCardProps {
   course: Course;
 }
 
-const PlayIcon = () => (
-    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <path d="M8 5.14v13.72L19.25 12 8 5.14z" />
-    </svg>
-  );
-  
-
 export function CourseCard({ course }: CourseCardProps) {
   const router = useRouter();
   const image = PlaceHolderImages.find((img) => img.id === course.imageId);
@@ -74,17 +67,16 @@ export function CourseCard({ course }: CourseCardProps) {
       </div>
       
       {/* Content Section */}
-      <div className="p-3 bg-[#0a0a0a] flex-grow flex flex-col">
-         <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 min-h-[40px] mb-2">
-            FEATURED COURSE {course.title}
-          </h3>
-        <div className="flex justify-between items-center text-xs text-neutral-400 mt-auto pt-1">
-          <p className="font-mono">-----------</p>
-          <div className="flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5" />
-            <span className="font-semibold">{course.studentsCount.toLocaleString()}</span>
-          </div>
-        </div>
+      <div className="p-3 bg-[#0a0a0a] flex-grow flex flex-col justify-center">
+         <div className="flex justify-between items-center text-neutral-400">
+            <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 flex-1 mr-2">
+                {course.title}
+            </h3>
+            <div className="flex items-center gap-1.5 text-xs flex-shrink-0">
+                <Users className="w-3.5 h-3.5" />
+                <span className="font-semibold">{course.studentsCount.toLocaleString()}</span>
+            </div>
+         </div>
       </div>
     </article>
   );
