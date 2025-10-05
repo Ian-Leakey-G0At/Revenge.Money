@@ -67,12 +67,12 @@ export function CourseCard({ course }: CourseCardProps) {
       </div>
       
       {/* Content Section */}
-      <div className="p-3 bg-[#0a0a0a] flex-grow flex flex-col justify-center">
-         <div className="flex justify-between items-center text-neutral-400">
-            <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 flex-1 mr-2">
+      <div className="p-3 bg-[#0a0a0a] flex-grow flex flex-col">
+         <div className="relative flex items-center text-neutral-400 min-h-[42px]">
+            <h3 className="font-bold text-sm leading-tight text-white line-clamp-2 flex-1 mr-12">
                 {course.title}
             </h3>
-            <div className="flex items-center gap-1.5 text-xs flex-shrink-0">
+            <div className="absolute bottom-0 right-0 flex items-center gap-1.5 text-xs flex-shrink-0">
                 <Users className="w-3.5 h-3.5" />
                 <span className="font-semibold">{course.studentsCount.toLocaleString()}</span>
             </div>
