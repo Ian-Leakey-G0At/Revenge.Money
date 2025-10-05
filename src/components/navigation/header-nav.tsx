@@ -19,7 +19,7 @@ const navLinks = [
 
 export function HeaderNav() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center gap-2">
@@ -49,7 +49,7 @@ export function HeaderNav() {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-full max-w-xs">
+            <SheetContent side="left" className="w-full max-w-xs glassmorphism">
               <Link href="/" className="mb-6 flex items-center gap-2">
                  <Logo className="h-6 w-6 text-primary" />
                 <span className="font-bold">RevengeLearn</span>

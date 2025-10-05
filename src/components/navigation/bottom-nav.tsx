@@ -19,7 +19,7 @@ export function BottomNav() {
   return (
     <>
       <div className="h-16 md:hidden" />
-      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
+      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/60 backdrop-blur-xl md:hidden">
         <nav className="grid h-16 grid-cols-4 items-center">
           {navLinks.map((link) => {
             const isActive =
