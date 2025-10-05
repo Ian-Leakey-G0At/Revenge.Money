@@ -56,7 +56,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
         {/* Bottom Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-3 flex justify-between items-end">
-          <div className="text-white text-xs font-semibold bg-black/30 rounded-full px-2 py-1">
+          <div className="text-neutral-400 text-xs font-semibold">
             {totalLessons} VIDEOS
           </div>
           <div className="text-white font-bold bg-black/30 rounded-full px-4 py-1.5 text-sm border border-white/20 z-10">
