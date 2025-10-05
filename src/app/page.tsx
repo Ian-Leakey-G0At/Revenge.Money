@@ -13,8 +13,8 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight } from 'lucide-react';
 import { HeroCarousel } from '@/components/course/hero-carousel';
+import { GoodLuckButton } from '@/components/course/good-luck-button';
 
 export default function Home() {
 
@@ -22,6 +22,10 @@ export default function Home() {
     <div className="flex flex-col gap-8 md:gap-12">
       <section className="w-full md:container md:mx-auto md:px-4 md:pt-8 md:md:px-6">
         <HeroCarousel />
+      </section>
+      
+      <section className="container mx-auto px-4 md:px-6 -mt-4 mb-4">
+        <GoodLuckButton />
       </section>
 
       <main className="container mx-auto px-4 md:px-6">

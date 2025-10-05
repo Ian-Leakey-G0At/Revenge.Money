@@ -13,7 +13,6 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const heroContent = [
@@ -129,7 +128,7 @@ export function HeroCarousel() {
                       )}
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                     <div className="absolute inset-0 flex items-end justify-start text-left p-8 md:p-12">
-                      <div className="relative max-w-2xl px-4 text-foreground">
+                      <div className="relative max-w-2xl text-foreground">
                         <h1 className="text-3xl font-bold tracking-tight md:text-5xl font-headline text-white">
                           {item.headline}
                         </h1>
@@ -151,14 +150,14 @@ export function HeroCarousel() {
             key={index}
             onClick={() => api?.scrollTo(index)}
             className="flex-1 h-1 rounded-full bg-white/30"
+            aria-label={`Go to slide ${index + 1}`}
           >
             <div
               className={cn(
                 'h-full rounded-full bg-white transition-all duration-500',
-                index === current ? 'w-full' : 'w-0'
+                current === index ? 'w-full' : 'w-0'
               )}
             />
-             <span className="sr-only">Go to slide {index + 1}</span>
           </button>
         ))}
       </div>
