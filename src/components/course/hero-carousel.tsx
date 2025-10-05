@@ -14,7 +14,7 @@ import {
   type CarouselApi,
 } from '@/components/ui/carousel';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
 
 const heroContent = [
   {
@@ -47,13 +47,32 @@ const heroContent = [
       href: '/courses/investing-101',
     },
   },
+    {
+    id: 'hero-4',
+    imageId: 'course-real-estate',
+    headline: 'Build Wealth with Real Estate',
+    subhead: 'Discover how to find, finance, and manage profitable rental properties.',
+    cta: {
+      text: 'Learn More',
+      href: '/courses/real-estate-investing',
+    },
+  },
+  {
+    id: 'hero-5',
+    imageId: 'course-crypto',
+    headline: 'Navigate the World of Crypto',
+    subhead: 'Understand the fundamentals of cryptocurrency and decentralized finance.',
+    cta: {
+      text: 'Explore Crypto',
+      href: '/courses/crypto-fundamentals',
+    },
+  },
 ];
 
 
 export function HeroCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
-  const [progress, setProgress] = React.useState(0);
 
   const plugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
@@ -64,58 +83,26 @@ export function HeroCarousel() {
       return;
     }
   
-    const updateProgress = () => {
-      const progress = Math.max(0, Math.min(1, api.scrollProgress()));
-      setProgress(progress * 100);
-    };
-  
     const onSelect = () => {
       setCurrent(api.selectedScrollSnap());
-      updateProgress();
     };
   
     api.on('select', onSelect);
-    api.on('scroll', updateProgress)
-
-    // Custom timer for progress bar independent of scroll
-    let timer = 0;
-    const interval = setInterval(() => {
-        timer += 100 / (5000 / 100) // 100ms interval
-        setProgress(timer)
-        if (timer >= 100) {
-            if (api.canScrollNext()) {
-                api.scrollNext()
-            } else {
-                api.scrollTo(0)
-            }
-            timer = 0
-        }
-    }, 100)
-
-
+    
     const stopAutoplay = () => {
         plugin.current.stop();
-        clearInterval(interval);
     }
     
     api.on('pointerDown', stopAutoplay);
 
     return () => {
       api.off('select', onSelect);
-      api.off('scroll', updateProgress)
       api.off('pointerDown', stopAutoplay)
-      clearInterval(interval);
     };
   }, [api]);
   
-  React.useEffect(() => {
-    if (api) {
-      api.scrollTo(current, true);
-    }
-  }, [api, current]);
-
   return (
-    <div className="relative w-full aspect-video">
+    <div className="relative w-full aspect-[16/9]">
       <Carousel
         setApi={setApi}
         className="w-full h-full"
@@ -136,7 +123,7 @@ export function HeroCarousel() {
                         fill
                         className="object-cover"
                         data-ai-hint={image.imageHint}
-                        priority
+                        priority={item.id === 'hero-1'}
                     />
                     )}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
@@ -159,8 +146,22 @@ export function HeroCarousel() {
           })}
         </CarouselContent>
       </Carousel>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-1/3">
-        <Progress value={progress} className="h-1 bg-white/20 [&>div]:bg-white" />
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-1/3 max-w-xs flex gap-2 px-4">
+        {heroContent.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => api?.scrollTo(index)}
+            className="flex-1 h-1 rounded-full bg-white/30"
+          >
+            <div
+              className={cn(
+                'h-full rounded-full bg-white transition-all duration-500',
+                index === current ? 'w-full' : 'w-0'
+              )}
+            />
+             <span className="sr-only">Go to slide {index + 1}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
