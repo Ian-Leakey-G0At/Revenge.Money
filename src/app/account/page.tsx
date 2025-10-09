@@ -1,94 +1,51 @@
 
-import { CourseCard } from '@/components/course/course-card';
-import { Button } from '@/components/ui/button';
-import { myCourses } from '@/lib/placeholder-data';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Progress } from '@/components/ui/progress';
+'use client';
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { CourseCard } from "@/components/course/course-card";
+import { myCourses } from "@/lib/placeholder-data";
+import { useUser } from "@/hooks/use-user";
+import Link from "next/link";
+import { Settings } from "lucide-react";
 
 export default function AccountPage() {
+  const { user } = useUser();
+
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-      <div className="space-y-2 mb-8">
-        <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-          My Account
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Manage your profile, courses, and billing information.
-        </p>
-      </div>
-      <Tabs defaultValue="my-courses" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
-          <TabsTrigger value="my-courses">My Courses</TabsTrigger>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="billing">Billing</TabsTrigger>
-        </TabsList>
-        <TabsContent value="my-courses">
-          <div className="grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {myCourses.map((course) => {
-               const progress = Math.floor(Math.random() * 80) + 10;
-               return (
-                <div key={course.id} className="flex flex-col gap-2">
-                  <CourseCard
-                    course={course}
-                  />
-                  <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-center text-muted-foreground">{progress}% complete</p>
-                </div>
-              )
-            })}
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-20 w-20">
+            <AvatarImage src={user.avatarUrl} alt={user.name} />
+            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold font-headline">{user.name}</h1>
+            <p className="text-muted-foreground">{user.email}</p>
           </div>
-        </TabsContent>
-        <TabsContent value="profile">
-          <Card>
-            <CardHeader>
-              <CardTitle>Profile Information</CardTitle>
-              <CardDescription>Update your personal details here.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input id="name" defaultValue="Test User" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" defaultValue="user@example.com" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save Changes</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="billing">
-           <Card>
-            <CardHeader>
-              <CardTitle>Billing</CardTitle>
-              <CardDescription>Manage your payment methods and view your invoices.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">No payment methods on file.</p>
-            </CardContent>
-            <CardFooter>
-              <Button>Add Payment Method</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/settings">
+            <Settings className="mr-2 h-4 w-4" />
+            Settings
+          </Link>
+        </Button>
+      </header>
+
+      <main>
+        <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold tracking-tight font-headline">My Courses</h2>
+            <Button asChild variant="secondary">
+                <Link href="/courses">Explore Courses</Link>
+            </Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          {myCourses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      </main>
     </div>
   );
 }

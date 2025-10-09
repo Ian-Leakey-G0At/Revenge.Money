@@ -24,14 +24,13 @@ export function LoginForm() {
   }
   
   return (
-    <Card className="w-full max-w-sm bg-transparent border-none shadow-none">
-      <CardHeader>
-        <CardTitle className="text-2xl font-headline">Login</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="w-full max-w-sm">
+        <div className="text-center mb-4">
+            <h1 className="text-3xl font-bold font-headline">Login</h1>
+            <p className="text-muted-foreground">
+            Enter your email below to login to your account.
+            </p>
+        </div>
         <form onSubmit={handleLogin} className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -60,11 +59,10 @@ export function LoginForm() {
         </form>
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{' '}
-          <Link href="#" className="underline">
+          <Link href="/signup" className="underline">
             Sign up
           </Link>
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

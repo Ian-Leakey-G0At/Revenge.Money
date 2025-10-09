@@ -3,13 +3,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, BookOpen, GraduationCap, User } from 'lucide-react';
+import { Home, BookOpen, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/courses', label: 'Courses', icon: BookOpen },
-  { href: '/learn', label: 'Learning', icon: GraduationCap },
   { href: '/account', label: 'Account', icon: User },
 ];
 
@@ -20,7 +19,7 @@ export function BottomNav() {
     <>
       <div className="h-16 md:hidden" />
       <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/60 backdrop-blur-xl md:hidden">
-        <nav className="grid h-16 grid-cols-4 items-center">
+        <nav className="grid h-16 grid-cols-3 items-center">
           {navLinks.map((link) => {
             const isActive =
               link.href === '/'

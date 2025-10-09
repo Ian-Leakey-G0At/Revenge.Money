@@ -1,27 +1,41 @@
-import { CourseDataTable } from "@/components/admin/course-data-table";
-import { columns } from "@/components/admin/columns";
-import { courses } from "@/lib/placeholder-data";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
 
-export default async function AdminPage() {
-    return (
-        <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-              <div className="flex-1">
-                <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
-                Course Management
-                </h1>
-                <p className="text-lg text-muted-foreground mt-1">
-                Create, update, and manage all courses.
-                </p>
-              </div>
-              <Button>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add New Course
-              </Button>
+import { Button } from "@/components/ui/button";
+import { courses } from "@/lib/placeholder-data";
+import Link from "next/link";
+import { PlusCircle } from "lucide-react";
+import { PortraitStats } from "@/components/admin/portrait-stats";
+import { CourseList } from "@/components/admin/course-list";
+
+const stats = [
+    { title: "Total Sales", value: "$12,345" },
+    { title: "New Users", value: "123" },
+    { title: "Active Courses", value: "45" },
+    { title: "Pending Approvals", value: "3" },
+];
+
+export default function AdminPage() {
+  return (
+    <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
+        <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">Admin Dashboard</h1>
+                <p className="text-muted-foreground">Welcome back, Admin!</p>
             </div>
-            <CourseDataTable columns={columns} data={courses} />
-        </div>
-    )
+            <Button asChild className="w-full sm:w-auto">
+                <Link href="/admin/courses/new">
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Create New Course
+                </Link>
+            </Button>
+        </header>
+        <main className="grid gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-1">
+              <PortraitStats stats={stats} />
+            </div>
+            <div className="lg:col-span-2">
+              <CourseList courses={courses} />
+            </div>
+        </main>
+    </div>
+  );
 }

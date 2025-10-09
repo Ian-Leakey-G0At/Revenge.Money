@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,20 +10,18 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { CreditCard, LifeBuoy, LogOut, Settings, User, UserCog } from 'lucide-react';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { LogOut, User, Shield } from 'lucide-react';
+import { useUser } from '@/hooks/use-user';
 
 export function UserMenu() {
-  // In a real app, you'd get user data from a context or session
-  const user = { name: 'Test User', email: 'user@example.com' };
-  const avatarImage = PlaceHolderImages.find(img => img.id === 'instructor-avatar-1');
+  const { user, isAdmin } = useUser();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            {avatarImage && <AvatarImage src={avatarImage.imageUrl} alt={user.name} data-ai-hint={avatarImage.imageHint} />}
+            <AvatarImage src={user.avatarUrl} alt={user.name} />
             <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
           </Avatar>
         </Button>
@@ -38,24 +37,25 @@ export function UserMenu() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href="/account"><User className="mr-2" />Account</Link>
+          <Link href="/account">
+            <User className="mr-2 h-4 w-4" />
+            <span>Account</span>
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/account?tab=billing"><CreditCard className="mr-2" />Billing</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/account?tab=settings"><Settings className="mr-2" />Settings</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/admin"><UserCog className="mr-2" />Admin</Link>
-        </DropdownMenuItem>
+        {isAdmin && (
+          <DropdownMenuItem asChild>
+            <Link href="/admin">
+              <Shield className="mr-2 h-4 w-4" />
+              <span>Admin</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
-         <DropdownMenuItem>
-          <LifeBuoy className="mr-2" />
-          Support
-        </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/login"><LogOut className="mr-2" />Log out</Link>
+          <Link href="/login">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

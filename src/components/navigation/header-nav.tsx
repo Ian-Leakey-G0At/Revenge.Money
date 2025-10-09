@@ -5,8 +5,8 @@ import { ThemeToggle } from './theme-toggle';
 import { Logo } from '@/components/icons';
 
 const navLinks = [
+  { href: '/', label: 'Home' },
   { href: '/courses', label: 'Courses' },
-  { href: '/learn', label: 'My Learning' },
   { href: '/account', label: 'Account' },
 ];
 
