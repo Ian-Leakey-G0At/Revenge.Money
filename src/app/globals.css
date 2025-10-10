@@ -115,7 +115,7 @@
   }
 
   .course-card__info-bar {
-    @apply flex justify-between items-center mt-0.5;
+    @apply flex justify-between items-center;
   }
   
   .course-card__student-count {
