@@ -30,16 +30,16 @@ export function SignupForm() {
   }
   
   return (
-    <div className="flex flex-col lg:flex-row w-full max-w-6xl mx-auto overflow-hidden rounded-lg shadow-lg">
-        <div className="w-full lg:w-1/2 p-8">
-            <div className="flex items-center mb-4">
-                <Link href="/" passHref>
-                    <Button variant="ghost" size="icon">
+    <div className="flex flex-col lg:flex-row w-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-lg bg-card">
+        <div className="w-full lg:w-1/2 p-8 flex flex-col justify-center">
+            <div className="flex items-center mb-6">
+                 <Link href="/" passHref>
+                    <Button variant="ghost" size="icon" className="mr-2">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
                 </Link>
                 <h1 className="text-2xl font-bold font-headline text-center flex-grow">
-                    Let\'s Get Started
+                    Create an Account
                 </h1>
             </div>
             <form onSubmit={handleSignup} className="grid gap-4">
@@ -59,7 +59,7 @@ export function SignupForm() {
                 <div className="grid gap-2 relative">
                     <Label htmlFor="password">Password</Label>
                     <Input id="password" type={passwordVisible ? "text" : "password"} placeholder="********" />
-                    <Button
+                     <Button
                         type="button"
                         variant="ghost"
                         size="icon"
@@ -69,16 +69,16 @@ export function SignupForm() {
                         {passwordVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </Button>
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full mt-4">
                     Sign Up
                 </Button>
             </form>
-            <div className="relative my-4">
+            <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                     <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
+                    <span className="bg-card px-2 text-muted-foreground">
                     OR
                     </span>
                 </div>
@@ -87,9 +87,9 @@ export function SignupForm() {
                 <GoogleIcon />
                 Sign up with Google
             </Button>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-6 text-center text-sm">
                 Already have an account?{" "}
-                <Link href="/login" className="font-bold">
+                <Link href="/login" className="font-bold text-primary">
                     Log in
                 </Link>
             </div>
