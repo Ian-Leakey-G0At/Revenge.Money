@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LogOut, User, Shield } from 'lucide-react';
+import { LogOut, User, Shield, Settings } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
 
 export function UserMenu() {
@@ -40,6 +40,12 @@ export function UserMenu() {
           <Link href="/account">
             <User className="mr-2 h-4 w-4" />
             <span>Account</span>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/settings">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
           </Link>
         </DropdownMenuItem>
         {isAdmin && (
