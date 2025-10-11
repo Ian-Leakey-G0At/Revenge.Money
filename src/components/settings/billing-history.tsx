@@ -1,5 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "@lexz451/next-nprogress";
 
 export const BillingHistory = () => {
   // Fetch billing history data here
@@ -31,7 +32,7 @@ export const BillingHistory = () => {
                   <Badge variant={invoice.status === 'Paid' ? 'success' : 'secondary'}>{invoice.status}</Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <a href="#" className="text-sm font-medium text-blue-500 hover:underline">View</a>
+                  <Link href={`/invoices/${invoice.id}`} className="text-sm font-medium text-blue-500 hover:underline">View</Link>
                 </TableCell>
               </TableRow>
             ))}

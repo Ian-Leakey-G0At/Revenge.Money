@@ -1,7 +1,7 @@
 
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@lexz451/next-nprogress';
 import { usePathname } from 'next/navigation';
 import { Home, BookOpen, User } from 'lucide-react';
 import { cn } from '@/lib/utils';

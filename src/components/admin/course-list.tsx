@@ -1,6 +1,6 @@
 'use client';
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useNavigation } from "@/hooks/use-navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ import { MoreVertical, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export const CourseList = ({ courses }: { courses: Course[] }) => {
-    const router = useRouter();
+    const router = useNavigation();
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [confirmationInput, setConfirmationInput] = useState("");

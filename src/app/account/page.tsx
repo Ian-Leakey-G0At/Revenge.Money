@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CourseCard } from "@/components/course/course-card";
 import { myCourses } from "@/lib/placeholder-data";
 import { useUser } from "@/hooks/use-user";
-import Link from "next/link";
+import { Link } from "@lexz451/next-nprogress";
 import { ArrowRight } from "lucide-react";
 
 export default function AccountPage() {

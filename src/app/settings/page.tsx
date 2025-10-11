@@ -3,7 +3,7 @@ import { ProfileSettings } from "@/components/settings/profile-settings";
 import { DeleteAccount } from "@/components/settings/delete-account";
 import { Button } from "@/components/ui/button";
 import { CreditCard, FileText, Info, LifeBuoy } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@lexz451/next-nprogress";
 
 
 const SettingsItem = ({ href, icon, title, description }: { href: string; icon: React.ReactNode; title: string; description: string }) => (

@@ -9,12 +9,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@lexz451/next-nprogress';
 import { LogOut, User, Shield, Settings } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
+import { useAuth } from '@/hooks/use-auth';
 
 export function UserMenu() {
   const { user, isAdmin } = useUser();
+  const { signOut } = useAuth();
 
   return (
     <DropdownMenu>
@@ -57,11 +59,9 @@ export function UserMenu() {
           </DropdownMenuItem>
         )}
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/login">
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-          </Link>
+        <DropdownMenuItem onSelect={signOut}>
+          <LogOut className="mr-2 h-4 w-4" />
+          <span>Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

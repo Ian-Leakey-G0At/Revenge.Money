@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import React from 'react';
 import { AuthImage } from './auth-image';
+import { useNavigation } from '@/hooks/use-navigation';
 
 const GoogleIcon = () => (
     <svg className="h-5 w-5 mr-2" viewBox="0 0 48 48">
@@ -20,13 +21,15 @@ const GoogleIcon = () => (
 export function SignupForm() {
   const { toast } = useToast();
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const router = useNavigation();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
         title: "Signup Successful (Mock)",
         description: "You have been successfully signed up.",
-      })
+      });
+    router.push('/');
   }
   
   return (
@@ -47,7 +50,7 @@ export function SignupForm() {
                     <Label htmlFor="name">Full Name</Label>
                     <Input id="name" placeholder="Divyesh B" required />
                 </div>
-                <div className="grid gap-2">
+                <.div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
                     id="email"

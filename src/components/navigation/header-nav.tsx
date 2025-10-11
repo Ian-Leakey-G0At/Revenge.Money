@@ -1,5 +1,5 @@
 "use client";
-import Link from 'next/link';
+import { Link } from '@lexz451/next-nprogress';
 import { UserMenu } from '@/components/navigation/user-menu';
 import { ThemeToggle } from './theme-toggle';
 import { Logo } from '@/components/icons';

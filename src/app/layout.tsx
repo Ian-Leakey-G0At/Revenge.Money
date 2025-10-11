@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppProvider } from '@/components/layout/app-provider';
+import { ProgressBar } from '@lexz451/next-nprogress';
 
 export const metadata: Metadata = {
   title: 'RevengeLearn',
@@ -24,6 +25,12 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <AppProvider>{children}</AppProvider>
         <Toaster />
+        <ProgressBar
+          height="4px"
+          color="#000000"
+          options={{ showSpinner: false }}
+          shallowRouting
+        />
       </body>
     </html>
   );

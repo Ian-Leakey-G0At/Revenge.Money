@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -7,10 +8,12 @@ import { Label } from "@/components/ui/label";
 
 export const DeleteAccount = () => {
   const [confirmation, setConfirmation] = useState('');
+  const { signOut } = useAuth();
 
   const handleDelete = () => {
     // Add your account deletion logic here
     console.log('Account deleted');
+    signOut();
   };
 
   return (

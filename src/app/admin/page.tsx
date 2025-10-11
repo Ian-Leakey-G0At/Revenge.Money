@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { courses } from "@/lib/placeholder-data";
-import Link from "next/link";
+import { Link } from "@lexz451/next-nprogress";
 import { PlusCircle } from "lucide-react";
 import { PortraitStats } from "@/components/admin/portrait-stats";
 import { CourseList } from "@/components/admin/course-list";
