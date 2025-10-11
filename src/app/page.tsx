@@ -35,7 +35,7 @@ export default function Home() {
 
       <main className="container mx-auto px-4">
         <section>
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold tracking-tight md:text-xl font-headline">
               Featured Courses
             </h2>
@@ -51,7 +51,7 @@ export default function Home() {
         </section>
         
         <section className="mt-8 mb-12">
-          <h2 className="text-xl font-semibold tracking-tight md:text-2xl font-headline mb-6 text-center">
+          <h2 className="text-lg font-semibold tracking-tight md:text-xl font-headline mb-4 text-center">
             What Our Students Say
           </h2>
           <Carousel
