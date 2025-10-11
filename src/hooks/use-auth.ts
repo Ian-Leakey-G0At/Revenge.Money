@@ -10,10 +10,10 @@ export const useAuth = () => {
 
   const signOut = () => {
     // In a real app, you would clear the user's session here.
-    console.log('Signing out...');
+    console.log('Signing out (mock)...');
 
-    // Redirect to the homepage.
-    router.push('/');
+    // Redirect to the login page.
+    router.push('/login');
   };
 
   return { signOut };

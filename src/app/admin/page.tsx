@@ -21,12 +21,20 @@ export default function AdminPage() {
                 <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">Admin Dashboard</h1>
                 <p className="text-muted-foreground">Welcome back, Admin!</p>
             </div>
-            <Button asChild className="w-full sm:w-auto">
-                <Link href="/admin/courses/new">
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Create New Course
-                </Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-2">
+                <Button asChild className="w-full sm:w-auto">
+                    <Link href="/admin/courses/new">
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Create New Course
+                    </Link>
+                </Button>
+                <Button asChild className="w-full sm:w-auto">
+                    <Link href="/admin/featured/new">
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Add Featured
+                    </Link>
+                </Button>
+            </div>
         </header>
         <main className="grid gap-8 lg:grid-cols-3">
             <div className="lg:col-span-1">

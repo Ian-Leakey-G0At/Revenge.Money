@@ -50,7 +50,7 @@ export function SignupForm() {
                     <Label htmlFor="name">Full Name</Label>
                     <Input id="name" placeholder="Divyesh B" required />
                 </div>
-                <.div className="grid gap-2">
+                <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
                     id="email"
