@@ -29,7 +29,7 @@ export default function Home() {
         <HeroCarousel />
       </section>
       
-      <section className="container mx-auto px-4 my-4">
+      <section className="container mx-auto px-4 mt-2 mb-4">
         <GoodLuckButton />
       </section>
 
