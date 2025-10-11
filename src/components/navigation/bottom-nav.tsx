@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, BookOpen, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
@@ -14,17 +15,23 @@ const navLinks = [
 
 export function BottomNav() {
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <>
       <div className="h-16 md:hidden" />
-      <footer className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/60 backdrop-blur-xl md:hidden">
+      <footer className={cn(
+        "fixed bottom-0 left-0 right-0 z-50 border-t bg-background/60 backdrop-blur-xl md:hidden",
+        isMounted && "pb-safe-bottom"
+      )}>
         <nav className="grid h-16 grid-cols-3 items-center">
           {navLinks.map((link) => {
             const isActive =
-              link.href === '/'
-                ? pathname === '/'
-                : pathname.startsWith(link.href);
+              link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}

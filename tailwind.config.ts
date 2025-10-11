@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        'safe-bottom': 'env(safe-area-inset-bottom)',
+      },
       fontFamily: {
         body: ['Open Sans', 'sans-serif'],
         headline: ['Open Sans', 'sans-serif'],
