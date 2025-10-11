@@ -26,7 +26,8 @@ export default function AccountPage() {
       </header>
 
       <main className="max-w-7xl mx-auto">
-        <div className="flex justify-end mb-8">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-lg font-normal">Course History</h2>
           <Button asChild variant="ghost" className="group">
             <Link href="/courses">
               Explore Courses
