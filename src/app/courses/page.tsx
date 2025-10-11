@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { HeroCarousel } from '@/components/course/hero-carousel';
 
 export default function CoursesPage() {
   const categories = ['All', 'Investing', 'Debt', 'Budgeting', 'Advanced'];
@@ -17,7 +18,8 @@ export default function CoursesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12">
-      <div className="space-y-4 mb-8">
+      <HeroCarousel />
+      <div className="space-y-4 my-8">
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl font-headline">
           Course Catalog
         </h1>
