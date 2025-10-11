@@ -23,7 +23,7 @@ export default function AccountPage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto">
+      <main className="max-w-4xl mx-auto">
         <div className="flex justify-end mb-8">
           <Button asChild variant="ghost" className="group">
             <Link href="/courses">
@@ -32,7 +32,7 @@ export default function AccountPage() {
             </Link>
           </Button>
         </div>
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
           {myCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
