@@ -48,4 +48,5 @@ export type Course = {
   rating: number;
   studentsCount: number;
   level: 'Beginner' | 'Intermediate' | 'Advanced';
+  purchased?: boolean;
 };

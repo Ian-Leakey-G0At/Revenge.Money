@@ -10,6 +10,8 @@ import { ArrowRight } from "lucide-react";
 export default function AccountPage() {
   const { user } = useUser();
 
+  const purchasedCourses = myCourses.map(course => ({ ...course, purchased: true }));
+
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
       <header className="mb-12 space-y-2 text-center">
@@ -23,7 +25,7 @@ export default function AccountPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto">
+      <main className="max-w-7xl mx-auto">
         <div className="flex justify-end mb-8">
           <Button asChild variant="ghost" className="group">
             <Link href="/courses">
@@ -32,8 +34,8 @@ export default function AccountPage() {
             </Link>
           </Button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {myCourses.map((course) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+          {purchasedCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
         </div>

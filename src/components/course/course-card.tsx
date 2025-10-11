@@ -35,7 +35,11 @@ export function CourseCard({ course }: CourseCardProps) {
       setIsPlaying(false);
       return;
     }
-    router.push(`/courses/${course.id}`);
+    if (course.purchased) {
+      router.push(`/my-courses/${course.id}`);
+    } else {
+      router.push(`/courses/${course.id}`);
+    }
   };
 
   const playVideo = (e?: React.MouseEvent) => {
@@ -51,9 +55,11 @@ export function CourseCard({ course }: CourseCardProps) {
 
   const handleMouseDown = () => {
     wasHeld.current = false;
-    holdTimeout.current = setTimeout(() => {
-      playVideo();
-    }, 1500);
+    if (!course.purchased) {
+      holdTimeout.current = setTimeout(() => {
+        playVideo();
+      }, 1500);
+    }
   };
 
   const handleMouseUp = () => {
@@ -93,16 +99,19 @@ export function CourseCard({ course }: CourseCardProps) {
             />
         )}
 
-        <button
-          onClick={handlePlayPause}
-          className="course-card__play-button"
-          aria-label={`Play preview for ${course.title}`}
-        >
-          <Play className={cn("fill-white", isPlaying && "fill-primary")} />
-        </button>
+        {!course.purchased && (
+          <button
+            onClick={handlePlayPause}
+            className="course-card__play-button"
+            aria-label={`Play preview for ${course.title}`}
+          >
+            <Play className={cn("fill-white", isPlaying && "fill-primary")} />
+          </button>
+        )}
 
         <div className="course-card__media-overlay">
-          <span className="course-card__price-tag">${course.price}</span>
+          {!course.purchased && <span className="course-card__price-tag">${course.price}</span>}
+          {course.purchased && <span className="course-card__price-tag">Purchased</span>}
         </div>
       </article>
 
