@@ -182,10 +182,16 @@ export default function CourseDetailPage() {
       </div>
 
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-40 md:relative md:bg-transparent md:border-none md:backdrop-blur-none md:bottom-auto">
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between gap-4">
-          <p className="text-2xl font-bold whitespace-nowrap">${course.price}</p>
-          <Button size="lg" className="font-bold w-full max-w-xs" onClick={handlePurchase}>
-            Get Now
+        <div className="container mx-auto px-4 md:px-6">
+          <Button
+            size="lg"
+            className="w-full font-bold text-lg"
+            onClick={handlePurchase}
+          >
+            <div className="flex justify-between items-center w-full">
+              <span>${course.price}</span>
+              <span>Get Now</span>
+            </div>
           </Button>
         </div>
       </div>
