@@ -42,7 +42,7 @@ export default function PurchasedCoursePage() {
         </div>
         <div>
           <h2 className="text-xl font-bold mb-4">Course Content</h2>
-          <VideoPlaylist videos={allVideos} onVideoSelect={handleVideoSelect} />
+          <VideoPlaylist videos={allVideos} onVideoSelect={handleVideoSelect} currentVideo={currentVideo} />
         </div>
       </div>
       <div className="mt-8">
