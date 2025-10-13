@@ -42,14 +42,13 @@ export default function AccountPage() {
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6">
-      <header className="mb-12 space-y-2 text-center">
-        <Avatar className="h-28 w-28 mx-auto border-4 border-background shadow-lg">
+      <header className="flex items-center gap-4 mb-12">
+        <Avatar className="h-16 w-16">
           <AvatarImage src={user.avatarUrl} alt={user.name} />
-          <AvatarFallback className="text-4xl">{user.name.charAt(0)}</AvatarFallback>
+          <AvatarFallback className="text-2xl">{user.name.charAt(0)}</AvatarFallback>
         </Avatar>
-        <div className="pt-4">
-          <h1 className="text-4xl font-bold font-headline tracking-tight">{user.name}</h1>
-          <p className="text-lg text-muted-foreground">{user.email}</p>
+        <div>
+          <h1 className="text-2xl font-bold font-headline tracking-tight">{user.name}</h1>
         </div>
       </header>
 
