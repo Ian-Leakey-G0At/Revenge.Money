@@ -16,7 +16,6 @@ const SettingsItem = ({ href, icon, title, description }: { href: string; icon: 
                 <p className="text-muted-foreground">{description}</p>
                 </div>
             </div>
-            <Button variant="outline">View</Button>
         </div>
     </Link>
 );
