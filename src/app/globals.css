@@ -62,11 +62,20 @@
   body {
     @apply bg-background text-foreground;
   }
+  img, video, iframe {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @layer components {
   .glassmorphism {
     @apply bg-card/60 backdrop-blur-xl;
+  }
+
+  .full-height-container {
+    height: 100vh; /* Fallback for older browsers */
+    height: 100dvh;
   }
 
   .course-card-container {

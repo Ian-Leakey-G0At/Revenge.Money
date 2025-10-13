@@ -1,3 +1,12 @@
+/**
+ * @file Defines the user menu component, which provides account-related navigation
+ * and actions, such as logging out.
+ *
+ * This component displays the user's avatar and, when clicked, reveals a dropdown
+ * menu with links to the account page, settings, an admin panel (for admins), and
+ * a logout button.
+ */
+
 'use client';
 import {
   DropdownMenu,
@@ -14,6 +23,15 @@ import { LogOut, User, Shield, Settings } from 'lucide-react';
 import { useUser } from '@/hooks/use-user';
 import { useAuth } from '@/hooks/use-auth';
 
+/**
+ * The user menu component.
+ *
+ * This component uses the `useUser` hook to get user information and the `useAuth`
+ * hook to handle the sign-out process. It conditionally renders the "Admin"
+ * link based on the user's role.
+ *
+ * @returns {JSX.Element} The rendered user menu.
+ */
 export function UserMenu() {
   const { user, isAdmin } = useUser();
   const { signOut } = useAuth();

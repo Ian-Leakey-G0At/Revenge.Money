@@ -1,3 +1,51 @@
+/**
+ * @typedef {object} CourseModuleLesson
+ * @property {string} id - The unique identifier for the lesson.
+ * @property {string} title - The title of the lesson.
+ * @property {number} duration - The duration of the lesson in seconds.
+ * @property {boolean} isCompleted - Whether the user has completed the lesson.
+ * @property {boolean} isLocked - Whether the lesson is locked.
+ */
+
+/**
+ * @typedef {object} CourseModule
+ * @property {string} id - The unique identifier for the module.
+ * @property {string} title - The title of the module.
+ * @property {CourseModuleLesson[]} lessons - A list of lessons in the module.
+ */
+
+/**
+ * Represents the data structure for a single course. This is the contract
+ * that the frontend expects from the backend for endpoints like GET /api/courses.
+ * @typedef {object} Course
+ * @property {string} id - The unique identifier for the course.
+ * @property {string} title - The full title of the course.
+ * @property {string} description - A brief description of the course.
+ * @property {string} imageId - The ID for the course's thumbnail image, used to look up the actual URL.
+ * @property {number} price - The price of the course in USD.
+ * @property {number} studentsCount - The number of students enrolled in the course.
+ * @property {CourseModule[]} modules - An array of course modules.
+ * @property {boolean} purchased - Whether the current user has purchased the course.
+ */
+
+/**
+ * Defines the props for the CourseCard component.
+ * @typedef {object} CourseCardProps
+ * @property {Course} course - The course data object to display.
+ */
+
+/**
+ * Renders a single course card for the catalog. Displays key information
+ * such as title, price, and student count. On desktop, it features a
+ * "hold-to-play" video preview. On mobile, this feature is disabled.
+ *
+ * This is a Client Component and expects all course data to be passed via props.
+ *
+ * @param {CourseCardProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered course card component.
+ * @example
+ * <CourseCard course={sampleCourseData} />
+ */
 'use client';
 
 import Image from 'next/image';

@@ -1,3 +1,8 @@
+/**
+ * @file Defines the user login form component.
+ * @author Your Name
+ */
+
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -18,11 +23,27 @@ const GoogleIcon = () => (
     </svg>
 );
 
+/**
+ * Renders the login form for user authentication.
+ *
+ * This component provides fields for email and password, along with options
+ * for password visibility, "Forgot Password?", and social sign-in with Google.
+ * It is a Client Component that manages its own state for form inputs.
+ *
+ * @returns {JSX.Element} The rendered login form.
+ */
 export function LoginForm() {
   const { toast } = useToast();
   const [passwordVisible, setPasswordVisible] = React.useState(false);
   const router = useNavigation();
 
+  /**
+   * Handles the form submission event. Currently, this is a mock function
+   * that simulates a successful login and redirects the user to the homepage.
+   *
+   * @param {React.FormEvent} e - The form submission event.
+   * @todo Replace with actual backend authentication call.
+   */
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     toast({

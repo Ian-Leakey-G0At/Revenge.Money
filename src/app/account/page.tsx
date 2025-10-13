@@ -1,3 +1,31 @@
+/**
+ * @file Renders the user's account page.
+ *
+ * This page displays the user's profile information, including their avatar, name, and email.
+ * It also shows a grid of courses the user has purchased.
+ * This component is a client component (`'use client'`) because it uses the `useUser` hook.
+ *
+ * @returns {JSX.Element} The rendered account page.
+ */
+
+/**
+ * ### Backend Contract
+ *
+ * To function correctly, this page relies on the following backend services:
+ *
+ * 1.  **User Data:**
+ *     - **Mechanism:** The `useUser` hook.
+ *     - **Description:** This hook is expected to provide the currently authenticated user's
+ *       information, including `name`, `email`, and `avatarUrl`.
+ *     - **Note:** The underlying implementation of `useUser` is responsible for fetching and managing this data.
+ *
+ * 2.  **Purchased Courses:**
+ *     - **Endpoint:** `GET /api/user/courses`
+ *     - **Description:** Fetches the list of courses that the currently authenticated user has purchased.
+ *     - **Response:** An array of `Course` objects. The structure for the `Course`
+ *       object is defined in `src/components/course/course-card.tsx`.
+ */
+
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
