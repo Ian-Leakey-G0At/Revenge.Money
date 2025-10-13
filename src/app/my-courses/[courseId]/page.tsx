@@ -30,7 +30,7 @@ export default function PurchasedCoursePage() {
   const progress = allVideos.length > 0 ? (completedVideos.length / allVideos.length) * 100 : 0;
 
   return (
-    <div className="container mx-auto px-4 py-12 md:px-6">
+    <div className="container mx-auto px-4 py-8 md:px-6">
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
           <h1 className="text-3xl font-bold font-headline mb-4">{course.title}</h1>
