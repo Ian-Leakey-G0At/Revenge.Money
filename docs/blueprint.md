@@ -10,6 +10,37 @@
 - Access Control: Control user access to learning content based on their purchased courses, verifying `purchasedCourses` to grant access and generating signed URLs for secure video delivery.
 - Personalized Course Recommendations: Employ a tool to suggest relevant courses to users based on their learning history, purchase behavior, and profile data.
 
+## User Roles and Permissions:
+
+### 1. Guest User (Unauthenticated)
+
+- **Access Rights:**
+    - Can browse the **Homescreen** to see featured courses and promotional content.
+    - Can explore the **Course Catalog** to view all available courses. Courses will appear as "unpurchased."
+- **Restrictions:**
+    - **Account Access:** Cannot access any user-specific pages like the profile, settings, or my courses. If a guest attempts to access these areas (e.g., by clicking the account tab in the bottom navigation or the profile icon in the header), they will be prompted with a modal or redirected to a page that requires them to either **Log In** or **Create an Account**.
+    - **Purchasing:** Guests can initiate the purchase of a course. The checkout process will serve as a registration funnel, requiring them to create an account to complete the purchase.
+
+### 2. Regular User (Authenticated)
+
+- **Access Rights:**
+    - Has full access to all non-administrative features of the website.
+    - Can view and purchase courses from the **Course Catalog**.
+    - Can access their **purchased courses**, view video content, and track their progress.
+    - Can manage their **profile and settings**.
+- **Restrictions:**
+    - **Admin Privileges:** No access to the admin dashboard or any administrative functionalities. They cannot create, edit, or delete courses, view site-wide analytics, or manage other users.
+
+### 3. Admin (Authenticated with Admin Privileges)
+
+- **Access Rights:**
+    - **Full Privileges:** Holds all access rights of a Regular User and has complete administrative control over the platform.
+    - **Admin Dashboard:** Full access to the admin dashboard, which includes site statistics, user management, and course management functionalities.
+    - **Course Management:** Can perform all CRUD (Create, Read, Update, Delete) operations on courses.
+    - **Content Management:** Can manage featured content on the homepage, such as the hero carousel.
+- **Implementation Note:**
+    - Admin status is determined by a custom claim (`isAdmin: true`) in the user's Firebase ID Token, which is validated on the server-side to grant access to admin-protected routes and APIs.
+
 ## Style Guidelines:
 
 - Primary color: A sophisticated blue (#4682B4) evokes trust and knowledge, crucial for a learning platform.
