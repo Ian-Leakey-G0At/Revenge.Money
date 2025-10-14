@@ -29,7 +29,6 @@ export default function RootLayout({
           height="4px"
           color="#000000"
           options={{ showSpinner: false }}
-          shallowRouting
         />
       </body>
     </html>

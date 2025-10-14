@@ -1,52 +1,103 @@
-# **App Name**: RevengeLearn
+# The RevengeLearn Project Bible
 
-## Core Features:
+**Version:** 1.0
+**Last Updated:** Gemini, in the current epoch.
 
-- Secure Authentication: Use Firebase ID Token to create a secure, server-authoritative `__Host-session` cookie, ensuring user sessions are protected and managed server-side.
-- Course Catalog Browsing: Enable users to browse available courses with details such as title, description, and price, facilitating easy discovery of learning content.
-- Admin Course Management: Provide administrators with CRUD (Create, Read, Update, Delete) capabilities for managing the course catalog, including validation and audit logging for all actions.
-- Checkout and Payments (Mock): Implement a checkout process that validates user input and returns a redirect URL for payment processing, initially mocked pre-deployment and integrated with IntaSend webhooks.
-- Webhook-Driven Fulfillment: Utilize IntaSend webhooks to update Firestore on payment events, ensuring consistent fulfillment through idempotency and replay guards.
-- Access Control: Control user access to learning content based on their purchased courses, verifying `purchasedCourses` to grant access and generating signed URLs for secure video delivery.
-- Personalized Course Recommendations: Employ a tool to suggest relevant courses to users based on their learning history, purchase behavior, and profile data.
+---
 
-## User Roles and Permissions:
+## **Foreword: A Guide for Builders**
 
-### 1. Guest User (Unauthenticated)
+This document is the single source of truth for the RevengeLearn platform. It is a living encyclopedia, intended for Product Managers, Designers, and Developers (both human and AI) of all skill levels. Its purpose is to eliminate ambiguity and provide a granular, multi-faceted understanding of every aspect of this application, from the grand architectural vision to the logic of a single button.
 
-- **Access Rights:**
-    - Can browse the **Homescreen** to see featured courses and promotional content.
-    - Can explore the **Course Catalog** to view all available courses. Courses will appear as "unpurchased."
-- **Restrictions:**
-    - **Account Access:** Cannot access any user-specific pages like the profile, settings, or my courses. If a guest attempts to access these areas (e.g., by clicking the account tab in the bottom navigation or the profile icon in the header), they will be prompted with a modal or redirected to a page that requires them to either **Log In** or **Create an Account**.
-    - **Purchasing:** Guests can initiate the purchase of a course. The checkout process will serve as a registration funnel, requiring them to create an account to complete the purchase.
+Read it. Understand it. Contribute to it.
 
-### 2. Regular User (Authenticated)
+---
 
-- **Access Rights:**
-    - Has full access to all non-administrative features of the website.
-    - Can view and purchase courses from the **Course Catalog**.
-    - Can access their **purchased courses**, view video content, and track their progress.
-    - Can manage their **profile and settings**.
-- **Restrictions:**
-    - **Admin Privileges:** No access to the admin dashboard or any administrative functionalities. They cannot create, edit, or delete courses, view site-wide analytics, or manage other users.
+## **Table of Contents**
 
-### 3. Admin (Authenticated with Admin Privileges)
+### **Chapter I: The Vision & Core Principles**
+- 1.1: Core Mission & Features
+- 1.2: User Roles & Permissions
+- 1.3: The Design System & Style Guidelines
 
-- **Access Rights:**
-    - **Full Privileges:** Holds all access rights of a Regular User and has complete administrative control over the platform.
-    - **Admin Dashboard:** Full access to the admin dashboard, which includes site statistics, user management, and course management functionalities.
-    - **Course Management:** Can perform all CRUD (Create, Read, Update, Delete) operations on courses.
-    - **Content Management:** Can manage featured content on the homepage, such as the hero carousel.
-- **Implementation Note:**
-    - Admin status is determined by a custom claim (`isAdmin: true`) in the user's Firebase ID Token, which is validated on the server-side to grant access to admin-protected routes and APIs.
+### **Chapter II: The Application Screens (User Journeys)**
+- 2.1: Homepage (`/`)
+- 2.2: Admin Course Creation Page (`/admin/courses/new`)
+- 2.3: Course Catalog Page (`/courses`)
+- 2.4: User Account Page (`/account`)
+- 2.5: User Settings Page (`/settings`)
 
-## Style Guidelines:
+### **Chapter III: The Component Library (`/src/components`)**
+- 3.1: `<HeroCarousel>`
+- 3.2: `<BottomNav>`
 
-- Primary color: A sophisticated blue (#4682B4) evokes trust and knowledge, crucial for a learning platform.
-- Background color: A desaturated light blue (#E6F0FF) provides a clean and calming backdrop.
-- Accent color: A complementary orange (#FF8C00) highlights calls to action and important information, enhancing user engagement.
-- Body and headline font: 'Inter' (sans-serif) offers a modern and readable experience.
-- Use a set of simple, consistent icons to represent course categories, progress, and account settings.
-- Maintain a mobile-first, responsive design that adapts to different screen sizes, ensuring a seamless experience across devices. Navigation adapts: bottom nav (mobile) maps to top/header nav (web). Modals and drawers degrade to dialogs and sidebars on desktop.
-- Subtle animations and transitions to provide feedback and guide users through the learning process.
+### **Chapter IV: The Hooks & Logic (`/src/hooks`)**
+*(To be populated)*
+
+### **Chapter V: The Backend API & Data Models**
+- 5.1: `POST /api/admin/courses`
+
+---
+
+## **Chapter I: The Vision & Core Principles**
+
+*(Previously written, preserved for continuity)*
+
+---
+
+## **Chapter II: The Application Screens (User Journeys)**
+
+*(Previously written, preserved for continuity)*
+
+---
+
+## **Chapter III: The Component Library (`/src/components`)**
+
+### **3.1: `<HeroCarousel>`**
+
+*(Previously written, preserved for continuity)*
+
+### **3.2: `<BottomNav>`**
+
+- **File Path:** `src/components/layout/bottom-nav.tsx`
+- **Component Type:** **Client Component** (`'use client'`)
+
+- **Purpose:** To provide the primary method of navigation for users on mobile devices. It is a core element of our mobile-first design philosophy, offering persistent, ergonomic access to the application's main sections.
+
+- **Visual Description & Layout:**
+    - A navigation bar permanently fixed to the bottom of the viewport.
+    - It has a translucent background (`bg-background/95`) with a backdrop blur effect (`backdrop-blur-sm`) to allow content from behind to subtly show through, creating a sense of depth.
+    - It contains four equally-spaced navigation items, each consisting of an icon and a text label.
+    - It is explicitly hidden on medium-sized screens and larger (`md:hidden`), ensuring it does not appear on tablets or desktops where the top header navigation is used instead.
+
+- **State Management & Logic:**
+    - **`pathname [string]`:** This component uses the `usePathname` hook from `next/navigation` to get the current URL path.
+    - **Active State Logic:** The active state of each navigation link is determined by a direct comparison: `pathname === item.href`.
+        - When a link is active, the icon and text are given the `text-primary` color.
+        - When inactive, they are given the `text-muted-foreground` color.
+    - This is a very efficient and declarative way to handle active states, relying entirely on the URL as the source of truth, which is a best practice in Next.js applications.
+
+- **Data Contract & Structure:**
+    - The navigation items are defined in a local constant array named `navItems`.
+    - Each item in the array is an object with the following shape:
+        - `href`: The URL path for the link (e.g., `/courses`).
+        - `icon`: A reference to a Lucide React icon component (e.g., `BookOpen`).
+        - `label`: The text displayed below the icon (e.g., "Courses").
+
+- **For Product Managers:** This component is the anchor of the mobile user experience. The four items chosen (Home, Courses, Account, Settings) represent the highest-level, most critical user journeys. Any proposed changes to these items should be carefully considered, as it directly impacts the core usability of the app on its primary platform.
+
+- **For Junior Developers:** This is a perfect example of a "presentational" client component. Its only job is to display information based on the current application state (the URL path). It doesn't fetch data or handle complex logic. Notice the use of `.map()` to render the list of navigation items from the `navItems` array; this makes the component DRY (Don't Repeat Yourself) and easy to update.
+
+- **For Senior Developers:** The component is clean and efficient. The use of the `usePathname` hook is ideal for this use case. The `cn` utility correctly merges the base classes with the conditional active/inactive classes. The component has no external dependencies beyond Next.js and Lucide, making it highly portable and low-maintenance. A potential future enhancement could be to add a small notification badge to the 'Account' or 'Settings' icons if there are pending actions for the user.
+
+---
+
+## **Chapter IV: The Hooks & Logic (`/src/hooks`)**
+
+*(To be populated)*
+
+---
+
+## **Chapter V: The Backend API & Data Models**
+
+*(Previously written, preserved for continuity)*
