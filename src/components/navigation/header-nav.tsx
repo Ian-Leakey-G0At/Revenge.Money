@@ -26,6 +26,7 @@ const navLinks = [
  *
  * It renders the site logo, a list of navigation links, the theme toggle button,
  * and the user menu. The navigation links are hidden on mobile devices and are
+
  * replaced by the `BottomNav` component.
  *
  * @returns {JSX.Element} The rendered header navigation.
@@ -35,8 +36,7 @@ export function HeaderNav() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <Logo className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">Revenge Money</span>
+          <Logo />
         </Link>
         
         <nav className="hidden items-center gap-6 text-sm md:flex">

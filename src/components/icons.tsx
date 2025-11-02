@@ -1,18 +1,26 @@
-import type { SVGProps } from 'react';
+"use client";
+import Image from 'next/image';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
-export const Logo = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-    <path d="m4 13.5 4-4 4 4" />
-    <path d="m4 8.5 4-4 4 4" />
-  </svg>
-);
+export const Logo = () => {
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const src = mounted && resolvedTheme === 'dark'
+      ? '/logo/revenge_money_logo_dark_theme.png'
+      : '/logo/revenge_money_logo_light_theme.png';
+
+  return (
+    <Image
+      src={src}
+      alt="Revenge Money Logo"
+      width={120}
+      height={24}
+    />
+  );
+};
