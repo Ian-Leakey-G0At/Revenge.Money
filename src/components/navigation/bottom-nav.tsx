@@ -3,14 +3,14 @@
 
 import { Link } from '@lexz451/next-nprogress';
 import { usePathname } from 'next/navigation';
-import { Home, BookOpen, User } from 'lucide-react';
+import { Home, BookOpen, HandCoins } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/courses', label: 'Courses', icon: BookOpen },
-  { href: '/account', label: 'Account', icon: User },
+  { href: '/deals', label: 'Deals', icon: HandCoins },
 ];
 
 export function BottomNav() {

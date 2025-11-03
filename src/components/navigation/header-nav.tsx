@@ -8,7 +8,6 @@
 
 "use client";
 import { Link } from '@lexz451/next-nprogress';
-import { UserMenu } from '@/components/navigation/user-menu';
 import { ThemeToggle } from './theme-toggle';
 import { Logo } from '@/components/icons';
 
@@ -18,7 +17,7 @@ import { Logo } from '@/components/icons';
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/courses', label: 'Courses' },
-  { href: '/account', label: 'Account' },
+  { href: '/deals', label: 'Deals' },
 ];
 
 /**
@@ -26,7 +25,6 @@ const navLinks = [
  *
  * It renders the site logo, a list of navigation links, the theme toggle button,
  * and the user menu. The navigation links are hidden on mobile devices and are
-
  * replaced by the `BottomNav` component.
  *
  * @returns {JSX.Element} The rendered header navigation.
@@ -53,7 +51,6 @@ export function HeaderNav() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <UserMenu />
         </div>
       </div>
     </header>
