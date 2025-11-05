@@ -1,46 +1,17 @@
-'''
-# Revenge Money
+# RevengeLearn: A Digital Storefront
 
-This is a Next.js application for a fictional online learning platform called "Revenge Money".
+This project is a direct-to-consumer digital storefront for selling and delivering course content. The core principle is simplicity. We use a "Purchase & Access Link" model to eliminate the need for user accounts and complex authentication systems.
 
-## Getting Started
+## How It Works
 
-First, install the dependencies:
+1.  Users purchase courses through a third-party payment provider.
+2.  Upon successful payment, they receive a unique, permanent link to access the course content.
+3.  Course content is hosted on YouTube (unlisted) and embedded within our clean, focused interface.
 
-```bash
-npm install
-```
+## Tech Stack
 
-Then, run the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
-
-## Project Structure
-
-- `src/app`: Contains the pages of the application.
-- `src/components`: Contains the reusable components used throughout the application.
-- `src/lib`: Contains the placeholder data.
-- `src/styles`: Contains the global styles for the application.
-
-## Scripts
-
-- `npm run dev`: Starts the development server.
-- `npm run build`: Builds the application for production.
-- `npm run start`: Starts the production server.
-- `npm run lint`: Lints the code.
-
-## Deployment
-
-The application is deployed on Firebase. To deploy the application, you need to have the Firebase CLI installed and configured.
-
-Then, run the following command:
-
-```bash
-npm run build
-firebase deploy
-```
-'''
+*   Next.js & React
+*   Tailwind CSS
+*   Stripe (for payment processing)
+*   Vercel KV (for a simple key-value store)
+*   Next.js API Routes (for serverless functions)

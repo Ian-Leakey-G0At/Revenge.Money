@@ -1,103 +1,36 @@
-# The RevengeLearn Project Bible
+# Project Blueprint: RevengeLearn v2
 
-**Version:** 1.0
-**Last Updated:** Gemini, in the current epoch.
+This document outlines the mission, principles, and technical architecture for the RevengeLearn project. It serves as the single source of truth to guide all development efforts.
 
----
+## 1. Project North Star: Radical Simplicity
 
-## **Foreword: A Guide for Builders**
+Our primary goal is to build a direct-to-consumer digital storefront for selling and delivering course content. We will achieve this by ruthlessly eliminating all non-essential complexity.
 
-This document is the single source of truth for the RevengeLearn platform. It is a living encyclopedia, intended for Product Managers, Designers, and Developers (both human and AI) of all skill levels. Its purpose is to eliminate ambiguity and provide a granular, multi-faceted understanding of every aspect of this application, from the grand architectural vision to the logic of a single button.
+## 2. Core Principles
 
-Read it. Understand it. Contribute to it.
+*   **No User Accounts:** We will not build or maintain a traditional user account system. There will be no logins, signups, passwords, or user profiles.
+*   **Seamless Access:** Access to purchased content will be granted via a unique, unguessable link delivered to the customer's email. The email is the key.
+*   **Lean Architecture:** The backend will consist of simple, serverless functions. We will avoid complex databases and server management.
+*   **UI is Sacred:** The existing frontend UI is considered perfect and will not be modified. All backend work must be implemented without altering the visual presentation or component structure.
 
----
+## 3. The User Flow
 
-## **Table of Contents**
+1.  **Discovery:** A user browses courses on the homepage or the "Deals" page.
+2.  **Purchase:** The user is directed to a third-party payment provider (e.g., Stripe) to complete the transaction.
+3.  **Access:** Upon successful payment, the user instantly receives an email containing a unique, permanent link to their course (`https://[domain]/my-courses/[courseId]?token=[access_token]`).
+4.  **Consumption:** The user clicks the link and immediately views the course content (embedded from YouTube) within our clean, focused interface. They can bookmark this link for future access.
 
-### **Chapter I: The Vision & Core Principles**
-- 1.1: Core Mission & Features
-- 1.2: User Roles & Permissions
-- 1.3: The Design System & Style Guidelines
+## 4. Plan of Action
 
-### **Chapter II: The Application Screens (User Journeys)**
-- 2.1: Homepage (`/`)
-- 2.2: Admin Course Creation Page (`/admin/courses/new`)
-- 2.3: Course Catalog Page (`/courses`)
-- 2.4: User Account Page (`/account`)
-- 2.5: User Settings Page (`/settings`)
+- [ ] **Phase 1: Documentation & Scaffolding**
+    - [ ] **Task 1.1: Update README.md**: Reflect the new "Purchase & Access Link" model, removing references to user accounts. Add a section explaining the new, simplified architecture.
+    - [ ] **Task 1.2: Update ARCHITECTURE.md**: Create or update an `ARCHITECTURE.md` file to detail the serverless, key-based access system. Explain the data flow from purchase to access.
+    - [ ] **Task 1.3: Update INTEGRATION.md**: Create or update an `INTEGRATION.md` file to outline the integration points with the payment provider and YouTube.
 
-### **Chapter III: The Component Library (`/src/components`)**
-- 3.1: `<HeroCarousel>`
-- 3.2: `<BottomNav>`
+- [ ] **Phase 2: Build the Core Purchase & Access Flow**
+    - [ ] **Task 2.1: Implement Payment Provider Stub**: Modify the "Deals" page. The "Buy Now" buttons will initially link to a placeholder page that simulates a successful purchase.
+    - [ ] **Task 2.2: Create the Access Token API Endpoint**: Create a new Next.js API route. This serverless function will simulate receiving a webhook from a payment provider, generating a unique access token, and storing it (initially in-memory, later in Vercel KV). For now, it will just log the generated access link to the console.
+    - [ ] **Task 2.3: Create the Content Gatekeeper**: The course content page (`/my-courses/[courseId]`) will be a Server Component that validates the access token from the URL. It will check the token's validity and, if valid, render the course content. If not, it will show a "Permission Denied" message.
 
-### **Chapter IV: The Hooks & Logic (`/src/hooks`)**
-*(To be populated)*
-
-### **Chapter V: The Backend API & Data Models**
-- 5.1: `POST /api/admin/courses`
-
----
-
-## **Chapter I: The Vision & Core Principles**
-
-*(Previously written, preserved for continuity)*
-
----
-
-## **Chapter II: The Application Screens (User Journeys)**
-
-*(Previously written, preserved for continuity)*
-
----
-
-## **Chapter III: The Component Library (`/src/components`)**
-
-### **3.1: `<HeroCarousel>`**
-
-*(Previously written, preserved for continuity)*
-
-### **3.2: `<BottomNav>`**
-
-- **File Path:** `src/components/layout/bottom-nav.tsx`
-- **Component Type:** **Client Component** (`'use client'`)
-
-- **Purpose:** To provide the primary method of navigation for users on mobile devices. It is a core element of our mobile-first design philosophy, offering persistent, ergonomic access to the application's main sections.
-
-- **Visual Description & Layout:**
-    - A navigation bar permanently fixed to the bottom of the viewport.
-    - It has a translucent background (`bg-background/95`) with a backdrop blur effect (`backdrop-blur-sm`) to allow content from behind to subtly show through, creating a sense of depth.
-    - It contains four equally-spaced navigation items, each consisting of an icon and a text label.
-    - It is explicitly hidden on medium-sized screens and larger (`md:hidden`), ensuring it does not appear on tablets or desktops where the top header navigation is used instead.
-
-- **State Management & Logic:**
-    - **`pathname [string]`:** This component uses the `usePathname` hook from `next/navigation` to get the current URL path.
-    - **Active State Logic:** The active state of each navigation link is determined by a direct comparison: `pathname === item.href`.
-        - When a link is active, the icon and text are given the `text-primary` color.
-        - When inactive, they are given the `text-muted-foreground` color.
-    - This is a very efficient and declarative way to handle active states, relying entirely on the URL as the source of truth, which is a best practice in Next.js applications.
-
-- **Data Contract & Structure:**
-    - The navigation items are defined in a local constant array named `navItems`.
-    - Each item in the array is an object with the following shape:
-        - `href`: The URL path for the link (e.g., `/courses`).
-        - `icon`: A reference to a Lucide React icon component (e.g., `BookOpen`).
-        - `label`: The text displayed below the icon (e.g., "Courses").
-
-- **For Product Managers:** This component is the anchor of the mobile user experience. The four items chosen (Home, Courses, Account, Settings) represent the highest-level, most critical user journeys. Any proposed changes to these items should be carefully considered, as it directly impacts the core usability of the app on its primary platform.
-
-- **For Junior Developers:** This is a perfect example of a "presentational" client component. Its only job is to display information based on the current application state (the URL path). It doesn't fetch data or handle complex logic. Notice the use of `.map()` to render the list of navigation items from the `navItems` array; this makes the component DRY (Don't Repeat Yourself) and easy to update.
-
-- **For Senior Developers:** The component is clean and efficient. The use of the `usePathname` hook is ideal for this use case. The `cn` utility correctly merges the base classes with the conditional active/inactive classes. The component has no external dependencies beyond Next.js and Lucide, making it highly portable and low-maintenance. A potential future enhancement could be to add a small notification badge to the 'Account' or 'Settings' icons if there are pending actions for the user.
-
----
-
-## **Chapter IV: The Hooks & Logic (`/src/hooks`)**
-
-*(To be populated)*
-
----
-
-## **Chapter V: The Backend API & Data Models**
-
-*(Previously written, preserved for continuity)*
+- [ ] **Phase 3: Refine & Polish**
+    - [ ] **Task 3.1: Final Code Pruning**: Perform a final sweep of the codebase to ensure no remnants of the old user account system exist. This includes deleting any unused components, pages, or API routes related to authentication or user management.

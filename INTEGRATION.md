@@ -1,41 +1,12 @@
-# RevengeLearn: Frontend-Backend Integration Playbook
+# Integration Points
 
-This document serves as the official contract between the frontend and backend teams for the RevengeLearn application. It details the API endpoints and the exact data structures expected by the frontend components. Adhering to these contracts is crucial for ensuring seamless integration.
+This project has two key integration points:
 
-## API Contracts by Route
+1.  **Payment Provider:** We will integrate with a payment provider like Stripe to handle all payment processing. This will involve:
+    *   Using their API to create checkout sessions.
+    *   Configuring webhooks to receive notifications of successful payments.
 
-### `/api/courses`
-
-- **Method:** `GET`
-- **Description:** Fetches a list of all available courses.
-- **Used By:** `CourseCard` component (`/courses` page)
-- **Expected Response Shape:** `Array<Course>`
-
-```json
-[
-  {
-    "id": "string",
-    "title": "string",
-    "description": "string",
-    "imageId": "string",
-    "price": "number",
-    "studentsCount": "number",
-    "modules": [
-      {
-        "id": "string",
-        "title": "string",
-        "lessons": [
-          {
-            "id": "string",
-            "title": "string",
-            "duration": "number",
-            "isCompleted": "boolean",
-            "isLocked": "boolean"
-          }
-        ]
-      }
-    ],
-    "purchased": "boolean"
-  }
-]
-```
+2.  **YouTube:** We will use YouTube to host our course videos. The videos will be set to "unlisted" and embedded into our course pages. This will involve:
+    *   Uploading the course videos to a YouTube channel.
+    *   Getting the video IDs for each video.
+    *   Using the video IDs to embed the videos in our application.
