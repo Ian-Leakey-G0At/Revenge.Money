@@ -14,7 +14,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     instructor: { name: 'Jane Doe', avatarId: 'instructor-avatar-1' },
     rating: 4.8,
-    studentsCount: 10234,
+    studentsCount: 234,
     modules: [
       {
         id: 'm1',
@@ -42,7 +42,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     instructor: { name: 'John Smith', avatarId: 'instructor-avatar-2' },
     rating: 4.9,
-    studentsCount: 8765,
+    studentsCount: 312,
     modules: [
       {
         id: 'm1',
@@ -70,7 +70,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     instructor: { name: 'Jane Doe', avatarId: 'instructor-avatar-1' },
     rating: 4.7,
-    studentsCount: 12453,
+    studentsCount: 189,
     modules: [
       {
         id: 'm1',
@@ -98,7 +98,7 @@ export const courses: Course[] = [
     level: 'Advanced',
     instructor: { name: 'John Smith', avatarId: 'instructor-avatar-2' },
     rating: 4.9,
-    studentsCount: 4567,
+    studentsCount: 401,
     modules: [
       {
         id: 'm1',
@@ -126,7 +126,7 @@ export const courses: Course[] = [
     level: 'Intermediate',
     instructor: { name: 'Jane Doe', avatarId: 'instructor-avatar-1' },
     rating: 4.8,
-    studentsCount: 6789,
+    studentsCount: 288,
     modules: [
        {
         id: 'm1',
@@ -154,7 +154,7 @@ export const courses: Course[] = [
     level: 'Intermediate',
     instructor: { name: 'John Smith', avatarId: 'instructor-avatar-2' },
     rating: 4.7,
-    studentsCount: 9876,
+    studentsCount: 357,
     modules: [
        {
         id: 'm1',
