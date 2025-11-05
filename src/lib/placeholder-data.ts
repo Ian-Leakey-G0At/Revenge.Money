@@ -22,14 +22,9 @@ export const courses: Course[] = [
         lessons: [
           { id: 'l1.1', title: 'What is Investing?', duration: 10, content: 'Lesson content here...', isPreview: true },
           { id: 'l1.2', title: 'Why Should You Invest?', duration: 12, content: 'Lesson content here...', isPreview: false },
-        ],
-      },
-      {
-        id: 'm2',
-        title: 'Asset Classes',
-        lessons: [
-          { id: 'l2.1', title: 'Understanding Stocks', duration: 15, content: 'Lesson content here...', isPreview: false },
-          { id: 'l2.2', title: 'Understanding Bonds', duration: 15, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'Setting Up a Brokerage Account', duration: 15, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'Understanding Asset Classes', duration: 20, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Building a Diversified Portfolio', duration: 25, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
@@ -55,6 +50,9 @@ export const courses: Course[] = [
         lessons: [
           { id: 'l1.1', title: 'Creating a Debt Inventory', duration: 20, content: 'Lesson content here...', isPreview: true },
           { id: 'l1.2', title: 'Good Debt vs. Bad Debt', duration: 10, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'The Debt Snowball Method', duration: 15, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'The Debt Avalanche Method', duration: 15, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Negotiating with Creditors', duration: 20, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
@@ -79,6 +77,10 @@ export const courses: Course[] = [
         title: 'The Power of Budgeting',
         lessons: [
           { id: 'l1.1', title: 'Why Budget?', duration: 8, content: 'Lesson content here...', isPreview: true },
+          { id: 'l1.2', title: 'Budgeting Techniques', duration: 15, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'Tracking Your Expenses', duration: 12, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'Creating a Personal Budget', duration: 20, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Sticking to Your Budget', duration: 10, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
@@ -103,6 +105,10 @@ export const courses: Course[] = [
         title: 'Technical Analysis',
         lessons: [
           { id: 'l1.1', title: 'Candlestick Patterns', duration: 45, content: 'Lesson content here...', isPreview: true },
+          { id: 'l1.2', title: 'Chart Patterns', duration: 50, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'Technical Indicators', duration: 55, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'Options Trading Strategies', duration: 60, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Sector Analysis', duration: 40, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
@@ -127,6 +133,10 @@ export const courses: Course[] = [
         title: 'Finding Your First Deal',
         lessons: [
           { id: 'l1.1', title: 'Market Analysis', duration: 30, content: 'Lesson content here...', isPreview: true },
+          { id: 'l1.2', title: 'Deal Evaluation', duration: 35, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'Financing Options', duration: 40, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'Property Management', duration: 30, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Building Your Portfolio', duration: 25, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
@@ -151,6 +161,10 @@ export const courses: Course[] = [
         title: 'What is Blockchain?',
         lessons: [
           { id: 'l1.1', title: 'The Technology Explained', duration: 25, content: 'Lesson content here...', isPreview: true },
+          { id: 'l1.2', title: 'Bitcoin vs. Ethereum', duration: 30, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.3', title: 'Introduction to DeFi', duration: 35, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.4', title: 'Crypto Wallets', duration: 20, content: 'Lesson content here...', isPreview: false },
+          { id: 'l1.5', title: 'Risks and Opportunities', duration: 25, content: 'Lesson content here...', isPreview: false },
         ],
       },
     ],
