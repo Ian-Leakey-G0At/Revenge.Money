@@ -12,6 +12,5 @@ This project is a direct-to-consumer digital storefront for selling and deliveri
 
 *   Next.js & React
 *   Tailwind CSS
-*   Stripe (for payment processing)
 *   Vercel KV (for a simple key-value store)
 *   Next.js API Routes (for serverless functions)

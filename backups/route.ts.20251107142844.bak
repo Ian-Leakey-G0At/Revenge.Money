@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { courses } from '@/lib/placeholder-data';
 import { kv } from '@vercel/kv';
-import { randomUUID } from 'crypto';
 
 export async function POST(request: Request) {
   try {
-    const { courseId, email } = await request.json();
+    const { courseId } = await request.json();
     const course = courses.find(c => c.id === courseId);
 
     if (!course) {
@@ -15,16 +14,9 @@ export async function POST(request: Request) {
       });
     }
 
-    if (!email) {
- return new Response(JSON.stringify({ error: 'Email is required' }), {
- status: 400,
- headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    const token = Math.random().toString(36).substring(2);
 
-    const token = randomUUID();
-
-    await kv.set(token, { courseId: course.id, email });
+    await kv.set(token, course);
 
     const accessUrl = `/my-courses/${courseId}?token=${token}`;
 

@@ -1,0 +1,44 @@
+import { kv } from '@vercel/kv';
+import { CoursePlayer } from '@/components/course/course-player';
+import { Course } from '@/lib/types';
+
+export default async function PurchasedCoursePage({
+  params,
+  searchParams,
+}: {
+  params: { courseId: string };
+  searchParams: { token?: string };
+}) {
+  const { token } = searchParams;
+
+  if (!token) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl font-bold mb-4">Invalid Access Link</h1>
+        <p className="text-lg">The access link you are using is incomplete.</p>
+      </div>
+    );
+  }
+
+  const course = await kv.get<Course>(token);
+
+  if (!course) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl font-bold mb-4">Permission Denied</h1>
+        <p className="text-lg">You do not have access to this course.</p>
+      </div>
+    );
+  }
+
+  if (course.id !== params.courseId) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl font-bold mb-4">Access Link Mismatch</h1>
+        <p className="text-lg">This access link is for a different course.</p>
+      </div>
+    );
+  }
+
+  return <CoursePlayer course={course} />;
+}
