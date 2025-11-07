@@ -16,9 +16,9 @@ export async function POST(request: Request) {
     }
 
     if (!email) {
- return new Response(JSON.stringify({ error: 'Email is required' }), {
- status: 400,
- headers: { 'Content-Type': 'application/json' },
+      return new Response(JSON.stringify({ error: 'Email is required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
@@ -33,7 +33,6 @@ export async function POST(request: Request) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error(error);
     return new Response(JSON.stringify({ error: 'An unexpected error occurred' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
