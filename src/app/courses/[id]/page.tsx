@@ -135,7 +135,7 @@ export default function CourseDetailPage() {
             </div>
           </div>
 
-          <section className="mb-12">
+          <section className="mb-12 overflow-hidden">
             <h3 className="text-xl font-bold font-headline mb-4">Course Details</h3>
             <p className="text-muted-foreground mb-6">{course.longDescription}</p>
 
@@ -143,12 +143,12 @@ export default function CourseDetailPage() {
             <LockedVideoPlaylist videos={allVideos} />
           </section>
 
-          <section className="mb-12">
+          <section className="mb-12 overflow-hidden">
             <h3 className="text-xl font-bold font-headline mb-4">What Other Students Say</h3>
             <TestimonialCarousel />
           </section>
 
-          <section className="mb-12">
+          <section className="mb-12 overflow-hidden">
             <CustomerRatings course={course} />
           </section>
         </main>
