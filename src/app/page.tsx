@@ -35,7 +35,7 @@ export default function Home() {
         <GoodLuckButton />
       </section>
 
-      <main className="container mx-auto px-4">
+      <main className="container mx-auto px-4 flex flex-col gap-4">
         {/* The featured courses section. */}
         <FeaturedCourses />
         

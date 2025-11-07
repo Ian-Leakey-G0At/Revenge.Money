@@ -13,6 +13,7 @@ import {
   RotateCcw
 } from 'lucide-react';
 import { TestimonialCarousel } from '@/components/course/testimonial-carousel';
+import { CustomerRatings } from '@/components/course/customer-ratings';
 import { useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -145,6 +146,10 @@ export default function CourseDetailPage() {
           <section className="mb-12">
             <h3 className="text-xl font-bold font-headline mb-4">What Other Students Say</h3>
             <TestimonialCarousel />
+          </section>
+
+          <section className="mb-12">
+            <CustomerRatings course={course} />
           </section>
         </main>
       </div>
