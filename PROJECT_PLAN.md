@@ -47,9 +47,43 @@
 
 ## **Phase 4: Testing & Finalization**
 
-*   [ ] **Task 4.1: End-to-End System Testing**
-    *   **Status:** Not Started
+*   [x] **Task 4.1: End-to-End System Testing**
+    *   **Status:** Completed
     *   **Description:** Perform a full workflow test: simulate a purchase, use the access link, trigger the code request, enter the code, and verify access. Test all failure cases (wrong code, expired code, invalid token).
 *   [ ] **Task 4.2: Final Review and Deployment Approval**
     *   **Status:** Not Started
     *   **Description:** Generate a final report summarizing all changes, test results, and compliance with the `RULES.md` protocol. Request final approval for deployment.
+---
+
+## **Phase 5: Dynamic Video Content Delivery**
+
+**Objective:** Evolve the existing video playback system into a dual-source component serving local teasers to guests and unlisted YouTube videos to customers, without altering the UI.
+
+*   [x] **Task 5.1: Dependency Integration**
+    *   **Status:** Completed
+    *   **Description:** Install the `react-youtube` npm package to enable robust YouTube video embedding and control.
+
+*   [x] **Task 5.2: Create Dedicated VideoPlayer Component**
+    *   **Status:** Completed
+    *   **File(s) to be Created:** `src/components/course/video-player.tsx`
+    *   **Description:** Refactor the video player JSX and logic from the course layout into a new, dedicated, reusable component for scalability.
+
+*   [x] **Task 5.3: Implement Dual-Source Logic**
+    *   **Status:** Completed
+    *   **File(s) to be Modified:** `src/components/course/video-player.tsx`
+    *   **Description:** Add conditional rendering logic to the `VideoPlayer` to display either an HTML5 `<video>` for local teasers or the `<YouTube>` component, based on the provided data source.
+
+*   [x] **Task 5.4: Evolve Data Schema**
+    *   **Status:** Completed
+    *   **File(s) to be Modified:** `src/lib/types.ts`
+    *   **Description:** Update the `Course` and `Lesson` types to support both `teaserVideoUrl` (for local teasers) and `youtubeVideoId` (for unlisted YouTube lessons).
+
+*   [x] **Task 5.5: Integrate Smart Player into Layout**
+    *   **Status:** Completed
+    *   **File(s) to be Modified:** `src/components/course/course-page-layout.tsx`
+    *   **Description:** Replace the old video logic with the new `<VideoPlayer />` component and implement the top-level logic to pass the correct video source based on the user's purchase status.
+
+*   [x] **Task 5.6: Update Placeholder Data**
+    *   **Status:** Completed
+    *   **File(s) to be Modified:** `src/lib/placeholder-data.ts`
+    *   **Description:** Align the placeholder data with the new schema, adding placeholder values for `teaserVideoUrl` and `youtubeVideoId` to ensure the application remains functional during development.

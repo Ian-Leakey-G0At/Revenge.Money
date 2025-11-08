@@ -21,6 +21,7 @@ export type Lesson = {
   title: string;
   duration: number; // in minutes
   videoUrl?: string; // will be a signed URL
+  youtubeVideoId?: string; // For YouTube videos
   content: string; // markdown content
   isPreview: boolean;
 };
@@ -38,6 +39,7 @@ export type Course = {
   longDescription: string;
   price: number;
   imageId: string; // references placeholder-images.json
+  teaserVideoUrl: string; // Path to a local teaser video
   category: 'Investing' | 'Debt' | 'Budgeting' | 'Advanced';
   duration: string;
   modules: Module[];

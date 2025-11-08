@@ -1,17 +1,19 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import { courses } from '@/lib/placeholder-data';
-import { CoursePlayer } from '@/components/course/course-player';
 import { VerificationModal } from '@/components/course/verification-modal';
 import { useEffect, useState } from 'react';
+import { CoursePageLayout } from '@/components/course/course-page-layout';
 
 type VerificationState = 'idle' | 'requesting' | 'awaiting_code' | 'verifying' | 'verified' | 'error';
 
-export default function CourseAccessPage({ params }: { params: { courseId: string } }) {
+export default function CourseAccessPage() {
+  const params = useParams();
+  const courseId = typeof params.courseId === 'string' ? params.courseId : '';
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
-  const course = courses.find(c => c.id === params.courseId);
+  const course = courses.find(c => c.id === courseId);
 
   const [verificationState, setVerificationState] = useState<VerificationState>('idle');
   const [error, setError] = useState<string | null>(null);
@@ -87,7 +89,7 @@ export default function CourseAccessPage({ params }: { params: { courseId: strin
   }
 
   if (verificationState === 'verified') {
-    return <CoursePlayer course={course} />;
+    return <CoursePageLayout course={course} isPurchased={true} />;
   }
 
   // Show the verification modal if we are awaiting a code.

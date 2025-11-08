@@ -1,21 +1,67 @@
 'use client';
 
-import { Video } from "lucide-react";
+import { PlayCircle, Video, ChevronDown } from "lucide-react";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
+import { type Lesson } from "@/lib/types";
 
-export function VideoPlaylist({ videos, onVideoSelect, currentVideo }: { videos: any[], onVideoSelect: (video: any) => void, currentVideo: any }) {
-  return (
-    <div className="flex flex-col gap-y-3">
-      {videos.map((video) => (
-        <button
-          key={video.id}
-          onClick={() => onVideoSelect(video)}
-          className={`flex items-center gap-x-4 p-3 rounded-lg w-full text-left transition-colors ${currentVideo?.id === video.id ? 'bg-primary/10 text-primary font-semibold' : 'hover:bg-muted-foreground/10'}`}>
-          <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center ${currentVideo?.id === video.id ? 'bg-primary/20' : 'bg-green-100'}`}>
-            <Video className={`h-6 w-6 ${currentVideo?.id === video.id ? 'text-primary' : 'text-green-600'}`} />
-          </div>
-          <span className="flex-1">{video.title}</span>
-        </button>
-      ))}
-    </div>
-  );
+interface VideoPlaylistProps {
+    videos: Lesson[];
+    onVideoSelect: (video: Lesson) => void;
+}
+
+export function VideoPlaylist({ videos, onVideoSelect }: VideoPlaylistProps) {
+    const handlePlayClick = (e: React.MouseEvent, video: Lesson) => {
+        e.stopPropagation();
+        onVideoSelect(video);
+    };
+
+    return (
+        <Card className="overflow-hidden">
+            <CardContent className="p-0">
+                <Accordion type="single" collapsible className="w-full">
+                    {videos.map((video, index) => (
+                        <AccordionItem value={video.id} key={video.id} className={index === 0 ? "border-t-0" : ""}>
+                            <AccordionTrigger
+                                className="p-4 hover:no-underline group [&>svg]:hidden" // Hide the default chevron
+                            >
+                                <div className="flex items-center justify-between w-full">
+                                    {/* Left Side: Text and Icon */}
+                                    <div className="flex items-center gap-x-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted flex-shrink-0">
+                                            <Video className="h-5 w-5 text-muted-foreground" />
+                                        </div>
+                                        <p className="font-medium text-foreground text-left">{video.title}</p>
+                                    </div>
+
+                                    {/* Right Side: Controls */}
+                                    <div className="flex items-center gap-x-2">
+                                        <div
+                                            role="button"
+                                            aria-label={`Play video: ${video.title}`}
+                                            onClick={(e) => handlePlayClick(e, video)}
+                                            className="p-2 rounded-full hover:bg-accent/20 transition-colors z-10"
+                                        >
+                                            <PlayCircle className="h-6 w-6 text-gray-400 group-hover:text-accent transition-colors" />
+                                        </div>
+                                        <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 text-muted-foreground group-data-[state=open]:rotate-180" />
+                                    </div>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pb-4 px-4 pl-16">
+                                <p className="text-muted-foreground">
+                                  This is a placeholder description for the video "{video.title}". The actual description will be added later.
+                                </p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </CardContent>
+        </Card>
+    );
 }
