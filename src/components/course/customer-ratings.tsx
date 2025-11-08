@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import type { Course } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 // Helper function to create a biased, positive rating distribution
 const generateRatingDistribution = (rating: number, totalReviews: number) => {
@@ -65,6 +66,7 @@ export function CustomerRatings({ course }: { course: Course }) {
   const [hoveredStars, setHoveredStars] = useState(0);
   const [selectedStars, setSelectedStars] = useState(0);
   const [isWritingReview, setIsWritingReview] = useState(false);
+  const [accessToken] = useLocalStorage<string | null>(`access_token_${course.id}`, null);
   const ratingDistribution = generateRatingDistribution(course.rating, course.studentsCount);
 
   const handleSubmitReview = () => {
@@ -115,48 +117,50 @@ export function CustomerRatings({ course }: { course: Course }) {
         </div>
 
         {/* Write a Review Section */}
-        <div className="mt-6 pt-6 border-t">
-          {isWritingReview ? (
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm font-medium mb-2">Your Rating</p>
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onMouseEnter={() => setHoveredStars(star)}
-                      onMouseLeave={() => setHoveredStars(0)}
-                      onClick={() => setSelectedStars(star)}
-                      aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
-                    >
-                      <Star
-                        className={cn(
-                          'w-6 h-6 cursor-pointer transition-colors',
-                          (hoveredStars || selectedStars) >= star
-                            ? 'text-primary fill-primary'
-                            : 'text-muted-foreground/30'
-                        )}
-                      />
-                    </button>
-                  ))}
+        {accessToken && (
+          <div className="mt-6 pt-6 border-t">
+            {isWritingReview ? (
+              <div className="space-y-4">
+                <div>
+                  <p className="text-sm font-medium mb-2">Your Rating</p>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        onMouseEnter={() => setHoveredStars(star)}
+                        onMouseLeave={() => setHoveredStars(0)}
+                        onClick={() => setSelectedStars(star)}
+                        aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
+                      >
+                        <Star
+                          className={cn(
+                            'w-6 h-6 cursor-pointer transition-colors',
+                            (hoveredStars || selectedStars) >= star
+                              ? 'text-primary fill-primary'
+                              : 'text-muted-foreground/30'
+                          )}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-sm font-medium mb-2">Your Review</p>
+                  <Textarea placeholder="Tell us about your experience..." />
+                </div>
+                <div className="flex justify-end gap-2">
+                  <Button variant="ghost" onClick={() => setIsWritingReview(false)}>Cancel</Button>
+                  <Button onClick={handleSubmitReview}>Submit Review</Button>
                 </div>
               </div>
-              <div>
-                <p className="text-sm font-medium mb-2">Your Review</p>
-                <Textarea placeholder="Tell us about your experience..." />
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button variant="ghost" onClick={() => setIsWritingReview(false)}>Cancel</Button>
-                <Button onClick={handleSubmitReview}>Submit Review</Button>
-              </div>
-            </div>
-          ) : (
-            <Button variant="outline" className="w-full" onClick={() => setIsWritingReview(true)}>
-              <Edit className="mr-2 h-4 w-4" />
-              Write a Review
-            </Button>
-          )}
-        </div>
+            ) : (
+              <Button variant="outline" className="w-full" onClick={() => setIsWritingReview(true)}>
+                <Edit className="mr-2 h-4 w-4" />
+                Write a Review
+              </Button>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );

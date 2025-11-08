@@ -15,7 +15,7 @@ import { testimonials, generateRandomReviewer } from '@/lib/testimonials';
 export function StudentTestimonials() {
   const [randomReviewers, setRandomReviewers] = useState<ReturnType<typeof generateRandomReviewer>[]>([]);
   const plugin = useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
   useEffect(() => {
@@ -39,34 +39,34 @@ export function StudentTestimonials() {
           onMouseLeave={plugin.current.reset}
           className="w-full max-w-7xl mx-auto"
         >
-          <CarouselContent className="-ml-8">
+          <CarouselContent className="-ml-4">
             {testimonials.map((testimonial, index) => {
                 const reviewer = randomReviewers[index] || { name: 'S', location: '...', rating: 5 };
                 const avatar = PlaceHolderImages.find((img) => img.id === testimonial.imageId);
                 return (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-8">
-                    <div className="h-full p-8 flex flex-col items-center text-center glassmorphism rounded-2xl border">
-                        <Avatar className="w-20 h-20 mb-6">
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                    <div className="h-full p-4 md:p-6 flex flex-col items-center text-center glassmorphism rounded-lg border">
+                        <Avatar className="w-12 h-12 md:w-16 md:h-16 mb-4">
                             {avatar && <AvatarImage src={avatar.imageUrl} alt={reviewer.name} />}
-                            <AvatarFallback className="text-3xl">{reviewer.name.charAt(0)}</AvatarFallback>
+                            <AvatarFallback className="text-xl">{reviewer.name.charAt(0)}</AvatarFallback>
                         </Avatar>
-                        <div className="flex items-center gap-1.5 mb-6">
+                        <div className="flex items-center gap-1.5 mb-4">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star
                               key={star}
                               className={cn(
-                                'w-5 h-5',
+                                'w-4 h-4',
                                 reviewer.rating >= star ? 'text-primary fill-primary' : 'text-foreground/10'
                               )}
                             />
                           ))}
                         </div>
-                        <blockquote className="text-lg font-light text-foreground/80 italic mb-8 flex-grow">
+                        <blockquote className="text-sm md:text-base font-light text-foreground/80 italic mb-4 flex-grow">
                           “{testimonial.quote}”
                         </blockquote>
                         <div className="mt-auto">
-                            <p className="font-semibold text-base">{reviewer.name}</p>
-                            <p className="text-sm text-muted-foreground">{reviewer.location}</p>
+                            <p className="font-semibold text-sm">{reviewer.name}</p>
+                            <p className="text-xs text-muted-foreground">{reviewer.location}</p>
                         </div>
                     </div>
                   </CarouselItem>
