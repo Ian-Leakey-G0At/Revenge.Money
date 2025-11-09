@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* The hero section with a full-width carousel. */}
-      <section className="w-full">
+      <section className="container mx-auto px-4 mt-4">
         <HeroCarousel />
       </section>
       

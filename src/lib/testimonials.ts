@@ -1,4 +1,3 @@
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 // Data for randomization
 export const firstNames = ['John', 'Jane', 'Alex', 'Emily', 'Chris', 'Katie', 'Michael', 'Sarah', 'David', 'Laura'];
@@ -9,27 +8,21 @@ export const worldCities = ['London, UK', 'Toronto, CA', 'Sydney, AU', 'Berlin, 
 export const testimonials = [
   {
     quote: 'This course was a game-changer for my financial literacy. The instructor breaks down complex topics into easy-to-understand lessons. Highly recommended!',
-    imageId: 'testimonial-avatar-1'
   },
   {
     quote: 'I finally feel in control of my money. The budgeting strategies are practical and have made a huge difference in my savings.',
-    imageId: 'testimonial-avatar-2'
   },
   {
     quote: 'The advanced investing strategies were exactly what I was looking for. I feel much more confident in my ability to manage my portfolio.',
-    imageId: 'testimonial-avatar-3'
   },
   {
     quote: 'I went from being afraid of the stock market to making my first investment. This course is perfect for absolute beginners.',
-    imageId: 'testimonial-avatar-4'
   },
   {
     quote: 'The real estate investing module was fantastic. I now have a clear roadmap to buying my first rental property.',
-    imageId: 'testimonial-avatar-5'
   },
   {
     quote: 'An amazing deep dive into the world of crypto. I feel like I finally understand the technology and the investment opportunities.',
-    imageId: 'testimonial-avatar-6'
   },
 ];
 

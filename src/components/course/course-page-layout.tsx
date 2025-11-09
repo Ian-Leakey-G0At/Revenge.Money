@@ -1,6 +1,5 @@
 'use client';
 import { courses } from '@/lib/placeholder-data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -50,10 +49,6 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
     });
   };
 
-  const instructorAvatar = PlaceHolderImages.find(
-    (img) => img.id === course.instructor.avatarId
-  );
-  
   const videoSource = isPurchased ? "youtube" : "local";
   const videoIdentifier = isPurchased ? currentLesson.youtubeVideoId! : course.teaserVideoUrl;
 
@@ -70,12 +65,6 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
           <div className="flex items-center gap-4 text-muted-foreground mb-8">
             <div className="flex items-center gap-2">
               <Avatar className="h-8 w-8">
-                {instructorAvatar && (
-                  <AvatarImage
-                    src={instructorAvatar.imageUrl}
-                    alt={course.instructor.name}
-                  />
-                )}
                 <AvatarFallback>
                   {course.instructor.name.charAt(0)}
                 </AvatarFallback>

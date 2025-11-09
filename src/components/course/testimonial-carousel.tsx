@@ -7,7 +7,6 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState, useEffect, useRef } from 'react';
@@ -40,12 +39,10 @@ export function TestimonialCarousel() {
         {testimonials.map((testimonial, index) => {
             // Use generated data if available (client-side), otherwise use placeholders
             const reviewer = randomReviewers[index] || { name: 'Student', location: 'USA', rating: 5 };
-            const avatar = PlaceHolderImages.find((img) => img.id === testimonial.imageId);
             return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
                 <div className="h-full p-4 md:p-6 flex flex-col items-center text-center glassmorphism rounded-lg border">
                   <Avatar className="w-12 h-12 md:w-16 md:h-16 mb-4">
-                    {avatar && <AvatarImage src={avatar.imageUrl} alt={reviewer.name} />}
                     <AvatarFallback className="text-xl">{reviewer.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div className="flex items-center gap-1.5 mb-4">
