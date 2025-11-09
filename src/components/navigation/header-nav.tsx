@@ -10,6 +10,7 @@
 import { Link } from '@lexz451/next-nprogress';
 import { ThemeToggle } from './theme-toggle';
 import { Logo } from '@/components/icons';
+import { Suspense } from 'react';
 
 /**
  * An array of navigation links to be displayed in the header.
@@ -29,14 +30,14 @@ const navLinks = [
  *
  * @returns {JSX.Element} The rendered header navigation.
  */
-export function HeaderNav() {
+function HeaderNavContent() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <Logo />
         </Link>
-        
+
         <nav className="hidden items-center gap-6 text-sm md:flex">
           {navLinks.map(link => (
             <Link
@@ -54,5 +55,13 @@ export function HeaderNav() {
         </div>
       </div>
     </header>
+  );
+}
+
+export function HeaderNav() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeaderNavContent />
+    </Suspense>
   );
 }
