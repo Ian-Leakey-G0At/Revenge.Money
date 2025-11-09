@@ -24,7 +24,7 @@ export const PortraitStats = ({ stats }: { stats: Stat[] }) => (
               <p className="text-sm text-muted-foreground">{stat.title}</p>
               <p className="text-2xl font-bold">{stat.value}</p>
             </div>
-            {index < stats.length - 1 && <hr />}
+            {index < stats.length - 1 && <hr className="border-t" />}
           </div>
         ))}
       </div>

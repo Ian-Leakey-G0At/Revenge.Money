@@ -112,11 +112,11 @@ export function CourseCard({ course }: CourseCardProps) {
         <h3 className="course-card__title">{course.title}</h3>
         <div className="course-card__info-bar">
           <p className="course-card__video-count">
-            <Video />
+            <Video className="w-4 h-4" />
             <span>{totalLessons}</span>
           </p>
           <p className="course-card__student-count">
-            <Users />
+            <Users className="w-4 h-4" />
             <span>{course.studentsCount.toLocaleString()}</span>
           </p>
         </div>
