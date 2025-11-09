@@ -18,7 +18,7 @@ import {
     DialogTitle,
     DialogClose
 } from "@/components/ui/dialog";
-import type { Course } from "@/lib/placeholder-data";
+import type { Course } from "@/lib/types";
 import { MoreVertical, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
@@ -39,9 +39,9 @@ export const CourseList = ({ courses }: { courses: Course[] }) => {
     };
 
     const confirmDelete = () => {
-        if (selectedCourse && confirmationInput === selectedCourse.title) {
+        if (selectedCourse && confirmationInput === selectedCourse.name) {
             // Placeholder for backend delete logic (e.g., calling a Cloud Function)
-            console.log("Initiating deletion for course:", selectedCourse.title);
+            console.log("Initiating deletion for course:", selectedCourse.name);
             setIsDeleteDialogOpen(false);
             setSelectedCourse(null);
         }
@@ -57,7 +57,7 @@ export const CourseList = ({ courses }: { courses: Course[] }) => {
                         className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50"
                     >
                         <div className="flex flex-col">
-                            <h3 className="font-semibold">{course.title}</h3>
+                            <h3 className="font-semibold">{course.name}</h3>
                             <div className="text-sm text-muted-foreground">
                                 <span>${course.price}</span>
                                 <span className="mx-2">&middot;</span>
@@ -94,7 +94,7 @@ export const CourseList = ({ courses }: { courses: Course[] }) => {
                         </div>
                         <DialogTitle className="text-xl font-bold">Delete Course</DialogTitle>
                         <DialogDescription>
-                           The course <strong className="text-foreground">{selectedCourse?.title}</strong> will be permanently deleted.
+                           The course <strong className="text-foreground">{selectedCourse?.name}</strong> will be permanently deleted.
                         </DialogDescription>
                     </DialogHeader>
                     <div className="py-4">
@@ -117,7 +117,7 @@ export const CourseList = ({ courses }: { courses: Course[] }) => {
                         <Button
                             variant="destructive"
                             onClick={confirmDelete}
-                            disabled={confirmationInput !== (selectedCourse?.title || '')}
+                            disabled={confirmationInput !== (selectedCourse?.name || '')}
                         >
                             Delete
                         </Button>

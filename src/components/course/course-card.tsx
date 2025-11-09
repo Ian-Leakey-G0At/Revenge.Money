@@ -95,7 +95,7 @@ export function CourseCard({ course }: CourseCardProps) {
             <button
               onClick={handlePlayPause}
               className="course-card__play-button"
-              aria-label={`Play preview for ${course.title}`}
+              aria-label={`Play preview for ${course.name}`}
             >
               <Play className={cn("fill-white", isPlaying && "fill-primary")} />
             </button>
@@ -109,7 +109,7 @@ export function CourseCard({ course }: CourseCardProps) {
       </Link>
 
       <div className="course-card__title-section">
-        <h3 className="course-card__title">{course.title}</h3>
+        <h3 className="course-card__title">{course.name}</h3>
         <div className="course-card__info-bar">
           <p className="course-card__video-count">
             <Video className="w-4 h-4" />

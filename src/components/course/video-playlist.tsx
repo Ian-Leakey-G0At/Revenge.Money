@@ -55,7 +55,7 @@ export function VideoPlaylist({ videos, onVideoSelect }: VideoPlaylistProps) {
                             </AccordionTrigger>
                             <AccordionContent className="pb-4 px-4 pl-16">
                                 <p className="text-muted-foreground">
-                                  This is a placeholder description for the video "{video.title}". The actual description will be added later.
+                                  {video.content}
                                 </p>
                             </AccordionContent>
                         </AccordionItem>

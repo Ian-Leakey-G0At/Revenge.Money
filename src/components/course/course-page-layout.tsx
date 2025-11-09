@@ -45,7 +45,7 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
   const handlePurchase = () => {
     toast({
       title: 'Checkout Initiated (Mock)',
-      description: `You are being redirected to purchase "${course.title}". This is a mock action.`,
+      description: `You are being redirected to purchase \"${course.name}\". This is a mock action.`,
     });
   };
 
@@ -60,7 +60,7 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
 
         <main className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold tracking-tight uppercase md:text-4xl font-headline mb-3">
-            {course.title}
+            {course.name}
           </h1>
           <div className="flex items-center gap-4 text-muted-foreground mb-8">
             <div className="flex items-center gap-2">

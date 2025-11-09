@@ -34,13 +34,13 @@ export type Module = {
 
 export type Course = {
   id: string;
-  title: string;
-  description: string;
+  name: string;
+  shortDescription: string;
   longDescription: string;
   price: number;
   imageId: string; // references placeholder-images.json
   teaserVideoUrl: string; // Path to a local teaser video
-  category: 'Investing' | 'Debt' | 'Budgeting' | 'Advanced';
+  category: string;
   duration: string;
   modules: Module[];
   instructor: {
@@ -49,6 +49,14 @@ export type Course = {
   };
   rating: number;
   studentsCount: number;
-  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
   purchased?: boolean;
+  introductionScript?: string;
+};
+
+export type Instructor = {
+  id: string;
+  name: string;
+  avatarId: string;
+  bio: string;
 };
