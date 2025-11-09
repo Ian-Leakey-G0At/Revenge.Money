@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { AppProvider } from '@/components/layout/app-provider';
 import { ProgressBar } from '@lexz451/next-nprogress';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'RevengeLearn',
@@ -25,11 +26,13 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <AppProvider>{children}</AppProvider>
         <Toaster />
-        <ProgressBar
-          height="4px"
-          color="#000000"
-          options={{ showSpinner: false }}
-        />
+        <Suspense fallback={null}>
+          <ProgressBar
+            height="4px"
+            color="#000000"
+            options={{ showSpinner: false }}
+          />
+        </Suspense>
       </body>
     </html>
   );
