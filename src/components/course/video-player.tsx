@@ -17,8 +17,28 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(false);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+
+  const handleShowControls = () => {
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    setShowControls(true);
+    controlsTimeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 2000);
+  };
+
+  const handleHideControls = () => {
+    if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+    }
+    setShowControls(false);
+  }
 
   const togglePlayPause = () => {
+    handleShowControls();
     if (source === 'local' && videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play();
@@ -38,6 +58,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   };
 
   const toggleMute = () => {
+    handleShowControls();
     if (source === 'local' && videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
@@ -53,6 +74,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   };
 
   const handleReplay = () => {
+    handleShowControls();
     if (source === 'local' && videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play();
@@ -63,6 +85,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   };
 
   const handleRewind = () => {
+    handleShowControls();
     if (source === 'local' && videoRef.current) {
       videoRef.current.currentTime -= 10;
     } else if (source === 'youtube' && youtubePlayerRef.current) {
@@ -72,6 +95,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   };
 
   const handleForward = () => {
+    handleShowControls();
     if (source === 'local' && videoRef.current) {
       videoRef.current.currentTime += 10;
     } else if (source === 'youtube' && youtubePlayerRef.current) {
@@ -98,13 +122,13 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
   return (
     <div
       className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted group"
-      onMouseEnter={() => setShowControls(true)}
-      onMouseLeave={() => setShowControls(false)}
+      onMouseMove={handleShowControls}
+      onMouseLeave={handleHideControls}
     >
       {source === 'local' ? (
         <video
           ref={videoRef}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           src={identifier}
           autoPlay
           muted
