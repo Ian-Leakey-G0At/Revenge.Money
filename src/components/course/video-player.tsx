@@ -1,9 +1,8 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Volume2, VolumeX, RotateCcw } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import YouTube from 'react-youtube';
+import YouTube, { YouTubeProps } from 'react-youtube';
 
 interface VideoPlayerProps {
   source: 'local' | 'youtube';
@@ -69,6 +68,10 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
       onEnded();
     }
   }
+  
+  const onReady: YouTubeProps['onReady'] = (event) => {
+    youtubePlayerRef.current = event.target;
+  };
 
   return (
     <div
@@ -91,7 +94,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
       ) : (
         <YouTube
           videoId={identifier}
-          onReady={(event) => (youtubePlayerRef.current = event.target)}
+          onReady={onReady}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
           onEnd={handleEnd}
@@ -111,10 +114,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
         />
       )}
       <div
-        className={cn(
-          'absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300',
-          showControls ? 'opacity-100' : 'opacity-0'
-        )}
+        className={`absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}
       >
         <div className="flex items-center gap-4">
           <Button
