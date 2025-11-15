@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Play, Pause, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, RotateCcw, Rewind, FastForward } from 'lucide-react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 
 interface VideoPlayerProps {
@@ -61,9 +61,31 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
       youtubePlayerRef.current.playVideo();
     }
   };
+
+  const handleRewind = () => {
+    if (source === 'local' && videoRef.current) {
+      videoRef.current.currentTime -= 10;
+    } else if (source === 'youtube' && youtubePlayerRef.current) {
+      const currentTime = youtubePlayerRef.current.getCurrentTime();
+      youtubePlayerRef.current.seekTo(currentTime - 10, true);
+    }
+  };
+
+  const handleForward = () => {
+    if (source === 'local' && videoRef.current) {
+      videoRef.current.currentTime += 10;
+    } else if (source === 'youtube' && youtubePlayerRef.current) {
+      const currentTime = youtubePlayerRef.current.getCurrentTime();
+      youtubePlayerRef.current.seekTo(currentTime + 10, true);
+    }
+  };
   
   const handleEnd = () => {
     setIsPlaying(false);
+    if (source === 'youtube' && youtubePlayerRef.current) {
+        youtubePlayerRef.current.seekTo(0);
+        youtubePlayerRef.current.pauseVideo();
+    }
     if(onEnded) {
       onEnded();
     }
@@ -75,7 +97,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
 
   return (
     <div
-      className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted my-6 group"
+      className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted group"
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -106,10 +128,6 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
               mute: 1,
               controls: 0,
               rel: 0,
-              modestbranding: 1,
-              loop: 0,
-              iv_load_policy: 3,
-              showinfo: 0,
             },
           }}
           className="w-full h-full absolute top-0 left-0"
@@ -123,6 +141,14 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
             variant="ghost"
             size="icon"
             className="text-white hover:bg-white/20"
+            onClick={handleRewind}
+          >
+            <Rewind className="w-8 h-8" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/20"
             onClick={togglePlayPause}
           >
             {isPlaying ? (
@@ -130,6 +156,14 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
             ) : (
               <Play className="w-8 h-8" />
             )}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-white hover:bg-white/20"
+            onClick={handleForward}
+          >
+            <FastForward className="w-8 h-8" />
           </Button>
           <Button
             variant="ghost"
