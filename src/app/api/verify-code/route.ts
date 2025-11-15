@@ -29,13 +29,15 @@ export async function POST(request: NextRequest) {
     // *** THE CRITICAL LOCK AND KEY CHECK ***
     // We verify that the key (token) is for the specific door (courseId) the user is trying to open.
     if (tokenData.courseId !== courseId) {
-      // Burn the token anyway as a security measure against token scanning attempts.
-      await redis.del(tokenKey);
+      // Per "Durable Key" model, we no longer burn the token on read.
+      // The token's validity is now controlled by its expiry in the KV store.
+      // await redis.del(tokenKey); 
       return NextResponse.json({ error: 'This token is not valid for this course.' }, { status: 403 }); // 403 Forbidden
     }
 
-    // Burn on read: The token is valid and has served its purpose.
-    await redis.del(tokenKey);
+    // Per "Durable Key" model, we no longer burn the token on read.
+    // The token's validity is now controlled by its expiry in the KV store.
+    // await redis.del(tokenKey); 
 
     console.log(`VERIFY_SUCCESS: Token validated for course ${tokenData.courseId}`);
     // The token is valid for this course. Grant access.

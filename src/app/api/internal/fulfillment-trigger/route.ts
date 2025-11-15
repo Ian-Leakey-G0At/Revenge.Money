@@ -37,7 +37,8 @@ export async function POST(req: NextRequest) {
     const tokenKey = `token:${token}`;
     const tokenData = { courseId, email: customerEmail };
 
-    await redis.set(tokenKey, JSON.stringify(tokenData), { ex: 86400 * 7 });
+    const ONE_YEAR_IN_SECONDS = 86400 * 365;
+    await redis.set(tokenKey, JSON.stringify(tokenData), { ex: ONE_YEAR_IN_SECONDS });
     
     const course = courses.find(c => c.id === courseId);
     const courseName = course ? course.name : 'Your Acquired Knowledge';
