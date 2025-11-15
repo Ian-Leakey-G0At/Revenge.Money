@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis'; // ACTION: Import the official, correct client
+import { Redis } from '@upstash/redis';
 import { Resend } from 'resend';
 import crypto from 'crypto';
 import { courses } from '@/lib/placeholder-data';
 import AccessEmail from '@/emails/AccessEmail';
 
-// ACTION: Initialize clients using the official, environment-aware methods
 const resend = new Resend(process.env.RESEND_API_KEY);
-const redis = Redis.fromEnv(); // This method is designed to find the Vercel KV env vars
+const redis = Redis.fromEnv();
 
 export async function POST(req: NextRequest) {
   console.log('INFO: Internal fulfillment request received.');
 
-  // 1. **The Internal Handshake**: (This logic is perfect and remains unchanged)
   const internalSecret = process.env.INTERNAL_API_SECRET_KEY;
   if (!internalSecret) {
     console.error('CRITICAL FAILURE: INTERNAL_API_SECRET_KEY is not set.');
@@ -26,7 +24,6 @@ export async function POST(req: NextRequest) {
   }
   console.log('SUCCESS: Internal courier verified.');
 
-  // 2. **Process the Generic Command**: (This logic is perfect and remains unchanged)
   try {
     const { eventType, payload } = await req.json();
 
@@ -41,7 +38,6 @@ export async function POST(req: NextRequest) {
     }
     console.log(`FULFILLMENT_TRIGGER: Request for ${customerEmail}, Course ID: ${courseId}`);
 
-    // 3. **The Fulfillment Engine**:
     const token = crypto.randomUUID();
     const tokenKey = `token:${token}`;
     const tokenData = { courseId, email: customerEmail };
@@ -49,23 +45,25 @@ export async function POST(req: NextRequest) {
     await redis.set(tokenKey, JSON.stringify(tokenData), { ex: 86400 * 7 });
     console.log(`SUCCESS [LEDGER]: Token for ${customerEmail} stored in Upstash Redis (Vercel KV).`);
 
-    // Dispatch the Raven (This logic is perfect and remains unchanged)
     const course = courses.find(c => c.id === courseId);
     const courseName = course ? course.name : 'Your Acquired Knowledge';
     const accessLink = `https://revenge-money.vercel.app/my-courses/${courseId}?token=${token}`;
 
     await resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: customerEmail,
-        subject: `TEST: Your Key to the Fortress: Access to ${courseName}`,
-        html: `<h1>Test Email</h1><p>Your access link is: <a href="${accessLink}">${accessLink}</a></p>`,
-      });
+      from: 'onboarding@resend.dev',
+      to: customerEmail,
+      subject: `Your Key to the Fortress: Access to ${courseName}`,
+      react: AccessEmail({
+        email: customerEmail,
+        courseName,
+        accessLink,
+      }),
+    });
     console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
 
     return new NextResponse('Fulfillment successful.', { status: 200 });
 
   } catch (error) {
-    // The enhanced logging is still critical
     console.error('CRITICAL_FAILURE: Fulfillment engine failed.');
     console.error('Error Details:', error);
     if (error instanceof Error) {
