@@ -16,8 +16,8 @@ Our primary goal is to build a direct-to-consumer digital storefront for selling
 ## 3. The User Flow
 
 1.  **Discovery:** A user browses courses on the homepage or the "Deals" page.
-2.  **Purchase:** The user is directed to a third-party payment provider (e.g., Stripe) to complete the transaction.
-3.  **Access:** Upon successful payment, the user instantly receives an email containing a unique, permanent link to their course (`https://[domain]/my-courses/[courseId]?token=[access_token]`).
+2.  **Acquisition:** The user is directed to our partner art gallery, `VendettaMachine`, to complete the acquisition.
+3.  **Access:** Upon successful acquisition, the user instantly receives an email containing a unique, permanent link to their course (`https://[domain]/my-courses/[courseId]?token=[access_token]`).
 4.  **Consumption:** The user clicks the link and immediately views the course content (embedded from YouTube) within our clean, focused interface. They can bookmark this link for future access.
 
 ## 4. Plan of Action
