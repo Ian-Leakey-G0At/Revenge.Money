@@ -62,7 +62,7 @@ const courseName = course ? course.name : 'Your Acquired Knowledge';
 const accessLink = `https://revenge-money.vercel.app/my-courses/${courseId}?token=${token}`;
 
 await resend.emails.send({
-from: 'The Architect <noreply@revenge.money>',
+from: 'onboarding@resend.dev',
 to: customerEmail,
 subject: `Your Key to the Fortress: Access to ${courseName}`,
 react: AccessEmail({
@@ -76,7 +76,13 @@ console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
 return new NextResponse('Fulfillment successful.', { status: 200 });
 
 } catch (error) {
-console.error('CRITICAL_FAILURE: Fulfillment engine failed:', error);
+console.error('CRITICAL_FAILURE: Fulfillment engine failed.');
+console.error('Error Details:', error);
+if (error instanceof Error) {
+console.error('Error Name:', error.name);
+console.error('Error Message:', error.message);
+console.error('Error Stack:', error.stack);
+}
 return new NextResponse('Fulfillment processing error.', { status: 500 });
 }
 }
