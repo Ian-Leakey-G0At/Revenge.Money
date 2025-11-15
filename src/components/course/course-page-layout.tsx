@@ -1,3 +1,4 @@
+
 'use client';
 import { courses } from '@/lib/placeholder-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -55,7 +56,9 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
   return (
     <div className="bg-background pb-24">
       <div className="container mx-auto px-4 md:px-6">
-        <VideoPlayer source={videoSource} identifier={videoIdentifier} />
+        <div className="my-2">
+          <VideoPlayer source={videoSource} identifier={videoIdentifier} />
+        </div>
 
         <main className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold tracking-tight uppercase md:text-4xl font-headline mb-3">
