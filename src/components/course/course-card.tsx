@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Play, Users, Video } from 'lucide-react';
@@ -68,45 +69,49 @@ export function CourseCard({ course }: CourseCardProps) {
 
   return (
     <div className="course-card-container">
-      <Link 
-        href={href}
-        onClick={handleLinkClick}
-        prefetch={!isMobile} // Disable prefetching on mobile
+      <div
         className="block course-card__media-section"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
       >
-        <article>
-          {isPlaying && (
-            <video 
-                className="course-card__video" 
-                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder
-                autoPlay 
-                controls={false}
-                muted
-                loop
-                onEnded={() => setIsPlaying(false)}
-              />
-          )}
+        <Link 
+          href={href}
+          onClick={handleLinkClick}
+          prefetch={!isMobile} // Disable prefetching on mobile
+          className="w-full h-full"
+          aria-label={`View details for ${course.name}`}
+        >
+          <article className="w-full h-full">
+            {isPlaying && (
+              <video 
+                  className="course-card__video pointer-events-none" 
+                  src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder
+                  autoPlay 
+                  controls={false}
+                  muted
+                  loop
+                  onEnded={() => setIsPlaying(false)}
+                />
+            )}
 
-          {!course.purchased && (
-            <button
-              onClick={handlePlayPause}
-              className="course-card__play-button"
-              aria-label={`Play preview for ${course.name}`}
-            >
-              <Play className={cn("fill-white", isPlaying && "fill-primary")} />
-            </button>
-          )}
-
-          <div className="course-card__media-overlay">
-            {!course.purchased && <span className="course-card__price-tag">${course.price}</span>}
-            {course.purchased && <span className="course-card__price-tag">Purchased</span>}
-          </div>
-        </article>
-      </Link>
+            <div className="course-card__media-overlay">
+              {!course.purchased && <span className="course-card__price-tag">${course.price}</span>}
+              {course.purchased && <span className="course-card__price-tag">Purchased</span>}
+            </div>
+          </article>
+        </Link>
+        {!course.purchased && (
+          <button
+            onClick={handlePlayPause}
+            className="course-card__play-button"
+            aria-label={`Play preview for ${course.name}`}
+          >
+            <Play className={cn("fill-white", isPlaying && "fill-primary")} />
+          </button>
+        )}
+      </div>
 
       <div className="course-card__title-section">
         <h3 className="course-card__title">{course.name}</h3>
