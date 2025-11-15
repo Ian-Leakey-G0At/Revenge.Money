@@ -108,6 +108,8 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
               rel: 0,
               modestbranding: 1,
               loop: 0,
+              iv_load_policy: 3,
+              showinfo: 0,
             },
           }}
           className="w-full h-full absolute top-0 left-0"
