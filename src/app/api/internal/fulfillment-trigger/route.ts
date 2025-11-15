@@ -46,9 +46,6 @@ export async function POST(req: NextRequest) {
     const tokenKey = `token:${token}`;
     const tokenData = { courseId, email: customerEmail };
 
-    // ACTION: Use the new, correct client and its methods
-    // The `.set()` method from `@upstash/redis` is slightly different.
-    // It takes the key, then the value. Expiry is set in a separate options object.
     await redis.set(tokenKey, JSON.stringify(tokenData), { ex: 86400 * 7 });
     console.log(`SUCCESS [LEDGER]: Token for ${customerEmail} stored in Upstash Redis (Vercel KV).`);
 
@@ -58,15 +55,11 @@ export async function POST(req: NextRequest) {
     const accessLink = `https://revenge-money.vercel.app/my-courses/${courseId}?token=${token}`;
 
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: customerEmail,
-      subject: `Your Key to the Fortress: Access to ${courseName}`,
-      react: AccessEmail({
-        email: customerEmail,
-        courseName,
-        accessLink,
-      }),
-    });
+        from: 'onboarding@resend.dev',
+        to: customerEmail,
+        subject: `TEST: Your Key to the Fortress: Access to ${courseName}`,
+        html: `<h1>Test Email</h1><p>Your access link is: <a href="${accessLink}">${accessLink}</a></p>`,
+      });
     console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
 
     return new NextResponse('Fulfillment successful.', { status: 200 });
