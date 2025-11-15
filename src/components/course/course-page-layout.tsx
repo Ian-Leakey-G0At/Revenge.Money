@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { LockedVideoPlaylist } from '@/components/course/locked-video-playlist';
 import { type Course, type Lesson } from '@/lib/types';
 import { VideoPlaylist } from './video-playlist';
+import { AntechamberModal } from '@/components/ui/antechamber-modal';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { VideoPlayer } from '@/components/course/video-player';
 
@@ -22,6 +23,7 @@ interface CoursePageLayoutProps {
 
 export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps) {
   const { toast } = useToast();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentLesson, setCurrentLesson] = useState(course.modules.flatMap(module => module.lessons)[0]);
   const [watchedVideos, setWatchedVideos] = useState<Set<string>>(new Set());
@@ -42,11 +44,8 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
     }
   };
 
-  const handlePurchase = () => {
-    toast({
-      title: 'Checkout Initiated (Mock)',
-      description: `You are being redirected to purchase \"${course.name}\". This is a mock action.`,
-    });
+  const handlePurchaseClick = () => {
+    setIsModalOpen(true);
   };
 
   const videoSource = isPurchased ? "youtube" : "local";
@@ -110,16 +109,24 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
               <ProgressBar value={progress} />
              </div>
           ) : (
-            <Button
-              size="lg"
-              className="w-full font-bold text-lg"
-              onClick={handlePurchase}
-            >
-              <div className="flex justify-between items-center w-full">
-                <span>${course.price}</span>
-                <span>Get Now</span>
-              </div>
-            </Button>
+            <>
+              <AntechamberModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onProceed={() => setIsModalOpen(false)}
+                vendettaMachineUrl={course.vendettaMachineUrl}
+              />
+              <Button
+                size="lg"
+                className="w-full font-bold text-lg"
+                onClick={handlePurchaseClick}
+              >
+                <div className="flex justify-between items-center w-full">
+                  <span>${course.price}</span>
+                  <span>Acquire Access</span>
+                </div>
+              </Button>
+            </>
           )}
         </div>
       </div>
