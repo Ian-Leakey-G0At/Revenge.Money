@@ -17,49 +17,33 @@ This phase is focused on building a completely convincing and functional digital
 *   **[x] Task 1.2: Identity & Asset Generation**
 *   **[x] Task 1.3: Storefront Development**
 
-*   **[ ] Task 1.4: Payment Integration & Key Storage**
-    *   **Action:** Select and create an account with Paystack.
-    *   **Action:** In the `VendettaMachine` Vercel project, securely store the Paystack Secret Key (`sk_...`) as an environment variable named `PAYSTACK_SECRET_KEY`.
-    *   **Key Detail:** In the metadata for each product on the Paystack dashboard, define a unique, internal `sku` (e.g., `VEND-001`). This SKU is the key that links the art piece to the `RevengeMoney` course.
+*   **[ ] Task 1.4: Payment Provider Integration (`service-connector`)**
+    *   **Action:** The `service-connector` fortress is responsible for all communication with the external payment provider.
+    *   **Action:** It receives a signed webhook, verifies it, and translates it into a generic, internal `FULFILLMENT_REQUEST`.
 
-*   **[ ] Task 1.5: Webhook Configuration**
-    *   **Action:** Within the Paystack dashboard's "API Keys & Webhooks" section, locate the "Webhook URL" field.
-    *   **Action:** Set the webhook target URL to the `RevengeMoney` API endpoint: **`https://[revenge-money-domain.com]/api/generate-access`**.
-    *   **Critical Correction:** Paystack uses your main API Secret Key (`sk_...`) to sign its webhooks. There is no separate, third "Webhook Secret". The key used for webhook verification is the same key used for API calls.
+*   **[ ] Task 1.5: Internal Communication**
+    *   **Action:** The `service-connector` forwards the `FULFILLMENT_REQUEST` to the `RevengeMoney` fortress's internal API endpoint.
+    *   **Action:** This communication is secured by a shared secret, the `INTERNAL_API_SECRET_KEY`.
 
 ---
 
 ## **Phase 2: `RevengeMoney` - The Fortress Fortification**
 
-This phase involves making precise, surgical modifications to the existing `RevengeMoney` platform to enable it to securely receive and process messages from `VendettaMachine`.
+This phase involves making precise, surgical modifications to the existing `RevengeMoney` platform to enable it to securely receive and process internal commands.
 
 *   **[ ] Task 2.1: Environment Variable Fortification**
-    *   **Action:** In the `RevengeMoney` Vercel project settings, add a new environment variable. For clarity in our code, we will name it `PAYSTACK_WEBHOOK_SECRET`.
-    *   **Action:** The value for this variable is your main Paystack API Secret Key (`sk_...`). **This is the exact same key** used by `VendettaMachine` in its `PAYSTACK_SECRET_KEY` variable.
+    *   **Action:** In the `RevengeMoney` Vercel project settings, add a new environment variable: `INTERNAL_API_SECRET_KEY`.
+    *   **Action:** The value for this variable is the shared secret used to authenticate requests from the `service-connector`.
 
-*   **[ ] Task 2.2: Create the Translation Key**
-    *   **Action:** In the `RevengeMoney` codebase, create a mapping object that translates `VendettaMachine` SKUs to `RevengeMoney` course IDs.
-    *   **File:** `src/app/api/generate-access/route.ts`
-    *   **Code:**
-        ```typescript
-        const artToCourseMap = {
-          'VEND-001': 'course-id-alpha',
-          'VEND-002': 'course-id-bravo',
-          // ... map all 9 SKUs to their respective course IDs
-        };
-        ```
-
-*   **[ ] Task 2.3: Re-Architect the `generate-access` API Endpoint**
-    *   **Action:** Rewrite this endpoint to function as a secure webhook handler.
-    *   **File:** `src/app/api/generate-access/route.ts`
+*   **[ ] Task 2.2: Create the Internal Fulfillment Endpoint**
+    *   **Action:** Create a new, secure endpoint at `/app/api/internal/fulfillment-trigger/route.ts`.
     *   **Logic Flow:**
         1.  Receive the incoming `POST` request.
-        2.  **Verify Signature:** Before parsing any data, use the `PAYSTACK_WEBHOOK_SECRET` environment variable (which holds your main API Secret Key) to cryptographically verify the request's signature from the `x-paystack-signature` header. If verification fails, immediately return a `401 Unauthorized` error and stop.
-        3.  **Parse Data:** Only after successful verification, parse the JSON body of the request.
-        4.  **Extract Data:** Get the customer email (`data.customer.email`) and the product SKU (`data.metadata.sku`).
-        5.  **Translate:** Use `artToCourseMap` to get the `courseId`.
-        6.  **Fulfill:** Proceed with the existing logic: generate a unique token, store `{ courseId, email }` in Vercel KV, and trigger the fulfillment email.
-        7.  **Acknowledge:** Return a `200 OK` status to the payment provider to confirm successful receipt.
+        2.  **Verify Courier:** Before parsing any data, verify the `Authorization: Bearer` token matches the `INTERNAL_API_SECRET_KEY`. If verification fails, immediately return a `401 Unauthorized`.
+        3.  **Parse Command:** Only after successful verification, parse the JSON body of the request.
+        4.  **Extract Data:** Get the `customerEmail` and `courseId` from the `payload`.
+        5.  **Fulfill:** Proceed with the fulfillment logic: generate a unique access token, store it in Vercel KV, and trigger the fulfillment email.
+        6.  **Acknowledge:** Return a `200 OK` status to the `service-connector` to confirm successful receipt.
 
 *   **[ ] Task 2.4: Modify Frontend "Buy" Triggers**
     *   **Action:** Systematically go through the `RevengeMoney` frontend.

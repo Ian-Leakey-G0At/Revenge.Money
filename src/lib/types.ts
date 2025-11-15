@@ -52,6 +52,7 @@ export type Course = {
   level: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
   purchased?: boolean;
   introductionScript?: string;
+  vendettaMachineUrl: string;
 };
 
 export type Instructor = {

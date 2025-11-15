@@ -4,13 +4,27 @@ This project is a direct-to-consumer digital storefront for selling and deliveri
 
 ## How It Works
 
-1.  Users purchase courses through a third-party payment provider.
-2.  Upon successful payment, they receive a unique, permanent link to access the course content.
-3.  Course content is hosted on YouTube (unlisted) and embedded within our clean, focused interface.
+This application is a pure fulfillment engine. It is part of a larger, decoupled system.
+
+1.  Users initiate a purchase on a separate, public-facing storefront (`VendettaMachine`).
+2.  A trusted intermediary (`service-connector`) processes the payment webhook and sends a secure, internal command to this application.
+3.  This application verifies the internal command and sends the user a unique, permanent link to access their course content.
+4.  Course content is hosted on YouTube (unlisted) and embedded within our clean, focused interface.
 
 ## Tech Stack
 
 *   Next.js & React
 *   Tailwind CSS
-*   Vercel KV (for a simple key-value store)
-*   Next.js API Routes (for serverless functions)
+*   Vercel KV (for storing access tokens)
+*   Next.js API Routes (for the internal fulfillment endpoint)
+
+## Setup
+
+1.  Clone the repository.
+2.  Install dependencies with `npm install`.
+3.  Create a `.env.local` file by copying `.env.example`.
+4.  Fill in the required environment variables:
+    *   `KV_URL`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `KV_REST_API_READ_ONLY_TOKEN`: Credentials for your Vercel KV store.
+    *   `RESEND_API_KEY`: Your API key for the Resend email service.
+    *   `INTERNAL_API_SECRET_KEY`: A long, random, secure string that must be shared with the `service-connector` application. This is the secret that secures the internal fulfillment endpoint.
+5.  Run the development server with `npm run dev`.
