@@ -24,7 +24,7 @@ export function SearchAndFilter() {
           animation: marquee 40s linear infinite;
         }
       `}</style>
-      <div className="relative flex overflow-x-hidden bg-foreground text-background h-12 items-center rounded-lg">
+      <div className="relative flex overflow-x-hidden bg-black h-12 items-center rounded-lg">
         <div className="whitespace-nowrap animate-marquee flex">
           <MarqueeItem />
           <MarqueeItem />
