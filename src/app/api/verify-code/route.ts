@@ -3,34 +3,46 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const redis = Redis.fromEnv();
 
+interface TokenData {
+  courseId: string;
+  email: string; // The email is also stored, though not used in this check
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { token } = await request.json();
+    // The frontend must now send both the token AND the courseId it is trying to access.
+    const { token, courseId } = await request.json();
 
-    if (!token || typeof token !== 'string') {
-      return NextResponse.json({ error: 'Access token is required and must be a string' }, { status: 400 });
+    if (!token || typeof token !== 'string' || !courseId || typeof courseId !== 'string') {
+      return NextResponse.json({ error: 'Token and courseId are required.' }, { status: 400 });
     }
 
     const tokenKey = `token:${token}`;
     
-    const tokenDataString: string | null = await redis.get(tokenKey);
+    // Use the client's built-in JSON parsing.
+    const tokenData = await redis.get<TokenData>(tokenKey);
 
-    if (!tokenDataString) {
-      return NextResponse.json({ error: 'Invalid, expired, or already used access token' }, { status: 401 });
+    if (!tokenData) {
+      return NextResponse.json({ error: 'Invalid, expired, or already used access token.' }, { status: 401 });
     }
 
+    // *** THE CRITICAL LOCK AND KEY CHECK ***
+    // We verify that the key (token) is for the specific door (courseId) the user is trying to open.
+    if (tokenData.courseId !== courseId) {
+      // Burn the token anyway as a security measure against token scanning attempts.
+      await redis.del(tokenKey);
+      return NextResponse.json({ error: 'This token is not valid for this course.' }, { status: 403 }); // 403 Forbidden
+    }
+
+    // Burn on read: The token is valid and has served its purpose.
     await redis.del(tokenKey);
 
-    const tokenData = JSON.parse(tokenDataString);
-
+    console.log(`VERIFY_SUCCESS: Token validated for course ${tokenData.courseId}`);
+    // The token is valid for this course. Grant access.
     return NextResponse.json({ success: true, courseId: tokenData.courseId }, { status: 200 });
 
   } catch (error) {
     console.error('CRITICAL_FAILURE: Verify Token Error:', error);
-    if (error instanceof Error) {
-        console.error('Error Name:', error.name);
-        console.error('Error Message:', error.message);
-    }
     return NextResponse.json({ error: 'An unexpected server error occurred' }, { status: 500 });
   }
 }

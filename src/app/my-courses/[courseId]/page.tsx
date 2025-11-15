@@ -2,11 +2,10 @@
 
 import { useSearchParams, useParams } from 'next/navigation';
 import { courses } from '@/lib/placeholder-data';
-import { VerificationModal } from '@/components/course/verification-modal';
 import { useEffect, useState } from 'react';
 import { CoursePageLayout } from '@/components/course/course-page-layout';
 
-type VerificationState = 'idle' | 'requesting' | 'awaiting_code' | 'verifying' | 'verified' | 'error';
+type VerificationState = 'verifying' | 'verified' | 'error';
 
 export default function CourseAccessPage() {
   const params = useParams();
@@ -15,7 +14,7 @@ export default function CourseAccessPage() {
   const token = searchParams.get('token');
   const course = courses.find(c => c.id === courseId);
 
-  const [verificationState, setVerificationState] = useState<VerificationState>('idle');
+  const [verificationState, setVerificationState] = useState<VerificationState>('verifying');
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,53 +24,29 @@ export default function CourseAccessPage() {
       return;
     }
 
-    const requestCode = async () => {
-      setVerificationState('requesting');
+    const verifyToken = async () => {
       try {
-        const response = await fetch('/api/request-code', {
+        const response = await fetch('/api/verify-code', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
+          body: JSON.stringify({ token, courseId }),
         });
 
         if (!response.ok) {
           const { error } = await response.json();
-          throw new Error(error || 'Failed to request access code.');
+          throw new Error(error || 'Verification failed.');
         }
 
-        // The user now needs to enter the code they received
-        setVerificationState('awaiting_code');
+        setVerificationState('verified');
+        setError(null);
       } catch (err: any) {
         setVerificationState('error');
-        setError(err.message || 'An unexpected error occurred while requesting the code.');
+        setError(err.message || 'An unexpected error occurred during verification.');
       }
     };
 
-    requestCode();
-  }, [token]);
-
-  const handleVerification = async (code: string) => {
-    if (!token) return;
-    setVerificationState('verifying');
-    try {
-      const response = await fetch('/api/verify-code', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, code }),
-      });
-
-      if (!response.ok) {
-        const { error } = await response.json();
-        throw new Error(error || 'Verification failed.');
-      }
-
-      setVerificationState('verified');
-      setError(null);
-    } catch (err: any) {
-      setVerificationState('awaiting_code'); // Go back to the modal
-      setError(err.message || 'An unexpected error occurred during verification.');
-    }
-  };
+    verifyToken();
+  }, [token, courseId]);
 
   if (!course) {
     return <div>Course not found.</div>;
@@ -92,21 +67,10 @@ export default function CourseAccessPage() {
     return <CoursePageLayout course={course} isPurchased={true} />;
   }
 
-  // Show the verification modal if we are awaiting a code.
-  if (verificationState === 'awaiting_code' || verificationState === 'verifying') {
-    return (
-      <VerificationModal
-        onVerify={handleVerification}
-        isVerifying={verificationState === 'verifying'}
-        error={error}
-      />
-    );
-  }
-  
-  // Default state while we are requesting the code
+  // Default loading state
   return (
     <div className="flex justify-center items-center h-screen">
-      <p className="text-lg">Requesting secure access...</p>
+      <p className="text-lg">Verifying your access...</p>
     </div>
   );
 }
