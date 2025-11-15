@@ -3,7 +3,7 @@
 const marqueeText = "THEY BUILD CAGES. WE FORGE KEYS. YOUR FINANCIAL SOVEREIGNTY BEGINS NOW.";
 
 const MarqueeItem = () => (
-  <span className="text-sm font-bold uppercase tracking-wider px-8">
+  <span className="text-sm font-bold uppercase tracking-wider px-8 font-mono text-[#00B8FF]">
     {marqueeText}
   </span>
 );
@@ -21,10 +21,10 @@ export function SearchAndFilter() {
           }
         }
         .animate-marquee {
-          animation: marquee 25s linear infinite;
+          animation: marquee 40s linear infinite;
         }
       `}</style>
-      <div className="relative flex overflow-x-hidden bg-foreground text-background h-12 items-center">
+      <div className="relative flex overflow-x-hidden bg-foreground text-background h-12 items-center rounded-lg">
         <div className="whitespace-nowrap animate-marquee flex">
           <MarqueeItem />
           <MarqueeItem />
