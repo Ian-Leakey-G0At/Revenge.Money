@@ -1,5 +1,6 @@
 import { Redis } from '@upstash/redis';
 import { NextRequest, NextResponse } from 'next/server';
+import { courses } from '@/lib/placeholder-data';
 
 const redis = Redis.fromEnv();
 
@@ -33,6 +34,12 @@ export async function POST(request: NextRequest) {
       // The token's validity is now controlled by its expiry in the KV store.
       // await redis.del(tokenKey); 
       return NextResponse.json({ error: 'This token is not valid for this course.' }, { status: 403 }); // 403 Forbidden
+    }
+
+    const courseExists = courses.some(c => c.id === tokenData.courseId);
+    if (!courseExists) {
+      console.warn(`WARN: Valid token used for a non-existent courseId: [${tokenData.courseId}]`);
+      return NextResponse.json({ error: 'The course associated with this token no longer exists.' }, { status: 404 });
     }
 
     // Per "Durable Key" model, we no longer burn the token on read.
