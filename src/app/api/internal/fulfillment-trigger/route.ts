@@ -50,21 +50,35 @@ export async function POST(req: NextRequest) {
     const courseName = purchasedCourse.name;
     const accessLink = `https://revenge-money.vercel.app/my-courses/${purchasedCourse.id}?token=${token}`;
 
-    const emailHtml = await render(
-      AccessEmail({
-        email: customerEmail,
-        courseName,
-        accessLink,
-      })
-    );
+    try {
+      console.log('INFO [DISPATCH]: Rendering email template...');
+      const emailHtml = render(
+        AccessEmail({
+          email: customerEmail,
+          courseName,
+          accessLink,
+        })
+      );
+      console.log('SUCCESS [DISPATCH]: Email template rendered.');
 
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: customerEmail,
-      subject: `Your Key to the Fortress: Access to ${courseName}`,
-      html: emailHtml, 
-    });
-    console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
+      console.log('INFO [DISPATCH]: Sending email via Resend...');
+      await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: customerEmail,
+        subject: `Your Key to the Fortress: Access to ${courseName}`,
+        html: emailHtml,
+      });
+      console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
+
+    } catch (emailError) {
+      console.error('CRITICAL_FAILURE: Email dispatch failed AFTER token generation.');
+      console.error('Email Error Details:', emailError);
+      // We still return a 200 to Polar/service-connector because the token WAS created.
+      // This is a fulfillment failure, not a webhook reception failure.
+      // The manual reconciliation protocol would be used to fix this.
+      return new NextResponse('Webhook processed, but email dispatch failed.', { status: 200 });
+    }
+
     console.log(`SUCCESS [DATA]: Dispatched for course: ${purchasedCourse.name} with ID: ${purchasedCourse.id}`);
 
     return new NextResponse('Fulfillment successful.', { status: 200 });
