@@ -6,13 +6,13 @@ import { courses } from '@/lib/placeholder-data';
 import { render } from '@react-email/render';
 import AccessEmail from '@/emails/AccessEmail';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.REVENGE_MONEY_RESEND_API_KEY);
 const redis = Redis.fromEnv();
 
 export async function POST(req: NextRequest) {
-  const internalSecret = process.env.INTERNAL_API_SECRET_KEY;
+  const internalSecret = process.env.REVENGE_MONEY_INTERNAL_SECRET_KEY;
   if (!internalSecret) {
-    console.error('CRITICAL FAILURE: INTERNAL_API_SECRET_KEY is not set.');
+    console.error('CRITICAL FAILURE: REVENGE_MONEY_INTERNAL_SECRET_KEY is not set.');
     return new NextResponse('Internal server configuration error.', { status: 500 });
   }
   const authHeader = req.headers.get('Authorization');
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     console.warn('ALERT: Unauthorized attempt to access internal fulfillment endpoint.');
     return new NextResponse('Unauthorized.', { status: 401 });
   }
-  
+
   try {
     const { eventType, payload } = await req.json();
 
@@ -39,20 +39,20 @@ export async function POST(req: NextRequest) {
       console.error(`CRITICAL: Fulfillment request for unknown course ID: [${courseId}]`);
       return new NextResponse(`Course not found for courseId: ${courseId}`, { status: 404 });
     }
-    
+
     const token = crypto.randomUUID();
     const tokenKey = `token:${token}`;
     const tokenData = { courseId, email: customerEmail };
 
     const ONE_YEAR_IN_SECONDS = 86400 * 365;
     await redis.set(tokenKey, JSON.stringify(tokenData), { ex: ONE_YEAR_IN_SECONDS });
-    
+
     const courseName = purchasedCourse.name;
     const accessLink = `https://revenge-money.vercel.app/my-courses/${purchasedCourse.id}?token=${token}`;
 
     try {
       console.log('INFO [DISPATCH]: Rendering email template...');
-      const emailHtml = render(
+      const emailHtml = await render(
         AccessEmail({
           email: customerEmail,
           courseName,
@@ -62,12 +62,17 @@ export async function POST(req: NextRequest) {
       console.log('SUCCESS [DISPATCH]: Email template rendered.');
 
       console.log('INFO [DISPATCH]: Sending email via Resend...');
-      await resend.emails.send({
+      const { error } = await resend.emails.send({
         from: 'onboarding@resend.dev',
         to: customerEmail,
         subject: `Your Key to the Fortress: Access to ${courseName}`,
         html: emailHtml,
       });
+
+      if (error) {
+        console.error('ERROR [RESEND]: API returned an error:', error);
+        throw error;
+      }
       console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
 
     } catch (emailError) {

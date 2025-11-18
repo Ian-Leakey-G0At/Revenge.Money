@@ -23,7 +23,7 @@ This phase is focused on building a completely convincing and functional digital
 
 *   **[ ] Task 1.5: Internal Communication**
     *   **Action:** The `service-connector` forwards the `FULFILLMENT_REQUEST` to the `RevengeMoney` fortress's internal API endpoint.
-    *   **Action:** This communication is secured by a shared secret, the `INTERNAL_API_SECRET_KEY`.
+    *   **Action:** This communication is secured by a shared secret, the `REVENGE_MONEY_INTERNAL_SECRET_KEY`.
 
 ---
 
@@ -31,26 +31,26 @@ This phase is focused on building a completely convincing and functional digital
 
 This phase involves making precise, surgical modifications to the existing `RevengeMoney` platform to enable it to securely receive and process internal commands.
 
-*   **[ ] Task 2.1: Environment Variable Fortification**
-    *   **Action:** In the `RevengeMoney` Vercel project settings, add a new environment variable: `INTERNAL_API_SECRET_KEY`.
+*   **[x] Task 2.1: Environment Variable Fortification**
+    *   **Action:** In the `RevengeMoney` Vercel project settings, add a new environment variable: `REVENGE_MONEY_INTERNAL_SECRET_KEY`.
     *   **Action:** The value for this variable is the shared secret used to authenticate requests from the `service-connector`.
 
-*   **[ ] Task 2.2: Create the Internal Fulfillment Endpoint**
+*   **[x] Task 2.2: Create the Internal Fulfillment Endpoint**
     *   **Action:** Create a new, secure endpoint at `/app/api/internal/fulfillment-trigger/route.ts`.
     *   **Logic Flow:**
         1.  Receive the incoming `POST` request.
-        2.  **Verify Courier:** Before parsing any data, verify the `Authorization: Bearer` token matches the `INTERNAL_API_SECRET_KEY`. If verification fails, immediately return a `401 Unauthorized`.
+        2.  **Verify Courier:** Before parsing any data, verify the `Authorization: Bearer` token matches the `REVENGE_MONEY_INTERNAL_SECRET_KEY`. If verification fails, immediately return a `401 Unauthorized`.
         3.  **Parse Command:** Only after successful verification, parse the JSON body of the request.
         4.  **Extract Data:** Get the `customerEmail` and `courseId` from the `payload`.
         5.  **Fulfill:** Proceed with the fulfillment logic: generate a unique access token, store it in Vercel KV, and trigger the fulfillment email.
         6.  **Acknowledge:** Return a `200 OK` status to the `service-connector` to confirm successful receipt.
 
-*   **[ ] Task 2.4: Modify Frontend "Buy" Triggers**
+*   **[x] Task 2.4: Modify Frontend "Buy" Triggers**
     *   **Action:** Systematically go through the `RevengeMoney` frontend.
     *   **Action:** Replace all "Buy" buttons that trigger a payment modal with simple `<a>` hyperlink tags.
     *   **Action:** The `href` of each link must point to the corresponding art piece on the `VendettaMachine` domain.
 
-*   **[ ] Task 2.5: Design Fulfillment Email Template**
+*   **[x] Task 2.5: Design Fulfillment Email Template**
     *   **Action:** Create a new email template for the fulfillment service.
     *   **Content:** The email must thank the user for their "art purchase" and present the course access as a "complimentary bonus" or "exclusive access pass" that comes with the art. It must contain the unique `RevengeMoney` access link.
 

@@ -24,7 +24,7 @@ The fulfillment process is an automated, server-to-server communication flow, in
 
 2.  **Verification & Translation:** The `service-connector` receives and verifies the webhook. It then translates the payment provider's data structure into a standardized, internal `FULFILLMENT_REQUEST` format.
 
-3.  **Internal Handshake:** The `service-connector` forwards the `FULFILLMENT_REQUEST` to a secret, internal API endpoint on the `RevengeMoney` fortress. This communication is secured with a shared secret key (`INTERNAL_API_SECRET_KEY`).
+3.  **Internal Handshake:** The `service-connector` forwards the `FULFILLMENT_REQUEST` to a secret, internal API endpoint on the `RevengeMoney` fortress. This communication is secured with a shared secret key (`REVENGE_MONEY_INTERNAL_SECRET_KEY`).
 
 4.  **Fulfillment Execution:** The `RevengeMoney` fortress receives the request from `service-connector`. Its **only** role is to:
     *   Verify the shared secret key to ensure the request is from a trusted internal source.

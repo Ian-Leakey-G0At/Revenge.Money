@@ -19,12 +19,13 @@ jest.mock('resend', () => ({
 }));
 
 jest.mock('@react-email/render', () => ({
-    render: jest.fn().mockReturnValue('<!DOCTYPE html><html><body>Mocked Email</body></html>'),
+  render: jest.fn().mockReturnValue('<!DOCTYPE html><html><body>Mocked Email</body></html>'),
 }));
 
 describe('Fulfillment Trigger API', () => {
   const internalSecret = 'test-secret';
-  process.env.INTERNAL_API_SECRET_KEY = internalSecret;
+
+  process.env.REVENGE_MONEY_INTERNAL_SECRET_KEY = internalSecret;
 
   it('should return 401 Unauthorized if the auth token is missing or invalid', async () => {
     const invalidAuthRequest = new NextRequest('http://localhost', {
@@ -37,12 +38,12 @@ describe('Fulfillment Trigger API', () => {
     });
 
     const noAuthRequest = new NextRequest('http://localhost', {
-        method: 'POST',
-        body: JSON.stringify({
-          eventType: 'FULFILLMENT_REQUEST',
-          payload: { customerEmail: 'test@example.com', courseId: 'guy-fawkes-1' },
-        }),
-      });
+      method: 'POST',
+      body: JSON.stringify({
+        eventType: 'FULFILLMENT_REQUEST',
+        payload: { customerEmail: 'test@example.com', courseId: 'guy-fawkes-1' },
+      }),
+    });
 
     const invalidResponse = await POST(invalidAuthRequest);
     expect(invalidResponse.status).toBe(401);
