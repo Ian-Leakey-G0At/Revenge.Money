@@ -32,6 +32,13 @@ export async function POST(req: NextRequest) {
     if (typeof customerEmail !== 'string' || typeof courseId !== 'string') {
       return new NextResponse('Malformed payload.', { status: 400 });
     }
+
+    const purchasedCourse = courses.find(c => c.id === courseId);
+
+    if (!purchasedCourse) {
+      console.error(`CRITICAL: Fulfillment request for unknown course ID: [${courseId}]`);
+      return new NextResponse(`Course not found for courseId: ${courseId}`, { status: 404 });
+    }
     
     const token = crypto.randomUUID();
     const tokenKey = `token:${token}`;
@@ -40,9 +47,8 @@ export async function POST(req: NextRequest) {
     const ONE_YEAR_IN_SECONDS = 86400 * 365;
     await redis.set(tokenKey, JSON.stringify(tokenData), { ex: ONE_YEAR_IN_SECONDS });
     
-    const course = courses.find(c => c.id === courseId);
-    const courseName = course ? course.name : 'Your Acquired Knowledge';
-    const accessLink = `https://revenge-money.vercel.app/my-courses/${courseId}?token=${token}`;
+    const courseName = purchasedCourse.name;
+    const accessLink = `https://revenge-money.vercel.app/my-courses/${purchasedCourse.id}?token=${token}`;
 
     const emailHtml = await render(
       AccessEmail({
