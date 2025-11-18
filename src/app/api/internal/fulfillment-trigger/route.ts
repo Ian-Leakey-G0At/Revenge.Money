@@ -65,6 +65,7 @@ export async function POST(req: NextRequest) {
       html: emailHtml, 
     });
     console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
+    console.log(`SUCCESS [DATA]: Dispatched for course: ${purchasedCourse.name} with ID: ${purchasedCourse.id}`);
 
     return new NextResponse('Fulfillment successful.', { status: 200 });
 
