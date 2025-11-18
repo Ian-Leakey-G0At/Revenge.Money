@@ -19,7 +19,7 @@ export const instructors: Instructor[] = [
 export const courses: Course[] = [
   // Course 1 (Updated)
   {
-    id: 'guy-fawkes-1',
+    id: 'guy-fawkes-2',
     name: 'The Sovereign Self: The Architecture of Anonymity',
     shortDescription: 'Forge a collection of masks to move through the digital and financial world unseen.',
     longDescription: 'You have a name, a number, a digital shadow that follows you everywhere. This is not a course; it is an unlearning. Here, you will learn the art of strategic invisibility, shatter the single identity that makes you vulnerable, and forge a collection of masks. You will become a ghost in the machine—an operator who can move through the world untracked and in complete control.',
@@ -50,7 +50,7 @@ export const courses: Course[] = [
   },
   // Course 2 (Updated)
   {
-    id: 'guy-fawkes-2',
+    id: 'guy-fawkes-1',
     name: 'Jurisdictional Arbitrage: The World is Your Weapon',
     shortDescription: 'See the globe as a chessboard, where citizenships and legal systems are pieces you can move to your advantage.',
     longDescription: 'The map of the world, with its rigid borders and tax laws, is an illusion for those who don\'t know the rules of the game. This course is the playbook. We will teach you to see the globe as a chessboard, where citizenships, residencies, and legal systems are pieces you can move to your advantage. Stop being a citizen of a country; become a citizen of the world.',
