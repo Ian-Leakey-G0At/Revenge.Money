@@ -25,6 +25,7 @@ This application is a pure fulfillment engine. It is part of a larger, decoupled
 3.  Create a `.env.local` file by copying `.env.example`.
 4.  Fill in the required environment variables:
     *   `KV_URL`, `KV_REST_API_URL`, `KV_REST_API_TOKEN`, `KV_REST_API_READ_ONLY_TOKEN`: Credentials for your Vercel KV store.
-    *   `REVENGE_MONEY_RESEND_API_KEY`: Your API key for the Resend email service.
+    *   `REVENGE_MONEY_GMAIL_USER`: Your Gmail address (e.g., `your.email@gmail.com`).
+    *   `REVENGE_MONEY_GMAIL_APP_PASSWORD`: The 16-character App Password generated from your Google Account Security settings.
     *   `REVENGE_MONEY_INTERNAL_SECRET_KEY`: A long, random, secure string that must be shared with the `service-connector` application. This is the secret that secures the internal fulfillment endpoint.
 5.  Run the development server with `npm run dev`.

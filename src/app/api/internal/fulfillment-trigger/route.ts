@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
-import { Resend } from 'resend';
-import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+import { v4 as uuidv4 } from 'uuid';
 import { courses } from '@/lib/placeholder-data';
 import { render } from '@react-email/render';
 import AccessEmail from '@/emails/AccessEmail';
 
-const resend = new Resend(process.env.REVENGE_MONEY_RESEND_API_KEY);
 const redis = Redis.fromEnv();
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.REVENGE_MONEY_GMAIL_USER,
+    pass: process.env.REVENGE_MONEY_GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(req: NextRequest) {
   const internalSecret = process.env.REVENGE_MONEY_INTERNAL_SECRET_KEY;
@@ -40,7 +47,7 @@ export async function POST(req: NextRequest) {
       return new NextResponse(`Course not found for courseId: ${courseId}`, { status: 404 });
     }
 
-    const token = crypto.randomUUID();
+    const token = uuidv4();
     const tokenKey = `token:${token}`;
     const tokenData = { courseId, email: customerEmail };
 
@@ -61,18 +68,13 @@ export async function POST(req: NextRequest) {
       );
       console.log('SUCCESS [DISPATCH]: Email template rendered.');
 
-      console.log('INFO [DISPATCH]: Sending email via Resend...');
-      const { error } = await resend.emails.send({
-        from: 'onboarding@resend.dev',
+      console.log('INFO [DISPATCH]: Sending email via Gmail SMTP...');
+      await transporter.sendMail({
+        from: '"Revenge Money" <ian19leakey@gmail.com>',
         to: customerEmail,
         subject: `Your Key to the Fortress: Access to ${courseName}`,
         html: emailHtml,
       });
-
-      if (error) {
-        console.error('ERROR [RESEND]: API returned an error:', error);
-        throw error;
-      }
       console.log(`SUCCESS [DISPATCH]: Fulfillment email sent to ${customerEmail}.`);
 
     } catch (emailError) {

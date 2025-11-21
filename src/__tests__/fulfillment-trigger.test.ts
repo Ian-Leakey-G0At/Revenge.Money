@@ -10,12 +10,10 @@ jest.mock('@upstash/redis', () => ({
   },
 }));
 
-jest.mock('resend', () => ({
-  Resend: jest.fn(() => ({
-    emails: {
-      send: jest.fn().mockResolvedValue({ id: 'mocked_email_id' }),
-    },
-  })),
+jest.mock('nodemailer', () => ({
+  createTransport: jest.fn().mockReturnValue({
+    sendMail: jest.fn().mockResolvedValue({ messageId: 'mocked_message_id' }),
+  }),
 }));
 
 jest.mock('@react-email/render', () => ({
