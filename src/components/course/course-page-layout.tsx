@@ -1,4 +1,3 @@
-
 'use client';
 import { courses } from '@/lib/placeholder-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -57,7 +56,7 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
     <div className="bg-background pb-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="my-2">
-          <VideoPlayer source={videoSource} identifier={videoIdentifier} />
+          <VideoPlayer source={videoSource} identifier={videoIdentifier} thumbnail={course.thumbnailUrl} />
         </div>
 
         <main className="max-w-3xl mx-auto">
@@ -78,7 +77,7 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
             <div className="flex items-center gap-1.5">
               <Star className="w-4 h-4 text-accent fill-accent" />
               <span className="font-semibold text-sm text-foreground">{course.rating}</span>
-              <span className="text-sm">({course.studentsCount.toLocaleString()})</span>
+              <span className="text-sm">({course.studentsCount.toLocaleString()} Purchases)</span>
             </div>
           </div>
 
@@ -108,9 +107,20 @@ export function CoursePageLayout({ course, isPurchased }: CoursePageLayoutProps)
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/80 border-t backdrop-blur-sm z-40 md:relative md:bg-transparent md:border-none md:backdrop-blur-none md:bottom-auto">
         <div className="container mx-auto px-4 md:px-6">
           {isPurchased ? (
-             <div className="w-full font-bold text-lg">
+            <div className="w-full font-bold text-lg space-y-4">
+              {course.notebookLmUrl && (
+                <Button
+                  size="lg"
+                  className="w-full font-bold text-lg bg-primary hover:bg-primary/90 text-primary-foreground"
+                  asChild
+                >
+                  <a href={course.notebookLmUrl} target="_blank" rel="noopener noreferrer">
+                    Access AI Financial Brain
+                  </a>
+                </Button>
+              )}
               <ProgressBar value={progress} />
-             </div>
+            </div>
           ) : (
             <>
               <AntechamberModal

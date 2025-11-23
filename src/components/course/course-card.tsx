@@ -1,7 +1,6 @@
-
 'use client';
 
-import { Play, Users, Video } from 'lucide-react';
+import { Play, Users, Video, Bot } from 'lucide-react';
 import type { Course } from '@/lib/types';
 import { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
@@ -27,6 +26,7 @@ export function CourseCard({ course }: CourseCardProps) {
   }, []);
 
   const href = course.purchased ? `/my-courses/${course.id}` : `/courses/${course.id}`;
+  const isAiTool = course.category === 'AI Tool';
 
   const playVideo = () => {
     setIsPlaying(true);
@@ -57,7 +57,7 @@ export function CourseCard({ course }: CourseCardProps) {
   const handleLinkClick = (e: React.MouseEvent) => {
     if (wasHeld.current) {
       e.preventDefault();
-      wasHeld.current = false; 
+      wasHeld.current = false;
       return;
     }
     if (isPlaying) {
@@ -76,7 +76,7 @@ export function CourseCard({ course }: CourseCardProps) {
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
       >
-        <Link 
+        <Link
           href={href}
           onClick={handleLinkClick}
           prefetch={!isMobile} // Disable prefetching on mobile
@@ -85,20 +85,20 @@ export function CourseCard({ course }: CourseCardProps) {
         >
           <article className="w-full h-full">
             {isPlaying && (
-              <video 
-                  className="course-card__video pointer-events-none" 
-                  src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder
-                  autoPlay 
-                  controls={false}
-                  muted
-                  loop
-                  onEnded={() => setIsPlaying(false)}
-                />
+              <video
+                className="course-card__video pointer-events-none"
+                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder
+                autoPlay
+                controls={false}
+                muted
+                loop
+                onEnded={() => setIsPlaying(false)}
+              />
             )}
 
             <div className="course-card__media-overlay">
-              {!course.purchased && <span className="course-card__price-tag">${course.price}</span>}
-              {course.purchased && <span className="course-card__price-tag">Purchased</span>}
+              {!course.purchased && <span className="course-card__price-tag text-primary font-bold">${course.price}</span>}
+              {course.purchased && <span className="course-card__price-tag text-primary font-bold">Purchased</span>}
             </div>
           </article>
         </Link>
@@ -108,7 +108,11 @@ export function CourseCard({ course }: CourseCardProps) {
             className="course-card__play-button"
             aria-label={`Play preview for ${course.name}`}
           >
-            <Play className={cn("fill-white", isPlaying && "fill-primary")} />
+            {isAiTool ? (
+              <Bot className={cn("fill-white", isPlaying && "fill-primary")} />
+            ) : (
+              <Play className={cn("fill-white", isPlaying && "fill-primary")} />
+            )}
           </button>
         )}
       </div>
@@ -117,12 +121,12 @@ export function CourseCard({ course }: CourseCardProps) {
         <h3 className="course-card__title">{course.name}</h3>
         <div className="course-card__info-bar">
           <p className="course-card__video-count">
-            <Video className="w-4 h-4" />
+            {isAiTool ? <Bot className="w-4 h-4" /> : <Video className="w-4 h-4" />}
             <span>{totalLessons}</span>
           </p>
           <p className="course-card__student-count">
             <Users className="w-4 h-4" />
-            <span>{course.studentsCount.toLocaleString()}</span>
+            <span>{course.studentsCount.toLocaleString()} Purchases</span>
           </p>
         </div>
       </div>

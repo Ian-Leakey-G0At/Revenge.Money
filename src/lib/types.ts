@@ -53,6 +53,8 @@ export type Course = {
   purchased?: boolean;
   introductionScript?: string;
   vendettaMachineUrl: string;
+  notebookLmUrl?: string;
+  thumbnailUrl?: string;
 };
 
 export type Instructor = {

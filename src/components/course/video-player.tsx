@@ -8,15 +8,17 @@ import YouTube, { YouTubeProps } from 'react-youtube';
 interface VideoPlayerProps {
   source: 'local' | 'youtube';
   identifier: string;
+  thumbnail?: string;
   onEnded?: () => void;
 }
 
-export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
+export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const youtubePlayerRef = useRef<any>(null);
 
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -33,10 +35,16 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
 
   const handleHideControls = () => {
     if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
+      clearTimeout(controlsTimeoutRef.current);
     }
     setShowControls(false);
   }
+
+  const startVideo = () => {
+    setHasStarted(true);
+    setIsPlaying(true);
+    // The actual play logic will be handled by the effect or autoPlay prop when rendering the player
+  };
 
   const togglePlayPause = () => {
     handleShowControls();
@@ -104,21 +112,49 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
       youtubePlayerRef.current.seekTo(currentTime + 10, true);
     }
   };
-  
+
   const handleEnd = () => {
     setIsPlaying(false);
     if (source === 'youtube' && youtubePlayerRef.current) {
-        youtubePlayerRef.current.seekTo(0);
-        youtubePlayerRef.current.pauseVideo();
+      youtubePlayerRef.current.seekTo(0);
+      youtubePlayerRef.current.pauseVideo();
     }
-    if(onEnded) {
+    if (onEnded) {
       onEnded();
     }
   }
-  
+
   const onReady: YouTubeProps['onReady'] = (event) => {
     youtubePlayerRef.current = event.target;
   };
+
+  if (!hasStarted && thumbnail) {
+    return (
+      <div
+        className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer"
+        onClick={startVideo}
+      >
+        <img
+          src={thumbnail}
+          alt="Video Thumbnail"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute bottom-8 right-8 z-10">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className="text-white drop-shadow-lg transition-transform transform group-hover:scale-110">
+            <defs>
+              <mask id="SVGOVEmxbON">
+                <g fill="#555555" stroke="#fff" strokeLinejoin="round" strokeWidth="4">
+                  <path d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z" />
+                  <path d="M20 24v-6.928l6 3.464L32 24l-6 3.464l-6 3.464z" />
+                </g>
+              </mask>
+            </defs>
+            <path fill="currentColor" d="M0 0h48v48H0z" mask="url(#SVGOVEmxbON)" />
+          </svg>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -132,7 +168,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
           className="w-full h-full object-contain"
           src={identifier}
           autoPlay
-          muted
+          muted={isMuted}
           playsInline
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
@@ -150,7 +186,7 @@ export function VideoPlayer({ source, identifier, onEnded }: VideoPlayerProps) {
             width: '100%',
             playerVars: {
               autoplay: 1,
-              mute: 1,
+              mute: 0, // Unmute by default when explicitly started
               controls: 0,
               rel: 0,
             },
