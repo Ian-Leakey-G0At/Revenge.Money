@@ -1,133 +1,108 @@
 'use client';
 
-import { Play, Users, Video, Bot } from 'lucide-react';
-import type { Course } from '@/lib/types';
-import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import { Play, Bot, Video, Users, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Link } from '@lexz451/next-nprogress';
+import type { Course } from '@/lib/types';
+import { useState, useRef } from 'react';
+import { isMobile } from 'react-device-detect';
 
 interface CourseCardProps {
   course: Course;
 }
 
 export function CourseCard({ course }: CourseCardProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const isAiTool = course.category === 'AI Tool';
   const totalLessons = course.modules.reduce(
     (acc, module) => acc + module.lessons.length,
     0
   );
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const holdTimeout = useRef<NodeJS.Timeout | null>(null);
-  const wasHeld = useRef(false);
-
-  useEffect(() => {
-    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
-  }, []);
-
-  const href = course.purchased ? `/my-courses/${course.id}` : `/courses/${course.id}`;
-  const isAiTool = course.category === 'AI Tool';
-
-  const playVideo = () => {
-    setIsPlaying(true);
-    wasHeld.current = true;
-  };
-
   const handleMouseDown = () => {
-    if (isMobile) return; // Disable hold-to-play on mobile
-    wasHeld.current = false;
-    if (!course.purchased) {
-      holdTimeout.current = setTimeout(() => {
-        playVideo();
-      }, 1500); // 1.5 second hold to trigger video
-    }
+    if (isMobile || course.purchased) return;
+    timeoutRef.current = setTimeout(() => {
+      setIsPlaying(true);
+    }, 1500); // 1.5s hold to play
   };
 
   const handleMouseUp = () => {
-    if (holdTimeout.current) {
-      clearTimeout(holdTimeout.current);
-    }
-  };
-
-  const handlePlayPause = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsPlaying(prev => !prev);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsPlaying(false);
   };
 
   const handleLinkClick = (e: React.MouseEvent) => {
-    if (wasHeld.current) {
-      e.preventDefault();
-      wasHeld.current = false;
-      return;
-    }
     if (isPlaying) {
       e.preventDefault();
-      setIsPlaying(false);
-      return;
     }
   };
 
+  const href = course.purchased
+    ? `/my-courses/${course.id}`
+    : `/courses/${course.id}`;
+
   return (
-    <div className="course-card-container">
+    <div className="flex flex-col cursor-pointer group">
       <div
-        className="block course-card__media-section"
+        className="relative aspect-[3/4] w-full bg-void-depth rounded-xl overflow-hidden border border-white/5 shadow-lg mb-3 group-hover:border-white/20 transition duration-300"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         onTouchStart={handleMouseDown}
         onTouchEnd={handleMouseUp}
       >
         <Link
           href={href}
           onClick={handleLinkClick}
-          prefetch={!isMobile} // Disable prefetching on mobile
-          className="w-full h-full"
-          aria-label={`View details for ${course.name}`}
+          prefetch={!isMobile}
+          className="w-full h-full block"
         >
-          <article className="w-full h-full">
-            {isPlaying && (
-              <video
-                className="course-card__video pointer-events-none"
-                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" // Placeholder
-                autoPlay
-                controls={false}
-                muted
-                loop
-                onEnded={() => setIsPlaying(false)}
-              />
-            )}
+          {isPlaying ? (
+            <video
+              ref={videoRef}
+              src={course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <img
+              src={course.thumbnailUrl}
+              alt={course.name}
+              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500"
+            />
+          )}
 
-            <div className="course-card__media-overlay">
-              {!course.purchased && <span className="course-card__price-tag text-primary font-bold">${course.price}</span>}
-              {course.purchased && <span className="course-card__price-tag text-primary font-bold">Purchased</span>}
-            </div>
-          </article>
-        </Link>
-        {!course.purchased && (
-          <button
-            onClick={handlePlayPause}
-            className="course-card__play-button"
-            aria-label={`Play preview for ${course.name}`}
-          >
-            {isAiTool ? (
-              <Bot className={cn("fill-white", isPlaying && "fill-primary")} />
+          <div className="absolute top-2 right-2">
+            {course.purchased ? (
+              <CheckCircle2 className="w-5 h-5 text-vengeance-red shadow-glow-red drop-shadow-md" />
             ) : (
-              <Play className={cn("fill-white", isPlaying && "fill-primary")} />
+              <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white border border-white/10">
+                ${course.price}
+              </div>
             )}
-          </button>
-        )}
+          </div>
+        </Link>
       </div>
 
-      <div className="course-card__title-section">
-        <h3 className="course-card__title">{course.name}</h3>
-        <div className="course-card__info-bar">
-          <p className="course-card__video-count">
-            {isAiTool ? <Bot className="w-4 h-4" /> : <Video className="w-4 h-4" />}
-            <span>{totalLessons}</span>
-          </p>
-          <p className="course-card__student-count">
-            <Users className="w-4 h-4" />
-            <span>{course.studentsCount.toLocaleString()} Purchases</span>
-          </p>
+      <div>
+        <h3 className="text-xs font-extrabold text-white uppercase leading-tight line-clamp-2 mb-1 group-hover:text-brand-purple transition-colors h-8">
+          {course.name}
+        </h3>
+        <div className="flex items-center justify-between text-[9px] text-cyber-mute">
+          <div className="flex items-center gap-1">
+            <Video className="w-3 h-3" />
+            <span>{totalLessons} Videos</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Users className="w-3 h-3" />
+            <span>{course.studentsCount.toLocaleString()}</span>
+          </div>
         </div>
       </div>
     </div>

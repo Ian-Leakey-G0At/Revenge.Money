@@ -1,56 +1,34 @@
-/**
- * @file The main homepage of the application.
- *
- * This component serves as the landing page, showcasing featured courses, student testimonials,
- * and interactive elements to engage users. It is built using a combination of custom
- * components and UI primitives.
- */
-
-import * as React from 'react';
 import { Suspense } from 'react';
-
 import { HeroCarousel } from '@/components/course/hero-carousel';
 import { GoodLuckButton } from '@/components/course/good-luck-button';
-import { FeaturedCourses } from '@/components/course/featured-courses';
-import { StudentTestimonials } from '@/components/course/student-testimonials';
+import { FieldReports } from '@/components/course/field-reports';
 
-/**
- * The main homepage component.
- *
- * This component renders the entire homepage, which is composed of several sections:
- * - A `HeroCarousel` to display featured content.
- * - A `GoodLuckButton` for a fun, interactive user experience.
- * - A `FeaturedCourses` section to highlight a selection of courses.
- * - A `StudentTestimonials` section with an autoplaying carousel of testimonials.
- */
-function HomePageContent() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col">
-      {/* The hero section with a full-width carousel. */}
-      <section className="container mx-auto px-4 mt-4">
+    <div className="flex flex-col min-h-screen pb-24">
+      {/* Header */}
+      <header className="px-6 mt-6 mb-8 flex justify-between items-center">
+        <div>
+          <div className="text-[10px] font-mono text-cyber-mute mb-1 tracking-widest">OPERATOR: 99-AZ</div>
+          <h1 className="text-3xl font-extrabold uppercase tracking-tight text-white leading-none">
+            The<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Architect</span>
+          </h1>
+        </div>
+        <div className="w-12 h-12 rounded-full border border-white/10 p-1 relative glass-card">
+          <img src="https://i.pravatar.cc/150?img=15" className="w-full h-full rounded-full grayscale object-cover" alt="Profile" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 bg-vengeance-red border-2 border-void rounded-full"></div>
+        </div>
+      </header>
+
+      <main className="flex-1">
         <HeroCarousel />
-      </section>
 
-      {/* A fun, interactive button to wish users good luck. */}
-      <section className="container mx-auto px-4 mt-2 mb-4">
-        <GoodLuckButton />
-      </section>
+        <section className="px-6 mb-12">
+          <GoodLuckButton />
+        </section>
 
-      <main className="container mx-auto px-4 flex flex-col gap-4">
-        {/* The featured courses section. */}
-        <FeaturedCourses />
-
-        {/* The student testimonials section. */}
-        <StudentTestimonials />
+        <FieldReports />
       </main>
     </div>
-  );
-}
-
-export default function Home() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <HomePageContent />
-    </Suspense>
   );
 }

@@ -13,14 +13,20 @@ export default {
         'safe-bottom': 'env(safe-area-inset-bottom)',
       },
       fontFamily: {
-        body: ['Open Sans', 'sans-serif'],
-        headline: ['Open Sans', 'sans-serif'],
-        serif: ['Georgia', 'serif'],
-        mono: ['Menlo', 'monospace'],
+        sans: ['Manrope', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        headline: ['Manrope', 'sans-serif'], // Alias for backward compatibility if needed
       },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        void: '#050505',
+        'void-depth': '#0f0f12',
+        'vengeance-red': '#DC2626',
+        'wealth-gold': '#FBBF24',
+        'cyber-mute': '#94A3B8',
+        'brand-purple': '#8b5cf6',
+        'brand-cyan': '#06b6d4',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -75,6 +81,11 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        'glow-red': '0 0 20px rgba(220, 38, 38, 0.2)',
+        'glow-gold': '0 0 20px rgba(251, 191, 36, 0.15)',
+        'hud': '0 8px 32px 0 rgba(0, 0, 0, 0.8)',
+      },
       keyframes: {
         'accordion-down': {
           from: {
@@ -92,10 +103,25 @@ export default {
             height: '0',
           },
         },
+        'pulse-slow': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'pulse-slow': 'pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        marquee: 'marquee 20s linear infinite',
+        float: 'float 6s ease-in-out infinite',
       },
     },
   },

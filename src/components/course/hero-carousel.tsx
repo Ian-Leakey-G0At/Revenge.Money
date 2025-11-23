@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import * as React from 'react';
 import Image from 'next/image';
+import Autoplay from 'embla-carousel-autoplay';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -9,84 +10,87 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
 import { cn } from '@/lib/utils';
-
-const SLIDE_COUNT = 8;
+import Link from 'next/link';
+import { courses } from '@/lib/placeholder-data';
 
 export function HeroCarousel() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [_, setInteracted] = useState(false);
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
 
-  const handleInteraction = useCallback(() => {
-    setInteracted(true);
-  }, []);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (!api) {
       return;
     }
 
-    const onSelect = () => {
+    setCurrent(api.selectedScrollSnap());
+
+    api.on('select', () => {
       setCurrent(api.selectedScrollSnap());
-    };
-
-    onSelect();
-    api.on('select', onSelect);
-
-    return () => {
-      api.off('select', onSelect);
-    };
+    });
   }, [api]);
 
   return (
-    <section className="w-full">
-      <div className="relative w-full">
-        <Carousel
-          setApi={setApi}
-          plugins={[
-            Autoplay({
-              delay: 5000,
-              stopOnInteraction: true,
-            }),
-          ]}
-          opts={{ loop: true }}
-          className="w-full"
-        >
-          <CarouselContent onMouseDown={handleInteraction} onTouchStart={handleInteraction}>
-            {Array.from({ length: SLIDE_COUNT }).map((_, index) => (
-              <CarouselItem key={index}>
-                <Card className="border-0 rounded-lg overflow-hidden">
-                  <CardContent className="flex aspect-video items-center justify-center p-0">
-                    {/* This is an empty slide as requested */}
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+    <section className="mb-10 pl-6">
+      <div className="flex justify-between items-end pr-6 mb-4">
+        <h2 className="text-xs font-bold text-white uppercase tracking-widest">Priority Intelligence</h2>
       </div>
-      <div className="flex justify-center items-center gap-x-2 mt-4">
-        {Array.from({ length: SLIDE_COUNT }).map((_, index) => (
+
+      <Carousel
+        setApi={setApi}
+        plugins={[
+          Autoplay({
+            delay: 5000,
+            stopOnInteraction: true,
+          }),
+        ]}
+        className="w-full"
+        opts={{
+          align: 'start',
+          loop: true,
+        }}
+      >
+        <CarouselContent className="-ml-4">
+          {courses.map((course) => (
+            <CarouselItem key={course.id} className="pl-4 basis-[85%] md:basis-[45%] lg:basis-[30%]">
+              <Link href={`/courses/${course.id}`} className="flex flex-col cursor-pointer group">
+                <div className="w-full aspect-video rounded-xl overflow-hidden relative border border-white/10 shadow-lg mb-3">
+                  <Image
+                    src={course.thumbnailUrl}
+                    alt={course.name}
+                    fill
+                    className="object-cover opacity-80 group-hover:opacity-100 transition duration-500"
+                  />
+                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white border border-white/10">
+                    ${course.price}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold uppercase text-white mb-1 group-hover:text-wealth-gold transition-colors leading-tight">
+                    {course.name}
+                  </h3>
+                  <p className="text-[10px] text-cyber-mute line-clamp-1">
+                    {course.longDescription}
+                  </p>
+                </div>
+              </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+
+      {/* Custom Dots */}
+      <div className="flex justify-center gap-2 mt-6 pr-6">
+        {courses.map((_, index) => (
           <button
             key={index}
-            onClick={() => {
-              api?.scrollTo(index);
-              handleInteraction();
-            }}
+            className={cn(
+              "h-1 rounded-full transition-all duration-300",
+              current === index ? "w-8 bg-primary" : "w-2 bg-white/20"
+            )}
+            onClick={() => api?.scrollTo(index)}
             aria-label={`Go to slide ${index + 1}`}
-            className="p-0.5 rounded-full"
-          >
-            <div
-              className={cn(
-                'h-1 rounded-full transition-all duration-500 ease-in-out',
-                current === index
-                  ? 'w-8 bg-primary'
-                  : 'w-4 bg-muted-foreground/30 hover:bg-muted-foreground/50'
-              )}
-            />
-          </button>
+          />
         ))}
       </div>
     </section>

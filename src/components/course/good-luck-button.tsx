@@ -1,64 +1,56 @@
 'use client';
 
 import { useState } from 'react';
+import { Clover } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
-const goodLuckMessages = [
+const WEALTH_MANTRAS = [
   "Money magnet activated! 🧲",
-  "Wishing you a prosperous journey ahead! ✨",
-  "May your investments be wise and your returns plentiful. 📈",
-  "Good luck! May your bank account see many commas. 💰",
-  "Sending you vibes of financial abundance! 💸",
-  "Here\'s to smart decisions and a wealthy future. 🧠",
-  "May your financial goals be reached with ease. 🎯",
-  "Prosperity is just around the corner! 🚀",
-  "Keep tapping, keep earning! 👆",
-  "Your financial future is looking bright! ☀️",
-  "Wishing you a waterfall of wealth. 🌊",
-  "May your wallet always be heavy. 🏋️‍♂️",
-  "Abundance is your birthright. Claim it! 👑",
-  "Watch your savings grow like a well-tended garden. 🌱",
-  "Here\'s a sprinkle of financial magic! ✨",
-  "May you always have more money than month. 🗓️",
-  "Unlock your potential for wealth. 🔑",
-  "Good fortune is coming your way! 🍀",
-  "May your assets outweigh your liabilities. ⚖️",
-  "To the moon! 🌕🚀",
-  "Financial success is in your stars. 🌟",
-  "Stack those coins! 🥞",
-  "The universe is conspiring to make you wealthy. 🌌",
-  "Positive cash flow, positive life. ➕",
-  "May your portfolio be green and your spirits high. 💚",
-  "Fortune favors the bold (and the tapper!). 💪",
-  "Your net worth is on the rise! ↗️",
-  "Secure the bag! 💼",
-  "Wealth is a mindset. You\'ve got this! 🙌",
-  "Cheers to financial freedom! 🥂",
+  "Fortune favors the bold. 🦁",
+  "Abundance is your birthright. 👑",
+  "The universe is conspiring for you. ✨",
+  "Wealth flows to you effortlessly. 🌊",
+  "Your financial sovereignty is inevitable. 🛡️",
+  "Luck is just preparation meeting opportunity. 🤝",
+  "You are the architect of your reality. 🏗️"
 ];
 
 export function GoodLuckButton() {
-  const { toast } = useToast();
   const [count, setCount] = useState(19576);
+  const { toast } = useToast();
 
-  const handleClick = () => {
-    setCount(prevCount => prevCount + 1);
-    const randomIndex = Math.floor(Math.random() * goodLuckMessages.length);
+  const triggerLuck = () => {
+    setCount((prev) => prev + 1);
+    const randomMantra = WEALTH_MANTRAS[Math.floor(Math.random() * WEALTH_MANTRAS.length)];
+
     toast({
-      title: 'Good Luck!',
-      description: goodLuckMessages[randomIndex],
-      duration: 5000, // Stays on screen for 5 seconds
+      title: "Fortune Protocol Engaged",
+      description: randomMantra,
+      className: "bg-void-depth border-wealth-gold/20 text-white",
     });
   };
 
   return (
-    <Card 
-        className="text-center p-4 cursor-pointer hover:bg-accent/50 transition-colors"
-        onClick={handleClick}
+    <button
+      onClick={triggerLuck}
+      className="w-full glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-wealth-gold/50 transition-colors duration-500 text-left"
     >
-      <p className="font-semibold text-foreground">
-        {count.toLocaleString()} Tapped for Good Luck
-      </p>
-    </Card>
+      <div className="absolute inset-0 bg-gradient-to-r from-wealth-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+      <div className="relative z-10 flex justify-between items-end">
+        <div className="text-left">
+          <div className="flex items-center gap-2 mb-2">
+            <Clover className="w-4 h-4 text-wealth-gold" />
+            <span className="text-[10px] font-bold uppercase tracking-widest text-wealth-gold">Fortune Protocol</span>
+          </div>
+          <div className="text-4xl font-mono font-bold text-white tracking-tighter" id="luck-counter">
+            {count.toLocaleString()}
+          </div>
+        </div>
+        <div className="text-[10px] text-cyber-mute font-mono text-right opacity-60">
+          TAPS FOR<br />GOOD LUCK
+        </div>
+      </div>
+    </button>
   );
 }
