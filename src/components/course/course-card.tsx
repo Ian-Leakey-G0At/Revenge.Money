@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import type { Course } from '@/lib/types';
 import { useState, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
+import { getDynamicThumbnail } from '@/lib/thumbnails';
 
 interface CourseCardProps {
   course: Course;
@@ -72,7 +73,7 @@ export function CourseCard({ course }: CourseCardProps) {
             />
           ) : (
             <img
-              src={course.thumbnailUrl}
+              src={getDynamicThumbnail(course.id, 'card', course.thumbnailUrl || '/placeholder-course.jpg')}
               alt={course.name}
               className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-500"
             />

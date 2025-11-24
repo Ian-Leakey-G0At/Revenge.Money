@@ -14,6 +14,7 @@ import { ArrowLeft, Bot, Lock, Play, ShieldCheck, ExternalLink } from 'lucide-re
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useLocalStorage } from '@/hooks/use-local-storage';
+import { getDynamicThumbnail } from '@/lib/thumbnails';
 
 interface CoursePageLayoutProps {
   course: Course;
@@ -81,7 +82,7 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
         <VideoPlayer
           source={videoSourceType}
           identifier={videoIdentifier}
-          thumbnail={course.thumbnailUrl}
+          thumbnail={getDynamicThumbnail(course.id, 'hero', course.thumbnailUrl || '/placeholder-course.jpg')}
         />
       </div>
 

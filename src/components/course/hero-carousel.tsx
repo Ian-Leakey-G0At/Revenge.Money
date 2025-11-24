@@ -13,6 +13,7 @@ import {
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { courses } from '@/lib/placeholder-data';
+import { getDynamicThumbnail } from '@/lib/thumbnails';
 
 export function HeroCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -56,7 +57,7 @@ export function HeroCarousel() {
               <Link href={`/courses/${course.id}`} className="flex flex-col cursor-pointer group">
                 <div className="w-full aspect-video rounded-xl overflow-hidden relative border border-white/10 shadow-lg mb-3">
                   <Image
-                    src={course.thumbnailUrl || '/placeholder-course.jpg'}
+                    src={getDynamicThumbnail(course.id, 'hero', course.thumbnailUrl || '/placeholder-course.jpg')}
                     alt={course.name}
                     fill
                     className="object-cover opacity-80 group-hover:opacity-100 transition duration-500"
