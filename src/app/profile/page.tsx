@@ -9,7 +9,7 @@ export default function ProfilePage() {
             {/* Header */}
             <header className="pt-12 px-6 mb-8 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-full border-2 border-white/10 p-1 relative glass-card mb-4">
-                    <img src="https://i.pravatar.cc/150?img=15" className="w-full h-full rounded-full grayscale object-cover" alt="Profile" />
+                    <img src="https://i.pinimg.com/736x/34/3a/88/343a88de73dbe4c48aa1bb9ca4e41abc.jpg" className="w-full h-full rounded-full grayscale object-cover" alt="Profile" />
                     <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-void rounded-full animate-pulse"></div>
                 </div>
                 <h1 className="text-xl font-extrabold uppercase tracking-widest text-white mb-1">The Architect</h1>
