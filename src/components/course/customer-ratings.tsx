@@ -118,50 +118,48 @@ export function CustomerRatings({ course }: { course: Course }) {
         </div>
 
         {/* Write a Review Section */}
-        {accessToken && (
-          <div className="mt-6 pt-6 border-t border-white/10">
-            {isWritingReview ? (
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm font-medium mb-2 text-white">Your Rating</p>
-                  <div className="flex items-center gap-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        onMouseEnter={() => setHoveredStars(star)}
-                        onMouseLeave={() => setHoveredStars(0)}
-                        onClick={() => setSelectedStars(star)}
-                        aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
-                      >
-                        <Star
-                          className={cn(
-                            'w-6 h-6 cursor-pointer transition-colors',
-                            (hoveredStars || selectedStars) >= star
-                              ? 'text-brand-purple fill-brand-purple'
-                              : 'text-white/10'
-                          )}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium mb-2 text-white">Your Review</p>
-                  <Textarea placeholder="Tell us about your experience..." className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
-                </div>
-                <div className="flex justify-end gap-2">
-                  <Button variant="ghost" onClick={() => setIsWritingReview(false)} className="text-white hover:bg-white/10 hover:text-white">Cancel</Button>
-                  <Button onClick={handleSubmitReview} className="bg-brand-purple hover:bg-brand-purple/80 text-white">Submit Review</Button>
+        <div className="mt-6 pt-6 border-t border-white/10">
+          {isWritingReview ? (
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm font-medium mb-2 text-white">Your Rating</p>
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onMouseEnter={() => setHoveredStars(star)}
+                      onMouseLeave={() => setHoveredStars(0)}
+                      onClick={() => setSelectedStars(star)}
+                      aria-label={`Rate ${star} star${star > 1 ? 's' : ''}`}
+                    >
+                      <Star
+                        className={cn(
+                          'w-6 h-6 cursor-pointer transition-colors',
+                          (hoveredStars || selectedStars) >= star
+                            ? 'text-brand-purple fill-brand-purple'
+                            : 'text-white/10'
+                        )}
+                      />
+                    </button>
+                  ))}
                 </div>
               </div>
-            ) : (
-              <Button variant="outline" className="w-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white" onClick={() => setIsWritingReview(true)}>
-                <Edit className="mr-2 h-4 w-4" />
-                Write a Review
-              </Button>
-            )}
-          </div>
-        )}
+              <div>
+                <p className="text-sm font-medium mb-2 text-white">Your Review</p>
+                <Textarea placeholder="Tell us about your experience..." className="bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" onClick={() => setIsWritingReview(false)} className="text-white hover:bg-white/10 hover:text-white">Cancel</Button>
+                <Button onClick={handleSubmitReview} className="bg-brand-purple hover:bg-brand-purple/80 text-white">Submit Review</Button>
+              </div>
+            </div>
+          ) : (
+            <Button variant="outline" className="w-full border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white" onClick={() => setIsWritingReview(true)}>
+              <Edit className="mr-2 h-4 w-4" />
+              Write a Review
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

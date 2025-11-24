@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Course, Lesson } from '@/lib/types';
 import { VideoPlayer } from './video-player';
 import { LockedVideoPlaylist } from './locked-video-playlist';
@@ -10,9 +10,10 @@ import { StudentTestimonials } from './student-testimonials';
 import { AntechamberModal } from '@/components/ui/antechamber-modal';
 import { ProgressBar } from '@/components/ui/progress-bar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Bot, Lock, Play, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Bot, Lock, Play, ShieldCheck, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { useLocalStorage } from '@/hooks/use-local-storage';
 
 interface CoursePageLayoutProps {
   course: Course;
@@ -24,10 +25,12 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const { toast } = useToast();
 
+  // Progress Tracking
+  const [completedLessonIds, setCompletedLessonIds] = useLocalStorage<string[]>(`completed_lessons_${course.id}`, []);
+
   // Calculate progress
   const totalLessons = course.modules.reduce((acc, module) => acc + module.lessons.length, 0);
-  const completedLessons = 0; // Placeholder for actual progress
-  const progress = (completedLessons / totalLessons) * 100;
+  const progress = totalLessons > 0 ? (completedLessonIds.length / totalLessons) * 100 : 0;
 
   const isPurchased = propIsPurchased ?? course.purchased ?? false;
 
@@ -46,11 +49,19 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const handleLessonSelect = (lesson: Lesson) => {
     setActiveLesson(lesson);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Mark as complete if not already
+    if (!completedLessonIds.includes(lesson.id)) {
+      setCompletedLessonIds([...completedLessonIds, lesson.id]);
+    }
   };
 
   const handlePurchaseClick = () => {
     setIsModalOpen(true);
   };
+
+  const isAiTool = course.category === 'AI Tool';
+  const aiNotebookUrl = "https://notebooklm.google.com/notebook/1ed52c6c-bc0d-4a55-a1ec-bacac4220f8f";
 
   return (
     <div className="min-h-screen pb-32 pt-[72px] relative overflow-hidden volumetric-bg">
@@ -104,7 +115,7 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
         <section className="mb-10">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xs font-bold text-white uppercase tracking-widest">
-              {course.category === 'AI Tool' ? (
+              {isAiTool ? (
                 <span className="flex items-center gap-2">
                   <Bot className="w-4 h-4" />
                   Neural Link
@@ -114,14 +125,14 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
               )}
             </h2>
             <span className="text-[10px] text-cyber-mute font-mono">
-              {course.category === 'AI Tool' ? "AI ACCESS" : `${totalLessons} MODULES`}
+              {isAiTool ? "AI ACCESS" : `${totalLessons} MODULES`}
             </span>
           </div>
 
           {isPurchased ? (
-            <VideoPlaylist videos={allVideos} onVideoSelect={handleLessonSelect} isAiTool={course.category === 'AI Tool'} />
+            <VideoPlaylist videos={allVideos} onVideoSelect={handleLessonSelect} isAiTool={isAiTool} />
           ) : (
-            <LockedVideoPlaylist videos={allVideos} isAiTool={course.category === 'AI Tool'} />
+            <LockedVideoPlaylist videos={allVideos} isAiTool={isAiTool} />
           )}
         </section>
 
@@ -146,10 +157,23 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
               <span>{Math.round(progress)}%</span>
             </div>
             <ProgressBar value={progress} className="h-1 bg-white/10" indicatorClassName="bg-brand-purple" />
-            <Button className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 mt-2">
-              <Bot className="w-4 h-4 mr-2" />
-              Access Financial Brain
-            </Button>
+
+            {isAiTool ? (
+              <Button
+                asChild
+                className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 mt-2"
+              >
+                <a href={aiNotebookUrl} target="_blank" rel="noopener noreferrer">
+                  <Bot className="w-4 h-4 mr-2" />
+                  Access Financial Brain
+                </a>
+              </Button>
+            ) : (
+              <Button className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 mt-2">
+                <Bot className="w-4 h-4 mr-2" />
+                Access Financial Brain
+              </Button>
+            )}
           </div>
         ) : (
           <Button

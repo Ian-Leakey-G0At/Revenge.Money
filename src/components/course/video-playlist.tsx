@@ -19,6 +19,10 @@ interface VideoPlaylistProps {
 export function VideoPlaylist({ videos, onVideoSelect, isAiTool = false }: VideoPlaylistProps) {
     const handlePlayClick = (e: React.MouseEvent, video: Lesson) => {
         e.stopPropagation();
+        if (isAiTool) {
+            window.open("https://notebooklm.google.com/notebook/1ed52c6c-bc0d-4a55-a1ec-bacac4220f8f", "_blank");
+            return;
+        }
         onVideoSelect(video);
     };
 
