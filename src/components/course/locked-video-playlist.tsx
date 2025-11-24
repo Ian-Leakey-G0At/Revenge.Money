@@ -16,21 +16,21 @@ export function LockedVideoPlaylist({ videos, isAiTool = false }: { videos: any[
                 <Accordion type="single" collapsible className="w-full">
                     {videos.map((video, index) => (
                         <AccordionItem value={video.id} key={video.id} className={`border-white/5 ${index === 0 ? "border-t-0" : ""}`}>
-                            <AccordionTrigger className="flex items-center gap-x-4 p-4 text-left hover:no-underline hover:bg-white/5 transition-colors">
-                                <div className="flex items-center gap-x-4 flex-1">
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 flex-shrink-0">
+                            <AccordionTrigger className="flex items-center gap-x-4 p-3 text-left hover:no-underline hover:bg-white/5 transition-colors">
+                                <div className="flex items-center gap-x-3 flex-1">
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 border border-white/10 flex-shrink-0">
                                         {isAiTool ? (
-                                            <Bot className="h-5 w-5 text-cyber-mute" />
+                                            <Bot className="h-4 w-4 text-cyber-mute" />
                                         ) : (
-                                            <Video className="h-5 w-5 text-cyber-mute" />
+                                            <Video className="h-4 w-4 text-cyber-mute" />
                                         )}
                                     </div>
                                     <div className="flex-1 space-y-1">
-                                        <p className="font-medium text-white">{video.title}</p>
+                                        <p className="text-xs font-normal text-gray-300">{video.title}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center px-2">
-                                    <Lock className="h-5 w-5 text-vengeance-red" />
+                                    <Lock className="h-4 w-4 text-vengeance-red" />
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="pb-4 px-4 pl-16">

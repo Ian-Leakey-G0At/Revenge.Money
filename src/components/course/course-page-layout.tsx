@@ -65,11 +65,8 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
 
   return (
     <div className="min-h-screen pb-32 pt-[72px] relative overflow-hidden volumetric-bg">
-      {/* Ambient Biology: Pulsating Blobs */}
+      {/* Ambient Biology: Pulsating Blobs - REMOVED FOR PERFORMANCE ALIGNMENT */}
       <div className="absolute inset-0 z-[-1] pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-purple/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-vengeance-red/10 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
-        <div className="absolute top-[20%] right-[20%] w-[30%] h-[30%] bg-brand-cyan/5 rounded-full blur-[100px] animate-pulse-slow delay-2000"></div>
       </div>
       {/* Fixed Header with Back Button */}
       <div className="fixed top-0 left-0 right-0 h-[72px] z-40 bg-void/90 backdrop-blur-md border-b border-white/5 pl-6 pr-8 flex items-center justify-between pt-0 transition-all duration-300">
