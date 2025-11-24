@@ -16,9 +16,10 @@ import { cn } from '@/lib/utils';
 
 interface CoursePageLayoutProps {
   course: Course;
+  isPurchased?: boolean;
 }
 
-export function CoursePageLayout({ course }: CoursePageLayoutProps) {
+export function CoursePageLayout({ course, isPurchased: propIsPurchased }: CoursePageLayoutProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const { toast } = useToast();
@@ -28,7 +29,7 @@ export function CoursePageLayout({ course }: CoursePageLayoutProps) {
   const completedLessons = 0; // Placeholder for actual progress
   const progress = (completedLessons / totalLessons) * 100;
 
-  const isPurchased = course.purchased;
+  const isPurchased = propIsPurchased ?? course.purchased ?? false;
 
   // Video Source Logic
   const videoSourceType = (isPurchased && activeLesson && activeLesson.videoUrl) || (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube')) ? 'local' : 'youtube';
