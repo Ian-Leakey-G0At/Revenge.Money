@@ -1,6 +1,6 @@
 'use client';
 
-import { PlayCircle, Video, ChevronDown } from "lucide-react";
+import { PlayCircle, Video, ChevronDown, Bot } from "lucide-react";
 import {
     Accordion,
     AccordionContent,
@@ -13,9 +13,10 @@ import { type Lesson } from "@/lib/types";
 interface VideoPlaylistProps {
     videos: Lesson[];
     onVideoSelect: (video: Lesson) => void;
+    isAiTool?: boolean;
 }
 
-export function VideoPlaylist({ videos, onVideoSelect }: VideoPlaylistProps) {
+export function VideoPlaylist({ videos, onVideoSelect, isAiTool = false }: VideoPlaylistProps) {
     const handlePlayClick = (e: React.MouseEvent, video: Lesson) => {
         e.stopPropagation();
         onVideoSelect(video);
@@ -34,7 +35,11 @@ export function VideoPlaylist({ videos, onVideoSelect }: VideoPlaylistProps) {
                                     {/* Left Side: Text and Icon */}
                                     <div className="flex items-center gap-x-4">
                                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 flex-shrink-0">
-                                            <Video className="h-5 w-5 text-cyber-mute" />
+                                            {isAiTool ? (
+                                                <Bot className="h-5 w-5 text-cyber-mute" />
+                                            ) : (
+                                                <Video className="h-5 w-5 text-cyber-mute" />
+                                            )}
                                         </div>
                                         <p className="font-medium text-white text-left">{video.title}</p>
                                     </div>

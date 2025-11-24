@@ -8,21 +8,29 @@ import {
 import Autoplay from 'embla-carousel-autoplay';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { testimonials, generateRandomReviewer } from '@/lib/testimonials';
+import { testimonials as genericTestimonials, courseTestimonials, generateRandomReviewer } from '@/lib/testimonials';
 
-export function StudentTestimonials() {
+interface StudentTestimonialsProps {
+  courseId?: string;
+}
+
+export function StudentTestimonials({ courseId }: StudentTestimonialsProps) {
   const [randomReviewers, setRandomReviewers] = useState<ReturnType<typeof generateRandomReviewer>[]>([]);
   const plugin = useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
   );
 
+  const reviews = courseId && courseTestimonials[courseId]
+    ? courseTestimonials[courseId]
+    : genericTestimonials;
+
   useEffect(() => {
     // Generate random data on the client side to avoid hydration mismatch
-    setRandomReviewers(testimonials.map(() => generateRandomReviewer()));
-  }, []);
+    setRandomReviewers(reviews.map(() => generateRandomReviewer()));
+  }, [reviews]);
 
   return (
-    <section className="py-4 bg-background">
+    <section className="py-4">
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-2xl font-light tracking-tight text-center mb-4">
           What Other Students Say
@@ -38,7 +46,7 @@ export function StudentTestimonials() {
           className="w-full max-w-7xl mx-auto"
         >
           <CarouselContent className="-ml-4">
-            {testimonials.map((testimonial, index) => {
+            {reviews.map((testimonial, index) => {
               const reviewer = randomReviewers[index] || { name: 'S', location: '...', rating: 5 };
               return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">

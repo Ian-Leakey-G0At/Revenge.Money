@@ -16,7 +16,7 @@ export default function HomePage() {
         </div>
         <div className="w-12 h-12 rounded-full border border-white/10 p-1 relative glass-card">
           <img src="https://i.pravatar.cc/150?img=15" className="w-full h-full rounded-full grayscale object-cover" alt="Profile" />
-          <div className="absolute bottom-0 right-0 w-3 h-3 bg-vengeance-red border-2 border-void rounded-full"></div>
+          <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-void rounded-full"></div>
         </div>
       </header>
 

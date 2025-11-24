@@ -6,7 +6,13 @@ import { CourseCard } from '@/components/course/course-card';
 
 function CoursesPageContent() {
   return (
-    <div className="min-h-screen bg-void pb-32">
+    <div className="min-h-screen pb-32 relative overflow-hidden volumetric-bg">
+      {/* Ambient Biology: Pulsating Blobs */}
+      <div className="absolute inset-0 z-[-1] pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-brand-purple/10 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-vengeance-red/10 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
+        <div className="absolute top-[20%] right-[20%] w-[30%] h-[30%] bg-brand-cyan/5 rounded-full blur-[100px] animate-pulse-slow delay-2000"></div>
+      </div>
       {/* Marquee Banner */}
       <div className="bg-brand-cyan/10 border-y border-brand-cyan/20 py-2 overflow-hidden mb-6 relative">
         <div className="whitespace-nowrap animate-marquee text-[10px] font-mono text-brand-cyan font-bold tracking-widest uppercase">

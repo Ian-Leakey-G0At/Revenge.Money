@@ -78,11 +78,11 @@ export function CourseCard({ course }: CourseCardProps) {
             />
           )}
 
-          <div className="absolute top-2 right-2">
+          <div className="absolute bottom-2 right-2">
             {course.purchased ? (
               <CheckCircle2 className="w-5 h-5 text-vengeance-red shadow-glow-red drop-shadow-md" />
             ) : (
-              <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white border border-white/10">
+              <div className="bg-brand-purple/20 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-brand-purple border border-brand-purple/50 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
                 ${course.price}
               </div>
             )}
@@ -96,8 +96,17 @@ export function CourseCard({ course }: CourseCardProps) {
         </h3>
         <div className="flex items-center justify-between text-[9px] text-cyber-mute">
           <div className="flex items-center gap-1">
-            <Video className="w-3 h-3" />
-            <span>{totalLessons} Videos</span>
+            {isAiTool ? (
+              <>
+                <Bot className="w-3 h-3" />
+                <span>AI Assistant</span>
+              </>
+            ) : (
+              <>
+                <Video className="w-3 h-3" />
+                <span>{totalLessons} Videos</span>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-1">
             <Users className="w-3 h-3" />

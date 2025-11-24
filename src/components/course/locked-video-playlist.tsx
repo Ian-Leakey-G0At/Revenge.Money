@@ -1,6 +1,6 @@
 'use client';
 
-import { Lock, Video } from "lucide-react";
+import { Lock, Video, Bot } from "lucide-react";
 import {
     Accordion,
     AccordionContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 
-export function LockedVideoPlaylist({ videos }: { videos: any[] }) {
+export function LockedVideoPlaylist({ videos, isAiTool = false }: { videos: any[], isAiTool?: boolean }) {
     return (
         <div className="glass-card bg-void/80 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden">
             <div className="p-0">
@@ -19,7 +19,11 @@ export function LockedVideoPlaylist({ videos }: { videos: any[] }) {
                             <AccordionTrigger className="flex items-center gap-x-4 p-4 text-left hover:no-underline hover:bg-white/5 transition-colors">
                                 <div className="flex items-center gap-x-4 flex-1">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 flex-shrink-0">
-                                        <Video className="h-5 w-5 text-cyber-mute" />
+                                        {isAiTool ? (
+                                            <Bot className="h-5 w-5 text-cyber-mute" />
+                                        ) : (
+                                            <Video className="h-5 w-5 text-cyber-mute" />
+                                        )}
                                     </div>
                                     <div className="flex-1 space-y-1">
                                         <p className="font-medium text-white">{video.title}</p>

@@ -1,17 +1,18 @@
 'use client';
 
+import Link from 'next/link';
 import { Shield, Lock, Plane, Smartphone, AlertTriangle } from 'lucide-react';
 
 export default function ProfilePage() {
     return (
-        <div className="min-h-screen bg-void pb-32">
+        <div className="min-h-screen pb-32">
             {/* Header */}
             <header className="pt-12 px-6 mb-8 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-full border-2 border-white/10 p-1 relative glass-card mb-4">
                     <img src="https://i.pravatar.cc/150?img=15" className="w-full h-full rounded-full grayscale object-cover" alt="Profile" />
-                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-vengeance-red border-2 border-void rounded-full animate-pulse"></div>
+                    <div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 border-2 border-void rounded-full animate-pulse"></div>
                 </div>
-                <h1 className="text-xl font-extrabold uppercase tracking-widest text-white mb-1">The Commander</h1>
+                <h1 className="text-xl font-extrabold uppercase tracking-widest text-white mb-1">The Architect</h1>
                 <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-vengeance-red uppercase tracking-widest">
                     <Shield className="w-3 h-3" />
                     Access Level 4: Classified
@@ -24,10 +25,10 @@ export default function ProfilePage() {
                     <div className="text-[9px] font-mono text-cyber-mute uppercase mb-2 tracking-widest">Loyalty Points</div>
                     <div className="text-2xl font-mono font-bold text-wealth-gold drop-shadow-md">19,576</div>
                 </div>
-                <div className="glass-card rounded-2xl p-4 text-center">
-                    <div className="text-[9px] font-mono text-cyber-mute uppercase mb-2 tracking-widest">Payment</div>
+                <Link href="/how-to-pay" className="glass-card rounded-2xl p-4 text-center shadow-[inset_0_0_20px_rgba(34,197,94,0.15)] border-green-500/30 hover:bg-white/5 transition-colors cursor-pointer block">
+                    <div className="text-[9px] font-mono text-green-400 uppercase mb-2 tracking-widest">Payment</div>
                     <div className="text-xs font-mono font-bold text-white drop-shadow-md">How to Access Courses</div>
-                </div>
+                </Link>
             </div>
 
             {/* The Vault */}

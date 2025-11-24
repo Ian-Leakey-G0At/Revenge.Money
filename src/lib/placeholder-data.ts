@@ -4,7 +4,7 @@ import { Course, Instructor } from './types';
 export const instructors: Instructor[] = [
   {
     id: 'instructor-1',
-    name: 'The Commander',
+    name: 'The Architect',
     avatarId: 'instructor-avatar-1',
     bio: 'An operator who has successfully navigated the grey zones of global finance and sovereignty for over two decades. A master of systems, structures, and the art of invisibility.',
   },

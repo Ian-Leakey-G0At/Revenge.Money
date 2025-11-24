@@ -56,14 +56,12 @@ export function HeroCarousel() {
               <Link href={`/courses/${course.id}`} className="flex flex-col cursor-pointer group">
                 <div className="w-full aspect-video rounded-xl overflow-hidden relative border border-white/10 shadow-lg mb-3">
                   <Image
-                    src={course.thumbnailUrl}
+                    src={course.thumbnailUrl || '/placeholder-course.jpg'}
                     alt={course.name}
                     fill
                     className="object-cover opacity-80 group-hover:opacity-100 transition duration-500"
                   />
-                  <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white border border-white/10">
-                    ${course.price}
-                  </div>
+
                 </div>
                 <div>
                   <h3 className="text-sm font-extrabold uppercase text-white mb-1 group-hover:text-wealth-gold transition-colors leading-tight">
