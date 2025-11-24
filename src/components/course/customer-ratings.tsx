@@ -80,7 +80,7 @@ export function CustomerRatings({ course }: { course: Course }) {
   };
 
   return (
-    <div className="glass-card bg-void/80 backdrop-blur-xl border border-white/10 rounded-xl p-6">
+    <div className="glass-card bg-void/80 backdrop-blur-md border border-white/10 rounded-xl p-6">
       <div className="mb-6">
         <h3 className="font-headline text-xl text-white">Ratings & Reviews</h3>
         <p className="text-sm text-cyber-mute">See what other students think about this course.</p>

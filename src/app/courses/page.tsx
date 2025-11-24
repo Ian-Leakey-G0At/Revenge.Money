@@ -6,7 +6,7 @@ import { CourseCard } from '@/components/course/course-card';
 
 function CoursesPageContent() {
   return (
-    <div className="min-h-screen pb-32 relative overflow-hidden volumetric-bg">
+    <div className="min-h-screen pb-32 relative overflow-hidden">
       {/* Ambient Biology: Pulsating Blobs - REMOVED FOR PERFORMANCE ALIGNMENT */}
       <div className="absolute inset-0 z-[-1] pointer-events-none">
       </div>

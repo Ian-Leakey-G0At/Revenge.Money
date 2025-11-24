@@ -64,7 +64,7 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const aiNotebookUrl = "https://notebooklm.google.com/notebook/1ed52c6c-bc0d-4a55-a1ec-bacac4220f8f";
 
   return (
-    <div className="min-h-screen pb-32 pt-[72px] relative overflow-hidden volumetric-bg">
+    <div className="min-h-screen pb-32 pt-[72px] relative overflow-hidden">
       {/* Ambient Biology: Pulsating Blobs - REMOVED FOR PERFORMANCE ALIGNMENT */}
       <div className="absolute inset-0 z-[-1] pointer-events-none">
       </div>

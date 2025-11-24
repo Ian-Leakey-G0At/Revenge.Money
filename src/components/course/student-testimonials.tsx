@@ -50,7 +50,7 @@ export function StudentTestimonials({ courseId }: StudentTestimonialsProps) {
               const reviewer = randomReviewers[index] || { name: 'S', location: '...', rating: 5 };
               return (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
-                  <div className="h-full p-4 md:p-6 flex flex-col items-center text-center glass-card bg-void/80 backdrop-blur-xl border border-white/10 rounded-xl">
+                  <div className="h-full p-4 md:p-6 flex flex-col items-center text-center glass-card bg-void/80 backdrop-blur-md border border-white/10 rounded-xl">
                     <div className="flex items-center gap-1.5 mb-4">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
