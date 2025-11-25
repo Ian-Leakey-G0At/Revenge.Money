@@ -31,7 +31,7 @@ COURSE 3: UNTOUCHABLE WEALTH- [guy-fawkes-3]
 
 *HERO THUMBNAILS*
 https://pin.it/GmPwXcymK - https://i.pinimg.com/736x/19/b4/ca/19b4cab2045c807b406e2f6386f07850.jpg
-https://pin.it/1XInYiF5j - https://i.pinimg.com/736x/e8/c7/97/e8c7979d61cdc0f3617565eef1250863.jpg
+https://pin.it/3uBNckOap- https://i.pinimg.com/736x/72/e6/ca/72e6ca7bba9fb326a0d27186982f7cf8.jpg
 https://pin.it/5ocDiJEFG - https://i.pinimg.com/736x/6c/dc/43/6cdc4363a23cdcfda5740aee6f1833d7.jpg
 
 *COURSE CARD THUMBNAILS*

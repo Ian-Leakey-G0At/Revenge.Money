@@ -19,7 +19,7 @@ const REVIEWS = [
 
 export function FieldReports() {
     return (
-        <section className="pl-6 mb-24 relative">
+        <section className="pl-6 mb-[32px] relative">
             <h2 className="text-xs font-bold text-white uppercase tracking-widest mb-4">Field Reports</h2>
 
             <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 snap-x pr-6 relative z-10 [mask-image:linear-gradient(to_right,black_85%,transparent_100%)]">

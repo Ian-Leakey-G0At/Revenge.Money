@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { HeroCarousel } from '@/components/course/hero-carousel';
 import { GoodLuckButton } from '@/components/course/good-luck-button';
 import { FieldReports } from '@/components/course/field-reports';
@@ -28,6 +29,13 @@ export default function HomePage() {
         </section>
 
         <FieldReports />
+
+        <div className="px-6 mt-8 mb-8">
+          <Link href="/how-to-pay" className="glass-card rounded-2xl p-4 text-center shadow-[inset_0_0_20px_rgba(34,197,94,0.15)] border-green-500/30 hover:bg-white/5 transition-colors cursor-pointer block">
+            <div className="text-[9px] font-mono text-green-400 uppercase mb-2 tracking-widest">Payment</div>
+            <div className="text-xs font-mono font-bold text-white drop-shadow-md">How to Access Courses</div>
+          </Link>
+        </div>
       </main>
     </div>
   );

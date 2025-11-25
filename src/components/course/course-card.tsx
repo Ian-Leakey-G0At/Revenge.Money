@@ -83,7 +83,7 @@ export function CourseCard({ course }: CourseCardProps) {
             {course.purchased ? (
               <CheckCircle2 className="w-5 h-5 text-vengeance-red shadow-glow-red drop-shadow-md" />
             ) : (
-              <div className="bg-brand-purple backdrop-blur-sm px-2 py-1 rounded text-[9px] font-bold text-white border border-brand-purple/50 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
+              <div className="bg-brand-purple backdrop-blur-sm px-2 py-1 rounded-lg text-[9px] font-extrabold text-white border border-brand-purple/50 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
                 ${course.price}
               </div>
             )}
