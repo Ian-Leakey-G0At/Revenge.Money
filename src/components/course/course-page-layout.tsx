@@ -36,13 +36,13 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const isPurchased = propIsPurchased ?? course.purchased ?? false;
 
   // Video Source Logic
-  const videoSourceType = (isPurchased && activeLesson && activeLesson.videoUrl) || (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube')) ? 'local' : 'youtube';
+  const videoSourceType = (isPurchased && activeLesson)
+    ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
+    : (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube') ? 'local' : 'youtube');
 
-  const videoSource = isPurchased && activeLesson
-    ? activeLesson.videoUrl
-    : course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-
-  const videoIdentifier = isPurchased && activeLesson ? activeLesson.id : 'teaser';
+  const videoIdentifier = (isPurchased && activeLesson)
+    ? (activeLesson.youtubeVideoId || activeLesson.videoUrl || '')
+    : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
 
   // Flatten lessons for playlist
   const allVideos = course.modules.flatMap(m => m.lessons);
