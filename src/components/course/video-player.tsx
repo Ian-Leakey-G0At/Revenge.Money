@@ -165,7 +165,7 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
       {source === 'local' ? (
         <video
           ref={videoRef}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
           src={identifier}
           autoPlay
           muted={isMuted}
@@ -189,9 +189,10 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
               mute: 0, // Unmute by default when explicitly started
               controls: 0,
               rel: 0,
+              modestbranding: 1,
             },
           }}
-          className="w-full h-full absolute top-0 left-0"
+          className="w-full h-full absolute top-0 left-0 [&>iframe]:w-full [&>iframe]:h-full"
         />
       )}
       <div

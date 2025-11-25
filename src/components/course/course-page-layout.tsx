@@ -35,6 +35,13 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
 
   const isPurchased = propIsPurchased ?? course.purchased ?? false;
 
+  // Initialize activeLesson to the first lesson if purchased and not already set
+  useEffect(() => {
+    if (isPurchased && !activeLesson && course.modules.length > 0 && course.modules[0].lessons.length > 0) {
+      setActiveLesson(course.modules[0].lessons[0]);
+    }
+  }, [isPurchased, activeLesson, course]);
+
   // Video Source Logic
   const videoSourceType = (isPurchased && activeLesson)
     ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
@@ -54,6 +61,16 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
     // Mark as complete if not already
     if (!completedLessonIds.includes(lesson.id)) {
       setCompletedLessonIds([...completedLessonIds, lesson.id]);
+    }
+  };
+
+  const handleVideoEnd = () => {
+    if (!activeLesson) return;
+
+    const currentIndex = allVideos.findIndex(v => v.id === activeLesson.id);
+    if (currentIndex !== -1 && currentIndex < allVideos.length - 1) {
+      const nextLesson = allVideos[currentIndex + 1];
+      handleLessonSelect(nextLesson);
     }
   };
 
@@ -83,6 +100,7 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
           source={videoSourceType}
           identifier={videoIdentifier}
           thumbnail={getDynamicThumbnail(course.id, 'hero', course.thumbnailUrl || '/placeholder-course.jpg')}
+          onEnded={handleVideoEnd}
         />
       </div>
 
@@ -167,9 +185,11 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
                 </a>
               </Button>
             ) : (
-              <Button className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 mt-2">
-                <Bot className="w-4 h-4 mr-2" />
-                Access Financial Brain
+              <Button asChild className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 mt-2">
+                <a href="/courses/guy-fawkes-8">
+                  <Bot className="w-4 h-4 mr-2" />
+                  Access Financial Brain
+                </a>
               </Button>
             )}
           </div>
