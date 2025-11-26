@@ -36,36 +36,13 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const isPurchased = propIsPurchased ?? course.purchased ?? false;
 
   // Initialize activeLesson to the first lesson if purchased and not already set
+  // Initialize activeLesson to the first lesson if purchased and not already set
   useEffect(() => {
     if (isPurchased && !activeLesson && course.modules.length > 0 && course.modules[0].lessons.length > 0) {
       const firstLesson = course.modules[0].lessons[0];
       setActiveLesson(firstLesson);
     }
   }, [isPurchased, activeLesson, course]);
-
-  // Video Source Logic
-  const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
-
-  const getYouTubeId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
-
-  const videoSourceType = (!shouldPlayTeaser && activeLesson)
-    ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
-    : (course.teaserVideoUrl && (course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be')) ? 'youtube' : 'local');
-
-  let videoIdentifier = '';
-  if (!shouldPlayTeaser && activeLesson) {
-    videoIdentifier = activeLesson.youtubeVideoId || activeLesson.videoUrl || '';
-  } else {
-    if (videoSourceType === 'youtube' && course.teaserVideoUrl) {
-      videoIdentifier = getYouTubeId(course.teaserVideoUrl) || course.teaserVideoUrl;
-    } else {
-      videoIdentifier = course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-    }
-  }
 
   // Flatten lessons for playlist
   const allVideos = course.modules.flatMap(m => m.lessons);
@@ -93,6 +70,47 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   const handlePurchaseClick = () => {
     setIsModalOpen(true);
   };
+
+  // Video Source Logic
+  const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
+
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  const getDailymotionId = (url: string) => {
+    const regExp = /[?&]video=([a-zA-Z0-9]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  let videoSourceType: 'local' | 'youtube' | 'dailymotion' = 'local';
+  if (!shouldPlayTeaser && activeLesson) {
+    videoSourceType = activeLesson.youtubeVideoId ? 'youtube' : 'local';
+  } else {
+    if (course.teaserVideoUrl?.includes('dailymotion')) {
+      videoSourceType = 'dailymotion';
+    } else if (course.teaserVideoUrl && (course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be'))) {
+      videoSourceType = 'youtube';
+    } else {
+      videoSourceType = 'local';
+    }
+  }
+
+  let videoIdentifier = '';
+  if (!shouldPlayTeaser && activeLesson) {
+    videoIdentifier = activeLesson.youtubeVideoId || activeLesson.videoUrl || '';
+  } else {
+    if (videoSourceType === 'youtube' && course.teaserVideoUrl) {
+      videoIdentifier = getYouTubeId(course.teaserVideoUrl) || course.teaserVideoUrl;
+    } else if (videoSourceType === 'dailymotion' && course.teaserVideoUrl) {
+      videoIdentifier = getDailymotionId(course.teaserVideoUrl) || course.teaserVideoUrl;
+    } else {
+      videoIdentifier = course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    }
+  }
 
   const isAiTool = course.category === 'AI Tool';
   const aiNotebookUrl = "https://notebooklm.google.com/notebook/1ed52c6c-bc0d-4a55-a1ec-bacac4220f8f";

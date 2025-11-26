@@ -1,12 +1,11 @@
-
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Play, Pause, Volume2, VolumeX, RotateCcw, Rewind, FastForward } from 'lucide-react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 
 interface VideoPlayerProps {
-  source: 'local' | 'youtube';
+  source: 'local' | 'youtube' | 'dailymotion';
   identifier: string;
   thumbnail?: string;
   onEnded?: () => void;
@@ -15,6 +14,8 @@ interface VideoPlayerProps {
 export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const youtubePlayerRef = useRef<any>(null);
+  const dailymotionContainerRef = useRef<HTMLDivElement>(null);
+  const dailymotionPlayerRef = useRef<any>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
@@ -43,8 +44,92 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
   const startVideo = () => {
     setHasStarted(true);
     setIsPlaying(true);
-    // The actual play logic will be handled by the effect or autoPlay prop when rendering the player
   };
+
+  const handleEnd = () => {
+    setIsPlaying(false);
+    if (source === 'youtube' && youtubePlayerRef.current) {
+      youtubePlayerRef.current.seekTo(0);
+      youtubePlayerRef.current.pauseVideo();
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      // Manual loop implementation to ensure reliability
+      dailymotionPlayerRef.current.seek(0);
+      dailymotionPlayerRef.current.play();
+    }
+    if (onEnded) {
+      onEnded();
+    }
+  }
+
+  const initDailymotionPlayer = () => {
+    if (!dailymotionContainerRef.current || dailymotionPlayerRef.current) return;
+
+    // Ensure container has an ID
+    const containerId = `dailymotion-player-${identifier}`;
+    dailymotionContainerRef.current.id = containerId;
+
+    // @ts-ignore
+    dailymotion.createPlayer(containerId, {
+      video: identifier,
+      width: '100%',
+      height: '100%',
+      params: {
+        autoplay: true,
+        mute: false,
+        controls: false,
+        loop: true,
+        'queue-autoplay-next': false,
+        'queue-enable': false,
+        'sharing-enable': false,
+        'ui-logo': false,
+      },
+    }).then((player: any) => {
+      dailymotionPlayerRef.current = player;
+      player.on('play', () => setIsPlaying(true));
+      player.on('pause', () => setIsPlaying(false));
+      player.on('video_end', handleEnd);
+      if (typeof player.setMuted === 'function') {
+        player.setMuted(false);
+      }
+    }).catch((e: any) => {
+      console.error('Dailymotion player creation failed', e);
+    });
+  };
+
+  // Dailymotion SDK Integration
+  useEffect(() => {
+    if (source === 'dailymotion' && identifier && hasStarted) {
+      const scriptId = 'dailymotion-sdk';
+      if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://geo.dailymotion.com/libs/player.js';
+        script.async = true;
+        document.body.appendChild(script);
+        script.onload = () => {
+          initDailymotionPlayer();
+        };
+      } else {
+        if ((window as any).dailymotion) {
+          initDailymotionPlayer();
+        } else {
+          const interval = setInterval(() => {
+            if ((window as any).dailymotion) {
+              clearInterval(interval);
+              initDailymotionPlayer();
+            }
+          }, 100);
+        }
+      }
+    }
+
+    return () => {
+      if (dailymotionPlayerRef.current) {
+        dailymotionPlayerRef.current.destroy();
+        dailymotionPlayerRef.current = null;
+      }
+    };
+  }, [source, identifier, hasStarted]);
 
   const togglePlayPause = () => {
     handleShowControls();
@@ -57,11 +142,15 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
     } else if (source === 'youtube' && youtubePlayerRef.current) {
       const playerState = youtubePlayerRef.current.getPlayerState();
       if (playerState === 1) {
-        // Playing
         youtubePlayerRef.current.pauseVideo();
       } else {
-        // Paused, buffering, ended, etc.
         youtubePlayerRef.current.playVideo();
+      }
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      if (isPlaying) {
+        dailymotionPlayerRef.current.pause();
+      } else {
+        dailymotionPlayerRef.current.play();
       }
     }
   };
@@ -79,6 +168,14 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
         youtubePlayerRef.current.mute();
         setIsMuted(true);
       }
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      const newMutedState = !isMuted;
+      if (typeof dailymotionPlayerRef.current.setMuted === 'function') {
+        dailymotionPlayerRef.current.setMuted(newMutedState);
+      } else {
+        console.warn('setMuted method not found on Dailymotion player');
+      }
+      setIsMuted(newMutedState);
     }
   };
 
@@ -90,6 +187,9 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
     } else if (source === 'youtube' && youtubePlayerRef.current) {
       youtubePlayerRef.current.seekTo(0);
       youtubePlayerRef.current.playVideo();
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      dailymotionPlayerRef.current.seek(0);
+      dailymotionPlayerRef.current.play();
     }
   };
 
@@ -100,6 +200,9 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
     } else if (source === 'youtube' && youtubePlayerRef.current) {
       const currentTime = youtubePlayerRef.current.getCurrentTime();
       youtubePlayerRef.current.seekTo(currentTime - 10, true);
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      const time = dailymotionPlayerRef.current.currentTime;
+      dailymotionPlayerRef.current.seek(time - 10);
     }
   };
 
@@ -110,19 +213,11 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
     } else if (source === 'youtube' && youtubePlayerRef.current) {
       const currentTime = youtubePlayerRef.current.getCurrentTime();
       youtubePlayerRef.current.seekTo(currentTime + 10, true);
+    } else if (source === 'dailymotion' && dailymotionPlayerRef.current) {
+      const time = dailymotionPlayerRef.current.currentTime;
+      dailymotionPlayerRef.current.seek(time + 10);
     }
   };
-
-  const handleEnd = () => {
-    setIsPlaying(false);
-    if (source === 'youtube' && youtubePlayerRef.current) {
-      youtubePlayerRef.current.seekTo(0);
-      youtubePlayerRef.current.pauseVideo();
-    }
-    if (onEnded) {
-      onEnded();
-    }
-  }
 
   const onReady: YouTubeProps['onReady'] = (event) => {
     youtubePlayerRef.current = event.target;
@@ -174,7 +269,7 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
           onPause={() => setIsPlaying(false)}
           onEnded={handleEnd}
         />
-      ) : (
+      ) : source === 'youtube' ? (
         <YouTube
           videoId={identifier}
           onReady={onReady}
@@ -186,7 +281,7 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
             width: '100%',
             playerVars: {
               autoplay: 1,
-              mute: 0, // Unmute by default when explicitly started
+              mute: 0,
               controls: 0,
               rel: 0,
               modestbranding: 1,
@@ -194,6 +289,25 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
           }}
           className="w-full h-full absolute top-0 left-0 [&>iframe]:w-full [&>iframe]:h-full"
         />
+      ) : (
+        <div className="w-full h-full absolute top-0 left-0">
+          {/* Force styles using a standard style tag and deep selectors */}
+          <style>{`
+              #dailymotion-player-${identifier} iframe {
+                width: 100% !important;
+                height: 100% !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                object-fit: cover !important;
+              }
+            `}</style>
+          <div
+            id={`dailymotion-player-${identifier}`}
+            ref={dailymotionContainerRef}
+            className="w-full h-full relative [&_iframe]:!w-full [&_iframe]:!h-full [&_iframe]:!absolute [&_iframe]:!top-0 [&_iframe]:!left-0"
+          />
+        </div>
       )}
       <div
         className={`absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}
