@@ -43,11 +43,13 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   }, [isPurchased, activeLesson, course]);
 
   // Video Source Logic
-  const videoSourceType = (isPurchased && activeLesson)
+  const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
+
+  const videoSourceType = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
     : (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube') ? 'local' : 'youtube');
 
-  const videoIdentifier = (isPurchased && activeLesson)
+  const videoIdentifier = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId || activeLesson.videoUrl || '')
     : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
 
