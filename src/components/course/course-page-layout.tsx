@@ -38,20 +38,34 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   // Initialize activeLesson to the first lesson if purchased and not already set
   useEffect(() => {
     if (isPurchased && !activeLesson && course.modules.length > 0 && course.modules[0].lessons.length > 0) {
-      setActiveLesson(course.modules[0].lessons[0]);
+      const firstLesson = course.modules[0].lessons[0];
+      setActiveLesson(firstLesson);
     }
   }, [isPurchased, activeLesson, course]);
 
   // Video Source Logic
   const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
 
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
   const videoSourceType = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
-    : (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube') ? 'local' : 'youtube');
+    : (course.teaserVideoUrl && (course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be')) ? 'youtube' : 'local');
 
-  const videoIdentifier = (!shouldPlayTeaser && activeLesson)
-    ? (activeLesson.youtubeVideoId || activeLesson.videoUrl || '')
-    : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+  let videoIdentifier = '';
+  if (!shouldPlayTeaser && activeLesson) {
+    videoIdentifier = activeLesson.youtubeVideoId || activeLesson.videoUrl || '';
+  } else {
+    if (videoSourceType === 'youtube' && course.teaserVideoUrl) {
+      videoIdentifier = getYouTubeId(course.teaserVideoUrl) || course.teaserVideoUrl;
+    } else {
+      videoIdentifier = course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    }
+  }
 
   // Flatten lessons for playlist
   const allVideos = course.modules.flatMap(m => m.lessons);
