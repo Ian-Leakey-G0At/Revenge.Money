@@ -19,7 +19,7 @@ export function AntechamberModal({ isOpen, onClose, checkoutUrl }: AntechamberMo
     if (!isOpen) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % GUY_FAWKES_IMAGES.length);
-    }, 2000); // Rotate every 2 seconds
+    }, 3000); // Rotate every 3 seconds for smoother flow
     return () => clearInterval(interval);
   }, [isOpen]);
 
@@ -65,7 +65,7 @@ export function AntechamberModal({ isOpen, onClose, checkoutUrl }: AntechamberMo
               src={src}
               alt="Security Pattern"
               className={cn(
-                "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
+                "absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] will-change-[opacity]",
                 index === currentImageIndex ? "opacity-100" : "opacity-0"
               )}
             />
@@ -101,10 +101,10 @@ export function AntechamberModal({ isOpen, onClose, checkoutUrl }: AntechamberMo
           </p>
         </div>
 
-        <div className="w-full mt-auto pb-8">
+        <div className="w-full mt-auto pb-12">
           <button
             onClick={handleProceed}
-            className="w-full bg-white text-black font-bold h-12 rounded-lg hover:bg-vengeance-red hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mb-3 uppercase tracking-wider text-xs shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(220,38,38,0.4)] border border-white/20"
+            className="w-full bg-white text-black font-bold h-12 rounded-lg hover:bg-vengeance-red hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mb-6 uppercase tracking-wider text-xs shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(220,38,38,0.4)] border border-white/20"
           >
             Proceed to Checkout
           </button>

@@ -45,9 +45,11 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
   // Video Source Logic
   const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
 
+  const hasYoutubeUrl = course.teaserVideoUrl && (course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be'));
+
   const videoSourceType = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
-    : (course.teaserVideoUrl && !(course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be')) ? 'local' : 'youtube');
+    : (hasYoutubeUrl ? 'youtube' : 'local');
 
   const getYouTubeId = (url: string) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
