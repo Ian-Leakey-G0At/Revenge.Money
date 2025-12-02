@@ -47,11 +47,19 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
 
   const videoSourceType = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
-    : (course.teaserVideoUrl && !course.teaserVideoUrl.includes('youtube') ? 'local' : 'youtube');
+    : (course.teaserVideoUrl && !(course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be')) ? 'local' : 'youtube');
+
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : url;
+  };
 
   const videoIdentifier = (!shouldPlayTeaser && activeLesson)
     ? (activeLesson.youtubeVideoId || activeLesson.videoUrl || '')
-    : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+    : (videoSourceType === 'youtube' && course.teaserVideoUrl
+      ? getYouTubeId(course.teaserVideoUrl)
+      : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
 
   // Flatten lessons for playlist
   const allVideos = course.modules.flatMap(m => m.lessons);
