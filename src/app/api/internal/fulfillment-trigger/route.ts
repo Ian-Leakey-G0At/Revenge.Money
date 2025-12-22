@@ -6,7 +6,10 @@ import { courses } from '@/lib/placeholder-data';
 import { render } from '@react-email/render';
 import AccessEmail from '@/emails/AccessEmail';
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+  url: process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
+  token: process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
