@@ -6,7 +6,14 @@ import { courses } from '@/lib/placeholder-data';
 import { render } from '@react-email/render';
 import AccessEmail from '@/emails/AccessEmail';
 
-const redis = Redis.fromEnv();
+console.log('[DEBUG_ENV] RM_KV_REST_API_URL:', process.env.RM_KV_REST_API_URL ? 'SET' : 'MISSING');
+console.log('[DEBUG_ENV] revengemoney_KV_REST_API_URL:', process.env.revengemoney_KV_REST_API_URL ? 'SET' : 'MISSING');
+console.log('[DEBUG_ENV] KV_REST_API_URL:', process.env.KV_REST_API_URL ? 'SET' : 'MISSING');
+
+const redis = new Redis({
+  url: process.env.RM_KV_REST_API_URL || process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
+  token: process.env.RM_KV_REST_API_TOKEN || process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
+});
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',

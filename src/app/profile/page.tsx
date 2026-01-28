@@ -33,10 +33,10 @@ export default function ProfilePage() {
 
             {/* Stats Cards */}
             <div className="px-6 grid grid-cols-2 gap-4 mb-10">
-                <div className="glass-card rounded-2xl p-4 text-center">
-                    <div className="text-[9px] font-mono text-cyber-mute uppercase mb-2 tracking-widest">Loyalty Points</div>
-                    <div className="text-2xl font-mono font-bold text-wealth-gold drop-shadow-md">19,576</div>
-                </div>
+                <Link href="/about" className="glass-card rounded-2xl p-4 text-center shadow-[inset_0_0_20px_rgba(168,85,247,0.15)] border-brand-purple/30 hover:bg-white/5 transition-colors cursor-pointer block">
+                    <div className="text-[9px] font-mono text-brand-purple uppercase mb-2 tracking-widest">About</div>
+                    <div className="text-xs font-mono font-bold text-white drop-shadow-md">The Architecture</div>
+                </Link>
                 <Link href="/how-to-pay" className="glass-card rounded-2xl p-4 text-center shadow-[inset_0_0_20px_rgba(34,197,94,0.15)] border-green-500/30 hover:bg-white/5 transition-colors cursor-pointer block">
                     <div className="text-[9px] font-mono text-green-400 uppercase mb-2 tracking-widest">Payment</div>
                     <div className="text-xs font-mono font-bold text-white drop-shadow-md">How to Access Courses</div>

@@ -44,6 +44,30 @@ export function CoursePageLayout({ course, isPurchased: propIsPurchased }: Cours
     }
   }, [isPurchased, activeLesson, course]);
 
+<<<<<<< HEAD
+=======
+  // Video Source Logic
+  const shouldPlayTeaser = !isPurchased || course.id === 'guy-fawkes-8';
+
+  const hasYoutubeUrl = course.teaserVideoUrl && (course.teaserVideoUrl.includes('youtube') || course.teaserVideoUrl.includes('youtu.be'));
+
+  const videoSourceType = (!shouldPlayTeaser && activeLesson)
+    ? (activeLesson.youtubeVideoId ? 'youtube' : 'local')
+    : (hasYoutubeUrl ? 'youtube' : 'local');
+
+  const getYouTubeId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : url;
+  };
+
+  const videoIdentifier = (!shouldPlayTeaser && activeLesson)
+    ? (activeLesson.youtubeVideoId || activeLesson.videoUrl || '')
+    : (videoSourceType === 'youtube' && course.teaserVideoUrl
+      ? getYouTubeId(course.teaserVideoUrl)
+      : (course.teaserVideoUrl || "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
+
+>>>>>>> FRESH
   // Flatten lessons for playlist
   const allVideos = course.modules.flatMap(m => m.lessons);
 

@@ -221,6 +221,9 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
 
   const onReady: YouTubeProps['onReady'] = (event) => {
     youtubePlayerRef.current = event.target;
+    if (isPlaying) {
+      event.target.playVideo();
+    }
   };
 
   if (!hasStarted && thumbnail) {
@@ -235,7 +238,11 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-8 right-8 z-10">
+<<<<<<< HEAD
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className="text-white drop-shadow-lg transition-transform transform group-hover:scale-110">
+=======
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className="text-white drop-shadow-md transition-transform transform group-hover:scale-110">
+>>>>>>> FRESH
             <defs>
               <mask id="SVGOVEmxbON">
                 <g fill="#555555" stroke="#fff" strokeLinejoin="round" strokeWidth="4">
@@ -285,6 +292,7 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
               controls: 0,
               rel: 0,
               modestbranding: 1,
+              disablekb: 1,
             },
           }}
           className="w-full h-full absolute top-0 left-0 [&>iframe]:w-full [&>iframe]:h-full"
@@ -310,9 +318,13 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
         </div>
       )}
       <div
-        className={`absolute inset-0 bg-black/20 flex items-center justify-center transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center pb-6 transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}
+        onClick={togglePlayPause}
       >
-        <div className="flex items-center gap-4">
+        <div
+          className="flex items-center gap-6"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Button
             variant="ghost"
             size="icon"
