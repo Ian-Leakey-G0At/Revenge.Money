@@ -238,11 +238,7 @@ export function VideoPlayer({ source, identifier, thumbnail, onEnded }: VideoPla
           className="w-full h-full object-cover"
         />
         <div className="absolute bottom-8 right-8 z-10">
-<<<<<<< HEAD
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className="text-white drop-shadow-lg transition-transform transform group-hover:scale-110">
-=======
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" className="text-white drop-shadow-md transition-transform transform group-hover:scale-110">
->>>>>>> FRESH
             <defs>
               <mask id="SVGOVEmxbON">
                 <g fill="#555555" stroke="#fff" strokeLinejoin="round" strokeWidth="4">
