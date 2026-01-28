@@ -7,8 +7,8 @@ import { render } from '@react-email/render';
 import AccessEmail from '@/emails/AccessEmail';
 
 const redis = new Redis({
-  url: process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
-  token: process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
+  url: process.env.RM_KV_REST_API_URL || process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
+  token: process.env.RM_KV_REST_API_TOKEN || process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
 });
 
 const transporter = nodemailer.createTransport({

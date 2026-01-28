@@ -3,8 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { courses } from '@/lib/placeholder-data';
 
 const redis = new Redis({
-  url: process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
-  token: process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
+  url: process.env.RM_KV_REST_API_URL || process.env.revengemoney_KV_REST_API_URL || process.env.KV_REST_API_URL,
+  token: process.env.RM_KV_REST_API_TOKEN || process.env.revengemoney_KV_REST_API_TOKEN || process.env.KV_REST_API_TOKEN,
 });
 
 interface TokenData {
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     const tokenKey = `token:${token}`;
-    
+
     // Use the client's built-in JSON parsing.
     const tokenData = await redis.get<TokenData>(tokenKey);
 
